@@ -1948,14 +1948,14 @@
     async function fetchLiveEvents() {
       try {
         // A. FIRST: Fetch the Default Image Setting from DB
-        const settingRes = await fetch('http://localhost:5001/api/settings/default_event_image');
+        const settingRes = await fetch('https://sri-xpvu.onrender.com/api/settings/default_event_image');
         const settingData = await settingRes.json();
         if (settingData.value) {
           globalDefaultImage = settingData.value;
         }
 
         // B. SECOND: Fetch Events
-        const response = await fetch('http://localhost:5001/api/events');
+        const response = await fetch('https://sri-xpvu.onrender.com/api/events');
         const realData = await response.json();
 
         calendarEvents = realData.map(event => ({
@@ -2039,12 +2039,12 @@
       }
 
       try {
-        let url = 'http://localhost:5001/api/events';
+        let url = 'https://sri-xpvu.onrender.com/api/events';
         let method = 'POST';
 
         // Check if we are Updating or Creating
         if (editingEventId) {
-          url = `http://localhost:5001/api/events/${editingEventId}`;
+          url = `https://sri-xpvu.onrender.com/api/events/${editingEventId}`;
           method = 'PUT';
         }
 
@@ -2075,7 +2075,7 @@
       list.innerHTML = '<p>Loading...</p>';
 
       try {
-        const response = await fetch('http://localhost:5001/api/events');
+        const response = await fetch('https://sri-xpvu.onrender.com/api/events');
         allAdminEvents = await response.json(); // Save to global variable
 
         list.innerHTML = '';
@@ -2108,7 +2108,7 @@
     async function deleteEvent(id) {
       if (!confirm("Are you sure you want to delete?")) return;
       try {
-        await fetch(`http://localhost:5001/api/events/${id}`, { method: 'DELETE' });
+        await fetch(`https://sri-xpvu.onrender.com/api/events/${id}`, { method: 'DELETE' });
         renderAdminEvents();
         fetchLiveEvents();
       } catch (err) { console.error(err); }
@@ -2186,7 +2186,7 @@
       }
 
       try {
-        const response = await fetch('http://localhost:5001/api/settings', {
+        const response = await fetch('https://sri-xpvu.onrender.com/api/settings', {
           method: 'POST',
           body: formData
         });
@@ -2220,7 +2220,7 @@
 
     // try {
     //   // Note: Do NOT set 'Content-Type': 'application/json' when sending files!
-    //   const response = await fetch('http://localhost:5001/api/events', {
+    //   const response = await fetch('https://sri-xpvu.onrender.com/api/events', {
     //     method: 'POST',
     //     body: formData
     //   });
