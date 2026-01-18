@@ -41,7 +41,9 @@ app.use('/uploads', express.static('uploads'));
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected Successfully"))
     .catch((err) => console.error("❌ MongoDB Connection Error:", err));
-
+app.get('/', (req, res) => {
+    res.send('Jai Sri Narsingh! Backend is working.');
+});
 // --- ROUTES ---
 
 app.get('/api/events', async (req, res) => {
@@ -64,7 +66,7 @@ app.post('/api/events', upload.single('imageFile'), async (req, res) => {
         if (req.file) {
             // If a file was uploaded, construct the local server URL
             // NOTE: Replace 'localhost:5001' with your Render URL when you deploy!
-            finalImageUrl = `http://localhost:5001/uploads/${req.file.filename}`;
+            finalImageUrl = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`;
         }
 
         const newEvent = new Event({
@@ -100,7 +102,7 @@ app.put('/api/events/:id', upload.single('imageFile'), async (req, res) => {
         // If a text URL is provided, use that.
         // If neither is provided, we don't overwrite 'image' (so the old one stays).
         if (req.file) {
-            updateData.image = `http://localhost:5001/uploads/${req.file.filename}`;
+            updateData.image = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`;
         } else if (image) {
             updateData.image = image;
         }
@@ -148,7 +150,7 @@ app.post('/api/settings', upload.single('imageFile'), async (req, res) => {
 
         // If a file was uploaded, use that instead
         if (req.file) {
-            finalValue = `http://localhost:5001/uploads/${req.file.filename}`;
+            finalValue = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`;
         }
 
         // Find the setting and update it, OR create it if it doesn't exist (upsert)
