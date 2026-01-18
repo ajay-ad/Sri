@@ -1,0 +1,15 @@
+# Ignore dependency folders in both client and server
+node_modules/
+*/node_modules/
+
+# Ignore environment variables (Protect your passwords!)
+.env
+*/.env
+
+# Mac system junk
+.DS_Store
+*/.DS_Store
+
+# Build outputs (if you build your client later)
+dist/
+build/
