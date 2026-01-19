@@ -2248,48 +2248,72 @@
 
     let countdownInterval;
 
-    window.onload = function () {
+    // Run immediately when HTML is ready (Fixes 3-4s Lag)
+    document.addEventListener('DOMContentLoaded', () => {
       initSettingsUI();
       applyTheme(state.theme);
-      renderNavigation();
+
+      // --- RESTORE LAST VIEW ---
+      // Check memory: "Where was the user before refresh?"
+      const savedView = localStorage.getItem('lastView');
+
+      if (savedView && document.getElementById(savedView)) {
+        // If we have a memory, go there immediately
+        switchView(savedView);
+      } else {
+        // First time visitor? Go Home.
+        renderNavigation();
+        // Ensure Home is visible if no switchView happened
+        document.getElementById('view-home').classList.remove('hide');
+      }
+
+      // Initialize other lightweight features
       startCountdown(state.melaDate);
       renderCalendar();
       updateLanguage();
       startShlokaRotation();
-      initAudioPlayer();
       updateVisitorCount();
       initPanchang();
       renderAdminFeatures();
       applyFeatureStates();
-      renderUserPlaylist(); // Init Playlist UI
-      updateDarshanStatus(); // Initial Status Check
-      initSideNavResizer(); // Initialize Resizer
-      setInterval(updateDarshanStatus, 60000); // Check every minute
+      renderUserPlaylist();
+      updateDarshanStatus();
+      initSideNavResizer();
 
-      // Scroll Top Logic
-      window.addEventListener('scroll', () => {
-        const btn = document.getElementById('scroll-top-btn');
-        if (window.scrollY > 300) btn.classList.remove('hide');
-        else btn.classList.add('hide');
-      });
+      // Dark mode check
+      if (document.documentElement.classList.contains('dark')) {
+        toggleDarkMode();
+        if (!document.documentElement.classList.contains('dark')) toggleDarkMode();
+      }
 
-      // Initial Layout Render
-      setTimeout(setNavStyle, 100, state.navStyle);
-      window.addEventListener('resize', () => setNavStyle(state.navStyle));
-
-      // Show Welcome Popup
+      // Show welcome popup slightly later
       setTimeout(() => {
         document.getElementById('welcome-popup').classList.remove('hide');
         setTimeout(() => document.getElementById('welcome-popup').classList.add('hide'), 8000);
       }, 1000);
+    });
 
-      // Explicitly force dark mode reset on load to ensure text color is correct if system pref matches
-      if (document.documentElement.classList.contains('dark')) {
-        toggleDarkMode(); // Re-apply logic to ensure variables are correct
-        // Toggle back if it wasn't dark
-        if (!document.documentElement.classList.contains('dark')) toggleDarkMode();
-      }
-    };
+    // Load heavy audio/images in background (Doesn't block UI anymore)
+    window.addEventListener('load', () => {
+      initAudioPlayer();
+      setInterval(updateDarshanStatus, 60000);
+      setTimeout(() => setNavStyle(state.navStyle), 100);
+    });
+
+    // Keep resize listener
+    window.addEventListener('resize', () => setNavStyle(state.navStyle));
+
+    // Load heavy audio players only after everything else is done
+    window.addEventListener('load', () => {
+      initAudioPlayer();
+      setInterval(updateDarshanStatus, 60000);
+
+      // Initial Layout Render (Safety check)
+      setTimeout(() => setNavStyle(state.navStyle), 100);
+    });
+
+    // Keep resize listener separate
+    window.addEventListener('resize', () => setNavStyle(state.navStyle));
 
     // --- AUDIO PLAYER LOGIC ---
     function initAudioPlayer() {
@@ -3214,15 +3238,31 @@
     }
 
     function switchView(viewId) {
+      // 1. Hide all sections
       document.querySelectorAll('.view-section').forEach(el => el.classList.add('hide'));
-      document.getElementById(viewId).classList.remove('hide');
-      // Hide mobile menu on switch (by adding the negative translate class back)
+
+      // 2. Show target section
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.classList.remove('hide');
+      } else {
+        document.getElementById('view-home').classList.remove('hide');
+      }
+
+      // 3. Hide mobile menu
       document.getElementById('mobile-menu').classList.add('-translate-y-full');
 
+      // 4. Scroll to top
       window.scrollTo(0, 0);
+
+      // 5. Update State & Navigation UI
       state.activeView = viewId;
       renderNavigation();
       if (viewId === 'view-leela') checkLeelaAccess();
+
+      // --- THE MAGIC LINE ---
+      // Save "view-calendar" to browser memory, NOT the URL bar
+      localStorage.setItem('lastView', viewId);
     }
 
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
