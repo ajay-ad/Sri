@@ -47,7 +47,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected Successfully"))
     .catch((err) => console.error("❌ MongoDB Connection Error:", err));
 app.get('/', (req, res) => {
-    res.send('Jai Sri Narsingh! Backend is working.');
+    res.send('Jai Sri Narsingh! Backend is working. Made By - Ajay Pratap');
 });
 // --- ROUTES ---
 
