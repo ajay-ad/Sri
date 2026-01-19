@@ -665,6 +665,53 @@
       transition: transform 0.3s ease-in-out;
       /* Default state is set via utility class -translate-y-full */
     }
+
+    @keyframes pulse-highlight {
+      0% {
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 0 20px rgba(234, 88, 12, 0);
+        transform: scale(1.05);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+        transform: scale(1);
+      }
+    }
+
+    .search-highlight {
+      animation: pulse-highlight 2s ease-out;
+      z-index: 100;
+      border-color: var(--primary) !important;
+    }
+
+    /* This stays stable and won't break your layout */
+    .calendar-grid-stable {
+      display: grid !important;
+    }
+
+    /* Each card will trigger this when it is created */
+    .card-fade-in {
+      animation: fadeInUp 0.4s ease-out forwards;
+      opacity: 0;
+      /* Start invisible so the animation looks smooth */
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -1100,13 +1147,13 @@
 
     <!-- MOBILE MENU OVERLAY (For Top Nav Mode) - Fixed Animation to Slide from TOP -->
     <div id="mobile-menu"
-      class="fixed inset-0 glass-panel z-50 -translate-y-full flex flex-col items-center justify-center space-y-6 text-text font-bold text-xl bg-white/80 dark:bg-black/80 backdrop-blur-lg">
+      class="fixed inset-0 glass-panel z-50 -translate-y-full flex flex-col items-center justify-center space-y-6 text-text font-bold text-xl bg-white/10 backdrop-blur-md dark:bg-black/80 backdrop-blur-lg">
       <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl hover:text-red-500 hamburger-to-x"><i
           class="fas fa-times"></i></button>
       <div id="mobile-menu-links" class="flex flex-col text-center gap-6"></div>
 
       <!-- Mobile Menu Audio Player Container -->
-      <div id="mobile-menu-player-container" class="mt-4 p-4 border border-white/20 rounded-xl bg-white/5">
+      <div id="mobile-menu-player-container" class="mt-4 p-4 border border-white/20 rounded-xl bg-white/30">
         <div class="flex items-center gap-4 cursor-pointer" onclick="togglePlayerOverlay(); toggleMobileMenu();">
           <div class="w-10 h-10 rounded-full border border-primary bg-black overflow-hidden animate-spin-slow">
             <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
@@ -1118,11 +1165,11 @@
 
       <div class="flex gap-4 mt-8">
         <button onclick="toggleSearch(); toggleMobileMenu();"
-          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20">
+          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20 bg-white/50">
           <i class="fas fa-search mr-2"></i> Search
         </button>
         <button onclick="toggleSettings(); toggleMobileMenu();"
-          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20">
+          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20 bg-white/50">
           <i class="fas fa-universal-access mr-2"></i> <span data-key="settingsBtn">Settings</span>
         </button>
       </div>
@@ -1276,7 +1323,7 @@
       </section>
 
       <!-- ABOUT VIEW -->
-      <section id="view-about" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+      <section id="view-about" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
         <div class="text-center mb-10">
           <p class="sanskrit text-lg mb-4">नमस्ते नरसिंहाय प्रह्लादाह्लाद दायिने।<br>हिरण्यकशिपोर्वक्षः
             शिलाटङ्क नखालये॥</p>
@@ -1303,7 +1350,7 @@
       </section>
 
       <!-- GALLERY VIEW -->
-      <section id="view-gallery" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+      <section id="view-gallery" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
         <div class="text-center mb-4">
           <p class="sanskrit text-sm">तव करकमलवरे नखम् अद्भुतशृङ्गम् । दलितहिरण्यकशिपुतनुभृङ्गम् ॥</p>
         </div>
@@ -1346,7 +1393,7 @@
       </section>
 
       <!-- BHAJANS VIEW -->
-      <section id="view-bhajans" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+      <section id="view-bhajans" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
         <div class="text-center mb-12">
           <h2 class="text-4xl font-bold text-primary mb-4" data-key="navBhajans">भजन और ग्रंथ</h2>
           <p class="text-xl opacity-80" data-key="subBhajanLibrary">डिजिटल लाइब्रेरी</p>
@@ -1396,18 +1443,70 @@
       </section>
 
       <!-- CALENDAR VIEW -->
-      <section id="view-calendar" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+      <section id="view-calendar" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="max-w-md mx-auto mb-10 px-4 relative">
+          <div class="relative group">
+            <i
+              class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors"></i>
+            <input type="text" id="calendar-search" onkeyup="filterCalendar()"
+              placeholder="Search pooja, mela, or dates..."
+              class="w-full pl-12 pr-4 py-3 rounded-full border-2 border-primary/20 bg-white/10 backdrop-blur-md outline-none focus:border-primary transition-all text-text">
+          </div>
+
+          <div id="search-results-overlay"
+            class="absolute left-4 right-4 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-white/20 bg-white/90 dark:bg-black/80 backdrop-blur-xl shadow-2xl z-[100] hide">
+          </div>
+        </div>
+        <div class="max-w-4xl mx-auto mb-10 px-4 flex flex-wrap gap-4 justify-center items-center">
+          <div class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full border border-primary/20">
+            <label class="text-xs font-bold opacity-60 uppercase">From:</label>
+            <input type="date" id="date-from" onchange="filterCalendarByDate()"
+              class="bg-transparent outline-none text-sm">
+          </div>
+          <div class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full border border-primary/20">
+            <label class="text-xs font-bold opacity-60 uppercase">To:</label>
+            <input type="date" id="date-to" onchange="filterCalendarByDate()"
+              class="bg-transparent outline-none text-sm">
+          </div>
+          <button onclick="resetDateFilter()" class="text-xs font-bold text-primary underline">Clear Dates</button>
+        </div>
         <div class="text-center mb-10">
           <h2 class="text-4xl font-bold text-primary mb-4" data-key="calendarTitle">इवेंट कैलेंडर</h2>
           <p class="text-xl opacity-80" data-key="calendarSub">आगामी कार्यक्रम - 2026</p>
         </div>
-        <div class="max-w-6xl mx-auto" id="calendar-events-container">
-          <!-- Populated by JS -->
+
+        <div id="mela-trigger-wrapper" class="max-w-4xl mx-auto mb-16 hide cursor-pointer group"
+          onclick="toggleMelaOverlay()">
+          <div
+            class="relative h-64 rounded-2xl overflow-hidden border-4 border-yellow-500/50 shadow-[0_0_30px_rgba(234,88,12,0.5)]">
+            <img
+              src="https://scontent.fjai14-3.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=Y7sfuTH1nM0Q7kNvwFQHJKe&_nc_oc=AdnvGfXo6UDFAPG6sTIp1t10W2j85HvP5buT6F4Y0KYTGUsSiV32dCcD2yj4w9DgMtYYlKr5m4C1FQRegOo2fo9_&_nc_zt=23&_nc_ht=scontent.fjai14-3.fna&_nc_gid=Ymk-GACK05r016N32Wp39Q&oh=00_AfoTlD1x6o2wSLnHiX8QCHQy8_FZjQAuew2pUs-vfqisXg&oe=69744EB1"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-8">
+              <div>
+                <span
+                  class="bg-red-600 text-white font-bold px-3 py-1 rounded text-xs uppercase tracking-widest mb-2 inline-block animate-pulse">Live
+                  Now</span>
+                <h3 class="text-4xl font-bold text-yellow-400 mb-2 drop-shadow-lg">Grand Mela 2026</h3>
+                <p class="text-white text-lg opacity-90">Tap to view the full 5-day divine schedule</p>
+              </div>
+              <div
+                class="ml-auto bg-black/10 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition">
+                <i class="fas fa-arrow-right text-white text-2xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="other-events-heading" class="max-w-7xl mx-auto mb-8 border-l-4 border-primary pl-4">
+          <h3 class="text-2xl font-bold text-primary dark:text-white">Other Events</h3>
+          <p class="text-sm opacity-60">Regular temple programs and poojas</p>
+        </div>
+        <div class="max-w-7xl mx-auto" id="calendar-events-container">
         </div>
       </section>
-
       <!-- LEELA 2026 VIEW -->
-      <section id="view-leela" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+      <section id="view-leela" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
         <div class="text-center mb-12">
           <h2 class="text-5xl font-bold text-primary mb-4" data-key="leelaTitle">लीला 2026</h2>
           <p class="text-xl opacity-80" data-key="leelaSubtitle">भव्य मेला आयोजन समिति</p>
@@ -1463,7 +1562,7 @@
 
       <!-- LOGIN VIEW -->
       <section id="view-login"
-        class="view-section container mx-auto px-4 py-20 hide animate-fade-in flex justify-center">
+        class="view-section container mx-auto px-4 py-10 hide animate-fade-in flex justify-center">
         <div
           class="glass-panel p-10 rounded-2xl w-full max-w-md relative overflow-hidden shadow-2xl border border-white/30">
           <div class="text-center mb-6">
@@ -1783,6 +1882,33 @@
     </footer>
   </div>
 
+  <div id="mela-overlay" class="fixed inset-0 z-[5000] hide flex flex-col overflow-hidden 
+            transition-all duration-500 ease-in-out opacity-0 translate-y-10
+            bg-white/ backdrop-blur-md dark:bg-black/40 dark:backdrop-blur-lg">
+
+    <div
+      class="relative z-10 p-6 flex justify-between items-center border-b border-gray-200 dark:border-white/10  bg-white/30 backdrop-blur-md dark:bg-black/40 backdrop-blur-lg">
+      <div class="flex items-center gap-4">
+        <i class="fas fa-om text-4xl text-yellow-500 animate-pulse"></i>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-primary dark:text-white leading-none">Maha Mela 2026</h2>
+          <p class="text-yellow-600 dark:text-yellow-500 text-sm font-bold tracking-widest uppercase">Official Schedule
+          </p>
+        </div>
+      </div>
+      <button onclick="toggleMelaOverlay()"
+        class="w-12 h-12 rounded-full bg-primary/10 dark:bg-white/10 hover:bg-red-600 text-primary dark:text-white transition flex items-center justify-center text-xl border border-primary/20 dark:border-white/20">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto p-4 md:p-10 relative">
+      <div id="mela-overlay-grid"
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+      </div>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // --- DATA & STATE ---
@@ -1982,36 +2108,6 @@
       } catch (error) {
         console.error("❌ Could not connect:", error);
       }
-    }
-
-    function renderCalendar() {
-      const container = document.getElementById('calendar-events-container');
-      container.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
-      container.innerHTML = '';
-
-      calendarEvents.forEach(event => {
-        const el = document.createElement('div');
-        el.className = "glass-panel rounded-xl overflow-hidden hover:scale-105 transition duration-300 relative group border border-white/20 flex flex-col";
-
-        // --- FIX: ALWAYS USE AN IMG TAG ---
-        // If event has no image, use the Global Default we fetched from DB
-        const imageSrc = event.image ? event.image : globalDefaultImage;
-
-        el.innerHTML = `
-            <img src="${imageSrc}" class="w-full h-48 object-cover group-hover:opacity-90 transition">
-            
-            <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg">
-                <span class="block text-xl font-bold leading-none">${event.date.split(' ')[0]}</span>
-                <span class="text-[10px] uppercase font-bold text-secondary">${event.date.split(' ')[1]}</span>
-            </div>
-
-            <div class="p-5 flex-grow flex flex-col">
-                <h4 class="font-bold text-xl mb-2 text-primary leading-tight">${event.title}</h4>
-                <p class="text-sm opacity-80 mb-4 line-clamp-3">${event.desc}</p>
-            </div>
-        `;
-        container.appendChild(el);
-      });
     }
 
     // --- ADMIN: MANAGE EVENTS ---
@@ -3277,68 +3373,284 @@
       localStorage.setItem('lastView', viewId);
     }
 
+    // function toggleReadMore(btn) {
+    //   if (window.event) window.event.stopPropagation(); // Prevent card clicks
+
+    //   const parent = btn.parentElement;
+    //   const short = parent.querySelector('.short-text');
+    //   const full = parent.querySelector('.full-text');
+
+    //   if (full.classList.contains('hide')) {
+    //     full.classList.remove('hide');
+    //     short.classList.add('hide');
+    //     btn.innerText = "Show Less";
+    //   } else {
+    //     full.classList.add('hide');
+    //     short.classList.remove('hide');
+    //     btn.innerText = "Read More";
+    //   }
+    // }
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-    function renderCalendar() {
-      const container = document.getElementById('calendar-events-container');
+    function filterCalendar() {
+      const query = document.getElementById('calendar-search').value.toLowerCase().trim();
+      const resultsOverlay = document.getElementById('search-results-overlay');
 
-      // 1. Change Container to GRID Layout
-      // (We remove the old list styling and add grid columns)
-      container.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
-      container.innerHTML = '';
+      // 1. If query is empty, hide the results
+      if (query.length === 0) {
+        resultsOverlay.innerHTML = '';
+        resultsOverlay.classList.add('hide');
+        return;
+      }
 
-      calendarEvents.forEach(event => {
-        const el = document.createElement('div');
+      // 2. Filter the events array
+      const matches = calendarEvents.filter(event => {
+        const title = event.title.toLowerCase();
+        const desc = event.desc.toLowerCase();
+        return title.includes(query) || desc.includes(query);
+      });
 
-        // 2. Card Styling (Glass Effect + Hover Zoom)
-        el.className = "glass-panel rounded-xl overflow-hidden hover:scale-105 transition duration-300 relative group border border-white/20 flex flex-col";
+      // 3. Build the Results List
+      if (matches.length > 0) {
+        resultsOverlay.classList.remove('hide');
+        resultsOverlay.innerHTML = matches.map(event => {
+          const isMela = event.title.toLowerCase().includes('mela') ||
+            event.title.toLowerCase().includes('jayanti');
 
-        // 3. Logic: Show Image OR Fallback Gradient
-        // DEFAULT IMAGE (If no image provided)
-        const DEFAULT_IMG = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdaIbpPibbr0fU13OrnEtze0Bjcyvt4QGLbw&s"; // A nice Diya/Temple image
+          return `
+                <div class="p-4 hover:bg-primary/10 border-b border-gray-100 dark:border-white/5 cursor-pointer flex items-center gap-4 transition"
+                     onclick="navigateToEvent('${event.title}', ${isMela})">
+                    <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                        <img src="${event.image || globalDefaultImage}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-2">
+                            <h5 class="font-bold text-sm text-text">${event.title}</h5>
+                            ${isMela ? '<span class="text-[8px] bg-yellow-500 text-black px-1 rounded font-bold uppercase">Mela</span>' : ''}
+                        </div>
+                        <p class="text-xs opacity-60 line-clamp-1">${event.desc}</p>
+                    </div>
+                    <div class="text-[10px] font-bold text-primary opacity-80 whitespace-nowrap">
+                        ${event.date.split(' ')[0]} ${event.date.split(' ')[1]}
+                    </div>
+                </div>
+            `;
+        }).join('');
+      } else {
+        resultsOverlay.innerHTML = `<div class="p-6 text-center text-sm opacity-50">No matches found for "${query}"</div>`;
+        resultsOverlay.classList.remove('hide');
+      }
+    }
 
-        // Use uploaded image OR default
-        const displayImage = event.image ? event.image : DEFAULT_IMG;
+    function filterCalendarByDate() {
+      const fromDate = document.getElementById('date-from').value;
+      const toDate = document.getElementById('date-to').value;
 
-        // Card Styling
-        // el.className = "glass-panel rounded-xl ... (keep your existing classes)";
+      if (!fromDate || !toDate) return;
 
-        // el.innerHTML = `
-        // <img src="${displayImage}" class="w-full h-48 object-cover group-hover:opacity-90 transition">
+      const start = new Date(fromDate);
+      const end = new Date(toDate);
 
-        // <div class="absolute top-3 right-3 bg-black/60 ...">`
-        let mediaBlock = '';
-        if (event.image) {
-          mediaBlock = `<img src="${event.image}" class="w-full h-48 object-cover group-hover:opacity-90 transition">`;
-        } else {
-          // If no image, show a colorful gradient pattern
-          mediaBlock = `<div class="w-full h-48 bg-gradient-to-br from-primary/80 to-secondary/80 flex items-center justify-center">
-                            <i class="fas fa-om text-6xl text-white/50"></i>
-                          </div>`;
+      const filtered = calendarEvents.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate >= start && eventDate <= end;
+      });
+
+      // We pass the 'filtered' array here
+      renderCalendar(filtered);
+    }
+
+    function resetDateFilter() {
+      document.getElementById('date-from').value = '';
+      document.getElementById('date-to').value = '';
+      renderCalendar(calendarEvents); // Reset to full list
+    }
+
+    // 4. Function to handle clicking a result
+    function navigateToEvent(title, isMela) {
+      document.getElementById('calendar-search').value = '';
+      document.getElementById('search-results-overlay').classList.add('hide');
+
+      const triggerAndHighlight = (selector) => {
+        const cards = document.querySelectorAll(selector);
+        cards.forEach(card => {
+          const cardTitle = card.querySelector('h4').innerText;
+          if (cardTitle === title) {
+            // Scroll into view
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Apply visual highlight
+            card.classList.add('search-highlight');
+
+            // Remove highlight after animation ends (2 seconds)
+            setTimeout(() => {
+              card.classList.remove('search-highlight');
+            }, 2000);
+          }
+        });
+      };
+
+      if (isMela) {
+        if (document.getElementById('mela-overlay').classList.contains('hide')) {
+          toggleMelaOverlay();
         }
+        setTimeout(() => triggerAndHighlight('#mela-overlay-grid > div'), 600);
+      } else {
+        triggerAndHighlight('#calendar-events-container > div');
+      }
+    }
 
-        // 4. Build the Card HTML
-        el.innerHTML = `
-            ${mediaBlock}
+    document.addEventListener('click', (e) => {
+      const overlay = document.getElementById('search-results-overlay');
+      const searchInput = document.getElementById('calendar-search');
+      if (e.target !== overlay && e.target !== searchInput) {
+        overlay.classList.add('hide');
+      }
+    });
+
+    function renderCalendar(dataToRender = calendarEvents) {
+      const regularContainer = document.getElementById('calendar-events-container');
+      const melaOverlayGrid = document.getElementById('mela-overlay-grid'); // Inside the full-screen overlay
+      const melaTrigger = document.getElementById('mela-trigger-wrapper');
+
+      // Clear previous content
+      regularContainer.innerHTML = '';
+      melaOverlayGrid.innerHTML = '';
+
+      // Reset Grid Classes
+      regularContainer.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+
+      let melaCount = 0;
+      dataToRender.forEach(event => {
+        // Standard categorization logic based on Title
+        const titleLower = event.title.toLowerCase();
+        const isMela = titleLower.includes('mela') ||
+          titleLower.includes('jayanti') ||
+          titleLower.includes('mahotsav');
+
+        const imageSrc = event.image ? event.image : globalDefaultImage;
+
+        // --- UNIVERSAL READ MORE LOGIC (Calculated for EVERY event) ---
+        const limit = 100;
+        const isLong = event.desc.length > limit;
+        const shortDesc = isLong ? event.desc.substring(0, limit) + "..." : event.desc;
+
+        // This HTML block is now reused in both templates
+        const descHTML = `
+      <div class="text-sm opacity-90 mb-4 font-light">
+          <span class="short-text">${shortDesc}</span>
+          ${isLong ? `<span class="full-text hide">${event.desc}</span> 
+                      <button onclick="toggleReadMore(this)" class="text-primary dark:text-yellow-400 font-bold text-xs hover:underline ml-1 cursor-pointer relative z-50">Read More</button>` : ''}
+      </div>
+    `;
+
+        if (isMela) {
+          melaCount++;
+          const el = document.createElement('div');
+          // Updated Mela Poster with Glassmorphism and Read More
+          el.className = `relative h-[480px] rounded-2xl overflow-hidden group shadow-2xl transition duration-500 hover:scale-[1.02] bg-white/80 border border-white/40 backdrop-blur-md dark:bg-white/5 dark:border-white/10 dark:backdrop-blur-lg`;
+
+          el.innerHTML = `
+            <div class="h-[50%] overflow-hidden relative">
+                <img src="${imageSrc}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg z-20">
+                    <span class="block text-xl font-extrabold leading-none text-center">${event.date.split(' ')[0]}</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider">${event.date.split(' ')[1]}</span>
+                </div>
+            </div>
+
+            <div class="p-6 flex flex-col justify-between h-[50%]">
+                <div>
+                    <h4 class="font-bold text-2xl mb-2 text-primary dark:text-yellow-400 leading-tight">${event.title}</h4>
+                    ${descHTML} </div>
+                <div class="flex items-center gap-2 mt-auto opacity-70 text-xs text-primary dark:text-white">
+                    <i class="fas fa-map-marker-alt"></i> Hasampur Temple Premises
+                </div>
+            </div>
+        `;
+          melaOverlayGrid.appendChild(el);
+
+        } else {
+          // === REGULAR CARD (Standard Grid) ===
+          const el = document.createElement('div');
+          el.className = "glass-panel rounded-xl overflow-hidden hover:scale-105 transition duration-300 relative group border border-white/20 flex flex-col";
+
+          el.innerHTML = `
+            <div class="relative h-48 overflow-hidden">
+                <img src="${imageSrc}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            </div>
             
-            <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg">
+            <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg z-20">
                 <span class="block text-xl font-bold leading-none">${event.date.split(' ')[0]}</span>
                 <span class="text-[10px] uppercase font-bold text-secondary">${event.date.split(' ')[1]}</span>
             </div>
 
             <div class="p-5 flex-grow flex flex-col">
                 <h4 class="font-bold text-xl mb-2 text-primary leading-tight">${event.title}</h4>
-                <p class="text-sm opacity-80 mb-4 line-clamp-3">${event.desc}</p>
-                
+                ${descHTML}
                 <div class="mt-auto pt-3 border-t border-white/10 flex justify-between items-center text-xs opacity-60">
-                    <span><i class="fas fa-map-marker-alt mr-1"></i> Hasampur</span>
-                    <i class="fas fa-share-alt hover:text-primary cursor-pointer transition"></i>
+                     <span><i class="fas fa-map-marker-alt mr-1"></i> Hasampur</span>
+                     <i class="fas fa-share-alt hover:text-primary cursor-pointer transition" onclick="shareApp()"></i>
                 </div>
             </div>
         `;
-        container.appendChild(el);
+          regularContainer.appendChild(el);
+        }
       });
+
+      // Toggle Trigger Visibility
+      if (melaCount > 0) {
+        melaTrigger.classList.remove('hide');
+      } else {
+        melaTrigger.classList.add('hide');
+      }
     }
+
+    // === NEW: TOGGLE FUNCTION FOR OVERLAY ===
+    function toggleMelaOverlay() {
+      const overlay = document.getElementById('mela-overlay');
+
+      if (overlay.classList.contains('hide')) {
+        // --- OPENING TRANSITION ---
+        overlay.classList.remove('hide');
+        // Small delay to allow the browser to register the "un-hidden" state
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0', 'translate-y-10');
+          overlay.classList.add('opacity-100', 'translate-y-0');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+      } else {
+        // --- CLOSING TRANSITION ---
+        overlay.classList.add('opacity-0', 'translate-y-10');
+        overlay.classList.remove('opacity-100', 'translate-y-0');
+        // Wait for the 500ms transition to finish before hiding
+        setTimeout(() => {
+          overlay.classList.add('hide');
+        }, 500);
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Helper Function (Ensure this is in your script)
+    function toggleReadMore(btn) {
+      // Prevent event bubbling so it doesn't trigger card clicks if any
+      if (event) event.stopPropagation();
+
+      const parent = btn.parentElement;
+      const short = parent.querySelector('.short-text');
+      const full = parent.querySelector('.full-text');
+
+      if (full.classList.contains('hide')) {
+        full.classList.remove('hide');
+        short.classList.add('hide');
+        btn.innerText = "Show Less";
+      } else {
+        full.classList.add('hide');
+        short.classList.remove('hide');
+        btn.innerText = "Read More";
+      }
+    }
+
     function startCountdown(dateString) {
       if (countdownInterval) clearInterval(countdownInterval);
       const target = new Date(dateString).getTime();
