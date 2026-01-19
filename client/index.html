@@ -712,6 +712,23 @@
         transform: translateY(0);
       }
     }
+
+    @keyframes divine-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px 5px rgba(234, 88, 12, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 40px 10px rgba(250, 204, 21, 0.6);
+      }
+    }
+
+    .idol-glow {
+      animation: divine-glow 4s ease-in-out infinite;
+      border: 4px solid var(--secondary) !important;
+    }
   </style>
 </head>
 
@@ -1216,7 +1233,7 @@
 
             <div class="relative mx-auto w-fit">
               <div
-                class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-secondary overflow-hidden mx-auto shadow-2xl glass-panel flex items-center justify-center mb-6 ring-4 ring-primary/30 relative group z-10"
+                class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-secondary overflow-hidden mx-auto shadow-2xl glass-panel flex items-center justify-center mb-6 ring-4 ring-primary/30 relative group z-10 idol-glow relative group z-10"
                 id="idol-container">
                 <img id="main-idol-img"
                   src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-le5pjvyy3r.jpg"
@@ -3199,7 +3216,20 @@
     }
 
     function playBhajan(name) { showToast(`Now Playing: ${name} 🎵`); }
+    function playFromLibrary(title, url, art) {
+      // 1. Update the global playlist or inject this track at the top
+      const track = { title: title, url: url };
+      playlist.unshift(track); // Add to beginning
 
+      // 2. Load and Play
+      loadTrack(0);
+      audioPlayer.play();
+      isPlaying = true;
+      updatePlayerUI();
+
+      // 3. Notify the user
+      showToast(`Playing: ${title} 🎵`);
+    }
     function showToast(msg) {
       const t = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
