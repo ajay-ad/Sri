@@ -224,10 +224,12 @@
     /* ---- SCROLLBAR OVERLAY GLASS EFFECT ---- */
     /* ---- FIXED SCROLLBAR OVERLAY ---- */
     /* ---- DYNAMIC THEME SCROLLBAR ---- */
-    html {
-      /* This ensures content takes full width and scrollbar sits on top */
-      overflow-y: overlay;
-      overflow-x: hidden;
+    html,
+    body {
+      /* overflow-x: hidden; */
+      /* Keep this to prevent horizontal shaking */
+      height: auto;
+      /* Ensure the height isn't capped */
     }
 
     ::-webkit-scrollbar {
@@ -469,7 +471,7 @@
     /* Welcome Popup */
     #welcome-popup {
       position: fixed;
-      top: 80px;
+      top: 65px;
       right: 20px;
       background: var(--primary);
       color: white;
@@ -478,7 +480,7 @@
       font-size: 0.85rem;
       font-weight: bold;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      z-index: 200;
+      z-index: 2000;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -758,15 +760,30 @@
     }
 
     /* Add this to your style section */
-    .view-section,
-    .glass-panel,
     #top-nav {
-      /* Forces GPU rendering */
-      backface-visibility: hidden;
-      perspective: 1000;
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+      /* Ensure it floats above everything */
       transform: translateZ(0);
-      /* Ensures smooth scrolling on iOS */
+      /* Keep hardware acceleration */
+      backface-visibility: hidden;
+      width: 100%;
+      /* backdrop-filter: blur(5px); */
+    }
+
+    /* Keep these for smooth mobile scrolling only, NO sticky here */
+    .view-section,
+    .glass-panel {
+      backface-visibility: hidden;
       -webkit-overflow-scrolling: touch;
+    }
+
+    #main-layout {
+      overflow: visible !important;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
   </style>
 </head>
@@ -988,9 +1005,9 @@
   </div>
 
   <!-- SETTINGS / ACCESSIBILITY MODAL -->
-  <div id="settings-modal" class="modal-overlay hide animate-fade-in bg-white/10 backdrop-blur-md">
+  <div id="settings-modal" class="modal-overlay hide animate-fade-in bg-white/10 backdrop-blur-md dark:bg-black/20">
     <div
-      class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative bg-white/70 backdrop-blur-md dark:bg-black/40 text-left">
+      class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative bg-white/50 backdrop-blur-md dark:bg-black/50 text-left">
       <button onclick="toggleSettings()" class="absolute top-4 right-4 text-red-500 hover:text-red-700 transition">
         <i class="fas fa-times text-2xl"></i>
       </button>
@@ -1066,85 +1083,89 @@
     </div>
   </div>
 
+  <!-- top-nav bar -->
+
+  <nav id="top-nav"
+    class=" sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md bg-white/20 backdrop-blur-md">
+
+    <!-- Left Group -->
+    <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
+
+      <!-- Search Icon Trigger (Visible in Mobile Bottom Mode & Side Mobile) -->
+      <button id="top-nav-search-trigger" onclick="toggleSearch()"
+        class="hide text-primary text-xl hover:scale-110 transition"><i class="fas fa-search"></i></button>
+
+      <!-- Desktop Bottom Nav: Left Search Input -->
+      <div id="desktop-bottom-search-container" class="hide relative w-64">
+        <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
+          class="w-full pl-3 pr-8 py-1 rounded-full bg-black/10 border border-gray-400 outline-none text-sm">
+        <i class="fas fa-search absolute right-3 top-1.5 text-gray-500"></i>
+      </div>
+
+      <div id="top-nav-icon-container">
+        <i class="fas fa-om text-3xl text-primary animate-pulse" id="top-nav-icon"></i>
+      </div>
+
+      <div id="top-nav-title-group" class="transition-all duration-300">
+        <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
+          नृसिंह बड़ा मंदिर हसामपुर</h1>
+      </div>
+
+      <!-- Mobile Burger (Only visible in Side Nav Mode - Placed on FAR Right) -->
+      <button id="mobile-burger-btn"
+        class="hide text-2xl text-primary z-50 transition-transform burger-icon absolute right-6 lg:static"
+        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <!-- Center Menu (Hidden in Mobile/Bottom/Side Mode) -->
+    <div class="hidden lg:flex gap-6 font-bold text-sm uppercase tracking-wide items-center" id="top-menu-items">
+      <!-- Items injected via JS -->
+    </div>
+
+    <!-- Right Group -->
+    <div class="flex items-center gap-4" id="top-nav-right">
+
+      <!-- Desktop Burger (For Side Nav Desktop - MOVED TO FAR RIGHT) -->
+      <button id="desktop-side-burger"
+        class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
+        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+
+      <!-- Full Audio Player (Desktop Bottom Nav Only) -->
+      <div id="desktop-bottom-player-container"></div>
+
+      <!-- NEW FEATURE: Share Button (Top Nav) -->
+      <button onclick="shareApp()" class="hidden lg:block text-primary hover:scale-110 transition" title="Share App">
+        <i class="fas fa-share-alt text-xl"></i>
+      </button>
+
+      <!-- Standard Search Button (Top Nav) -->
+      <button id="top-nav-search-btn" onclick="toggleSearch()"
+        class="hidden lg:block text-primary hover:scale-110 transition" title="Search"><i
+          class="fas fa-search text-xl"></i></button>
+
+      <!-- Settings Button (Top Nav) -->
+      <button id="top-nav-settings-btn" onclick="toggleSettings()"
+        class="hidden lg:flex items-center gap-2 bg-primary/20 hover:bg-primary/40 px-4 py-2 rounded-full transition border border-primary text-primary font-bold"
+        title="Settings">
+        <i class="fas fa-cog"></i> <span>Settings</span>
+      </button>
+      <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
+      <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
+        class="w-10 h-10 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
+        <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+          class="w-full h-full object-cover opacity-80 animate-spin-slow">
+      </button>
+      <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
+      <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
+          class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
   <!-- MAIN CONTAINER -->
   <div id="main-layout" class="flex flex-col min-h-screen transition-all duration-300">
 
+
     <!-- TOP NAVIGATION BAR (Adapts to all 3 modes) -->
-    <nav id="top-nav"
-      class="glass-panel sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md">
-
-      <!-- Left Group -->
-      <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
-
-        <!-- Search Icon Trigger (Visible in Mobile Bottom Mode & Side Mobile) -->
-        <button id="top-nav-search-trigger" onclick="toggleSearch()"
-          class="hide text-primary text-xl hover:scale-110 transition"><i class="fas fa-search"></i></button>
-
-        <!-- Desktop Bottom Nav: Left Search Input -->
-        <div id="desktop-bottom-search-container" class="hide relative w-64">
-          <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
-            class="w-full pl-3 pr-8 py-1 rounded-full bg-black/10 border border-gray-400 outline-none text-sm">
-          <i class="fas fa-search absolute right-3 top-1.5 text-gray-500"></i>
-        </div>
-
-        <div id="top-nav-icon-container">
-          <i class="fas fa-om text-3xl text-primary animate-pulse" id="top-nav-icon"></i>
-        </div>
-
-        <div id="top-nav-title-group" class="transition-all duration-300">
-          <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
-            नृसिंह बड़ा मंदिर हसामपुर</h1>
-        </div>
-
-        <!-- Mobile Burger (Only visible in Side Nav Mode - Placed on FAR Right) -->
-        <button id="mobile-burger-btn"
-          class="hide text-2xl text-primary z-50 transition-transform burger-icon absolute right-6 lg:static"
-          onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
-      </div>
-
-      <!-- Center Menu (Hidden in Mobile/Bottom/Side Mode) -->
-      <div class="hidden lg:flex gap-6 font-bold text-sm uppercase tracking-wide items-center" id="top-menu-items">
-        <!-- Items injected via JS -->
-      </div>
-
-      <!-- Right Group -->
-      <div class="flex items-center gap-4" id="top-nav-right">
-
-        <!-- Desktop Burger (For Side Nav Desktop - MOVED TO FAR RIGHT) -->
-        <button id="desktop-side-burger"
-          class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
-          onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
-
-        <!-- Full Audio Player (Desktop Bottom Nav Only) -->
-        <div id="desktop-bottom-player-container"></div>
-
-        <!-- NEW FEATURE: Share Button (Top Nav) -->
-        <button onclick="shareApp()" class="hidden lg:block text-primary hover:scale-110 transition" title="Share App">
-          <i class="fas fa-share-alt text-xl"></i>
-        </button>
-
-        <!-- Standard Search Button (Top Nav) -->
-        <button id="top-nav-search-btn" onclick="toggleSearch()"
-          class="hidden lg:block text-primary hover:scale-110 transition" title="Search"><i
-            class="fas fa-search text-xl"></i></button>
-
-        <!-- Settings Button (Top Nav) -->
-        <button id="top-nav-settings-btn" onclick="toggleSettings()"
-          class="hidden lg:flex items-center gap-2 bg-primary/20 hover:bg-primary/40 px-4 py-2 rounded-full transition border border-primary text-primary font-bold"
-          title="Settings">
-          <i class="fas fa-cog"></i> <span>Settings</span>
-        </button>
-        <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
-        <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
-          class="w-10 h-10 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
-          <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
-            class="w-full h-full object-cover opacity-80 animate-spin-slow">
-        </button>
-        <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
-        <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
-            class="fas fa-bars"></i></button>
-      </div>
-    </nav>
 
     <!-- ANNOUNCEMENT TICKER -->
     <div id="announcement-bar" class="ticker-wrap hide" data-feature="ticker">
@@ -1365,7 +1386,7 @@
                       class="font-bold" id="time-evening-open">5:00 PM</span></p>
                   <p class="flex justify-between"><span class="opacity-70" data-key="labelAarti">आरती:</span> <span
                       class="font-bold" id="time-evening-aarti">6:00 PM</span></p>
-                  <p class="flex justify-between"><span class="opacity-70" data-key="labelAarti">भोग:</span> <span
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelBhog">भोग:</span> <span
                       class="font-bold" id="time-evening-aarti">7:00 PM</span></p>
                   <p class="flex justify-between"><span class="opacity-70" data-key="labelClose">शयन:</span> <span
                       class="font-bold" id="time-evening-close">8:00 PM</span></p>
@@ -1877,7 +1898,63 @@
         </div>
       </section>
 
+      <div id="mela-overlay" class="fixed inset-0 z-[5000] hide flex flex-col overflow-hidden 
+            transition-all duration-500 ease-in-out opacity-0 translate-y-10
+            bg-white/ backdrop-blur-md dark:bg-black/40 dark:backdrop-blur-lg">
+
+        <div
+          class="relative z-10 p-6 flex justify-between items-center border-b border-gray-200 dark:border-white/10  bg-white/30 backdrop-blur-md dark:bg-black/40 backdrop-blur-lg">
+          <div class="flex items-center gap-4">
+            <i class="fas fa-om text-4xl text-yellow-500 animate-pulse"></i>
+            <div>
+              <h2 class="text-2xl md:text-3xl font-bold text-primary dark:text-white leading-none">Maha Mela 2026</h2>
+              <p class="text-yellow-600 dark:text-yellow-500 text-sm font-bold tracking-widest uppercase">Official
+                Schedule
+              </p>
+            </div>
+          </div>
+          <button onclick="toggleMelaOverlay()"
+            class="w-12 h-12 rounded-full bg-primary/10 dark:bg-white/10 hover:bg-red-600 text-primary dark:text-white transition flex items-center justify-center text-xl border border-primary/20 dark:border-white/20">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto p-4 md:p-10 relative">
+          <div id="mela-overlay-grid"
+            class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+          </div>
+        </div>
+      </div>
+
     </main>
+
+    <div id="mela-overlay" class="fixed inset-0 z-[5000] hide flex flex-col overflow-hidden 
+            transition-all duration-500 ease-in-out opacity-0 translate-y-10
+            bg-white/ backdrop-blur-md dark:bg-black/40 dark:backdrop-blur-lg">
+
+      <div
+        class="relative z-10 p-6 flex justify-between items-center border-b border-gray-200 dark:border-white/10  bg-white/30 backdrop-blur-md dark:bg-black/40 backdrop-blur-lg">
+        <div class="flex items-center gap-4">
+          <i class="fas fa-om text-4xl text-yellow-500 animate-pulse"></i>
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-primary dark:text-white leading-none">Maha Mela 2026</h2>
+            <p class="text-yellow-600 dark:text-yellow-500 text-sm font-bold tracking-widest uppercase">Official
+              Schedule
+            </p>
+          </div>
+        </div>
+        <button onclick="toggleMelaOverlay()"
+          class="w-12 h-12 rounded-full bg-primary/10 dark:bg-white/10 hover:bg-red-600 text-primary dark:text-white transition flex items-center justify-center text-xl border border-primary/20 dark:border-white/20">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="flex-grow overflow-y-auto p-4 md:p-10 relative">
+        <div id="mela-overlay-grid"
+          class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        </div>
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <footer
@@ -1938,34 +2015,9 @@
         </div>
       </div>
     </footer>
+
   </div>
 
-  <div id="mela-overlay" class="fixed inset-0 z-[5000] hide flex flex-col overflow-hidden 
-            transition-all duration-500 ease-in-out opacity-0 translate-y-10
-            bg-white/ backdrop-blur-md dark:bg-black/40 dark:backdrop-blur-lg">
-
-    <div
-      class="relative z-10 p-6 flex justify-between items-center border-b border-gray-200 dark:border-white/10  bg-white/30 backdrop-blur-md dark:bg-black/40 backdrop-blur-lg">
-      <div class="flex items-center gap-4">
-        <i class="fas fa-om text-4xl text-yellow-500 animate-pulse"></i>
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold text-primary dark:text-white leading-none">Maha Mela 2026</h2>
-          <p class="text-yellow-600 dark:text-yellow-500 text-sm font-bold tracking-widest uppercase">Official Schedule
-          </p>
-        </div>
-      </div>
-      <button onclick="toggleMelaOverlay()"
-        class="w-12 h-12 rounded-full bg-primary/10 dark:bg-white/10 hover:bg-red-600 text-primary dark:text-white transition flex items-center justify-center text-xl border border-primary/20 dark:border-white/20">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-
-    <div class="flex-grow overflow-y-auto p-4 md:p-10 relative">
-      <div id="mela-overlay-grid"
-        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-      </div>
-    </div>
-  </div>
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
@@ -2060,9 +2112,9 @@
         unitDays: "दिन", unitHrs: "घंटे", unitMins: "मिनट", unitSecs: "सेकंड",
         templeScheduleTitle: "दर्शन समय",
         timingMorning: "प्रातः",
-        timingMidday: "राजभोग",
+        timingMidday: "मध्याह्न",
         timingEvening: "सायं",
-        labelOpen: "खुलना:", labelAarti: "आरती:", labelBhog: "भोग:", labelClose: "बंद:",
+        labelOpen: "पट:", labelAarti: "आरती:", labelBhog: "भोग:", labelClose: "शयन:",
         timingNote: "त्योहारों के दौरान समय बदल सकता है।",
         aboutTitle: "इतिहास और महत्व",
         historyText1: "हसामपुर का श्री नृसिंह बड़ा मंदिर एक अत्यंत प्राचीन और पवित्र स्थल है। मान्यताओं के अनुसार, यहाँ भगवान नृसिंह स्वयंभू रूप में विराजमान हैं।",
