@@ -150,21 +150,25 @@
 
     /* Animations */
     /* Slide and Zoom Animation */
-   /* Scale and Fade Transition */
+    /* Scale and Fade Transition */
     @keyframes scaleFadeIn {
       from {
         opacity: 0;
-        transform: scale(0.98); /* Starts slightly smaller */
+        transform: scale(0.98);
+        /* Starts slightly smaller */
       }
+
       to {
         opacity: 1;
-        transform: scale(1); /* Grows to full size */
+        transform: scale(1);
+        /* Grows to full size */
       }
     }
 
     .animate-fade-in {
       animation: scaleFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      will-change: opacity, transform; /* Pre-optimizes the animation */
+      will-change: opacity, transform;
+      /* Pre-optimizes the animation */
     }
 
     @keyframes spin-slow {
@@ -752,14 +756,17 @@
       transform: scale(0.95) translateY(20px);
       pointer-events: none;
     }
+
     /* Add this to your style section */
-    .view-section, .glass-panel, #top-nav {
+    .view-section,
+    .glass-panel,
+    #top-nav {
       /* Forces GPU rendering */
       backface-visibility: hidden;
       perspective: 1000;
-      transform: translateZ(0); 
+      transform: translateZ(0);
       /* Ensures smooth scrolling on iOS */
-      -webkit-overflow-scrolling: touch; 
+      -webkit-overflow-scrolling: touch;
     }
   </style>
 </head>
@@ -3418,12 +3425,12 @@
       // 1. Instantly hide all and strip the animation class
       sections.forEach(el => {
         el.classList.add('hide');
-        el.classList.remove('animate-fade-in'); 
+        el.classList.remove('animate-fade-in');
       });
 
       // 2. Make the target visible
       target.classList.remove('hide');
-      
+
       // 3. Re-trigger the scale-fade animation
       void target.offsetWidth; // Force reflow
       target.classList.add('animate-fade-in');
