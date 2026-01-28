@@ -380,11 +380,11 @@
       overflow: hidden;
       background: var(--primary);
       color: white;
-      padding: 5px 0;
-      font-size: 0.9rem;
+      padding: 2px 0;
+      font-size: 0.8rem;
       font-weight: bold;
       position: relative;
-      z-index: 30;
+      z-index: 60 !important;
     }
 
     .ticker {
@@ -767,14 +767,16 @@
     /* Add this to your style section */
     #top-nav {
       position: sticky !important;
-      top: 0px !important;
-      z-index: 40 !important;
-      /* Ensure it floats above everything */
-      transform: translateZ(0);
-      /* Keep hardware acceleration */
-      backface-visibility: hidden;
+      top: 0px;
+      /* Sits exactly below the ticker */
+      left: 0;
       width: 100%;
-      /* backdrop-filter: blur(5px); */
+      /* background: transparent !important; */
+      /* Transparent background */
+      /* backdrop-filter: none !important; */
+      /* Remove blur if you want pure transparency */
+      border: none !important;
+      box-shadow: none !important;
     }
 
     /* Keep these for smooth mobile scrolling only, NO sticky here */
@@ -812,19 +814,50 @@
     }
 
     .theme-active {
-      ring-color: var(--primary);
+      /* ring-color: var(--primary); */
       transform: scale(1.1);
       border-color: white !important;
     }
 
-    html.dark #theme-grid div {
+    /* html.dark #theme-grid div {
       ring-offset-color: #0a0a0a;
-      /* Match your dark BG */
+      /* Match your dark BG 
+    } */
+
+    /* Initial state: Pure transparent */
+    #top-nav {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+    }
+
+    /* Scrolled state: Frosted glass */
+    #top-nav.nav-scrolled {
+      background-color: rgba(255, 255, 255, 0.512);
+      /* bg-white/40 */
+      backdrop-filter: blur(15px);
+      /* blur-md */
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Ensure the Side Nav also adjusts its top position if needed */
+    body.nav-side #side-nav {
+      transition: top 0.4s ease;
     }
   </style>
 </head>
 
 <body class="min-h-screen overflow-x-hidden relative nav-top">
+
+  <!-- ANNOUNCEMENT TICKER -->
+  <div id="announcement-bar" class="ticker-wrap" data-feature="ticker">
+    <div class="ticker" id="announcement-text">
+      🎉 Upcoming: Narsimha Jayanti Mela preparations are underway! 🙏
+    </div>
+  </div>
 
   <!-- AUDIO ELEMENT & BELL -->
   <audio id="global-audio-player" preload="auto" onended="audioNext()"></audio>
@@ -1035,9 +1068,21 @@
 
   <!-- IMAGE FULLSCREEN PREVIEW MODAL -->
   <div id="image-preview-modal" class="fullscreen-modal hide" onclick="closeImagePreview()">
+    <button onclick="changePreviewImage(-1, event)"
+      class="absolute left-4 md:left-10 text-white text-4xl hover:text-primary transition-all z-[3001]">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
     <img id="preview-img-target" src=""
-      class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl border-4 border-white rounded-lg">
-    <button class="absolute top-5 right-5 text-white text-4xl hover:text-red-500"><i class="fas fa-times"></i></button>
+      class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl border-4 border-white rounded-lg animate-zoom-in">
+
+    <button onclick="changePreviewImage(1, event)"
+      class="absolute right-4 md:right-10 text-white text-4xl hover:text-primary transition-all z-[3001]">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <button class="absolute top-5 right-5 text-white text-4xl hover:text-red-500 z-[3001]"><i
+        class="fas fa-times"></i></button>
   </div>
 
   <!-- SETTINGS / ACCESSIBILITY MODAL -->
@@ -1119,97 +1164,87 @@
     </div>
   </div>
 
-  <!-- top-nav bar -->
-
-  <nav id="top-nav"
-    class=" sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md bg-white/20 backdrop-blur-lg dark:bg-black/20">
-
-    <!-- Left Group -->
-    <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
-
-      <!-- Search Icon Trigger (Visible in Mobile Bottom Mode & Side Mobile) -->
-      <button id="top-nav-search-trigger" onclick="toggleSearch()"
-        class="hide text-primary text-xl hover:scale-110 transition"><i class="fas fa-search"></i></button>
-
-      <!-- Desktop Bottom Nav: Left Search Input -->
-      <div id="desktop-bottom-search-container" class="hide relative w-64">
-        <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
-          class="w-full pl-3 pr-8 py-1 rounded-full bg-black/10 border border-gray-400 outline-none text-sm">
-        <i class="fas fa-search absolute right-3 top-1.5 text-gray-500"></i>
-      </div>
-
-      <div id="top-nav-icon-container">
-        <i class="fas fa-om text-3xl text-primary animate-pulse" id="top-nav-icon"></i>
-      </div>
-
-      <div id="top-nav-title-group" class="transition-all duration-300">
-        <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
-          नृसिंह बड़ा मंदिर हसामपुर</h1>
-      </div>
-
-      <!-- Mobile Burger (Only visible in Side Nav Mode - Placed on FAR Right) -->
-      <button id="mobile-burger-btn"
-        class="hide text-2xl text-primary z-50 transition-transform burger-icon absolute right-6 lg:static"
-        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
-    </div>
-
-    <!-- Center Menu (Hidden in Mobile/Bottom/Side Mode) -->
-    <div class="hidden lg:flex gap-6 font-bold text-sm uppercase tracking-wide items-center" id="top-menu-items">
-      <!-- Items injected via JS -->
-    </div>
-
-    <!-- Right Group -->
-    <div class="flex items-center gap-4" id="top-nav-right">
-
-      <!-- Desktop Burger (For Side Nav Desktop - MOVED TO FAR RIGHT) -->
-      <button id="desktop-side-burger"
-        class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
-        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
-
-      <!-- Full Audio Player (Desktop Bottom Nav Only) -->
-      <div id="desktop-bottom-player-container"></div>
-
-      <!-- NEW FEATURE: Share Button (Top Nav) -->
-      <button onclick="shareApp()" class="hidden lg:block text-primary hover:scale-110 transition" title="Share App">
-        <i class="fas fa-share-alt text-xl"></i>
-      </button>
-
-      <!-- Standard Search Button (Top Nav) -->
-      <button id="top-nav-search-btn" onclick="toggleSearch()"
-        class="hidden lg:block text-primary hover:scale-110 transition" title="Search"><i
-          class="fas fa-search text-xl"></i></button>
-
-      <!-- Settings Button (Top Nav) -->
-      <button id="top-nav-settings-btn" onclick="toggleSettings()"
-        class="hidden lg:flex items-center gap-2 bg-primary/20 hover:bg-primary/40 px-4 py-2 rounded-full transition border border-primary text-primary font-bold"
-        title="Settings">
-        <i class="fas fa-cog"></i> <span>Settings</span>
-      </button>
-      <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
-      <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
-        class="w-10 h-10 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
-        <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
-          class="w-full h-full object-cover opacity-80 animate-spin-slow">
-      </button>
-      <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
-      <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
-          class="fas fa-bars"></i></button>
-    </div>
-  </nav>
-
   <!-- MAIN CONTAINER -->
   <div id="main-layout" class="flex flex-col min-h-screen transition-all duration-300">
 
 
     <!-- TOP NAVIGATION BAR (Adapts to all 3 modes) -->
 
-    <!-- ANNOUNCEMENT TICKER -->
-    <div id="announcement-bar" class="ticker-wrap" data-feature="ticker">
-      <div class="ticker" id="announcement-text">
-        🎉 Upcoming: Narsimha Jayanti Mela preparations are underway! 🙏
-      </div>
-    </div>
+    <nav id="top-nav"
+      class=" sticky top-0 z-40 px-3 py-2 flex justify-between items-center transition-all shadow-xl bg-white/50 backdrop-blur-md dark:bg-black/20">
 
+      <!-- Left Group -->
+      <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
+
+        <!-- Search Icon Trigger (Visible in Mobile Bottom Mode & Side Mobile) -->
+        <button id="top-nav-search-trigger" onclick="toggleSearch()"
+          class="hide text-primary text-xl hover:scale-110 transition"><i class="fas fa-search"></i></button>
+
+        <!-- Desktop Bottom Nav: Left Search Input -->
+        <div id="desktop-bottom-search-container" class="hide relative w-64">
+          <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
+            class="w-full pl-3 pr-8 py-1 rounded-full bg-black/10 border border-gray-400 outline-none text-sm">
+          <i class="fas fa-search absolute right-3 top-1.5 text-gray-500"></i>
+        </div>
+
+        <div id="top-nav-icon-container">
+          <i class="fas fa-om text-3xl text-primary animate-pulse" id="top-nav-icon"></i>
+        </div>
+
+        <div id="top-nav-title-group" class="transition-all duration-300">
+          <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
+            नृसिंह बड़ा मंदिर हसामपुर</h1>
+        </div>
+
+        <!-- Mobile Burger (Only visible in Side Nav Mode - Placed on FAR Right) -->
+        <button id="mobile-burger-btn"
+          class="hide text-2xl text-primary z-50 transition-transform burger-icon absolute right-6 lg:static"
+          onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+      </div>
+
+      <!-- Center Menu (Hidden in Mobile/Bottom/Side Mode) -->
+      <div class="hidden lg:flex gap-3 font-bold text-sm uppercase tracking-wide items-center" id="top-menu-items">
+        <!-- Items injected via JS -->
+      </div>
+
+      <!-- Right Group -->
+      <div class="flex items-center gap-4" id="top-nav-right">
+
+        <!-- Desktop Burger (For Side Nav Desktop - MOVED TO FAR RIGHT) -->
+        <button id="desktop-side-burger"
+          class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
+          onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+
+        <!-- Full Audio Player (Desktop Bottom Nav Only) -->
+        <div id="desktop-bottom-player-container"></div>
+
+        <!-- NEW FEATURE: Share Button (Top Nav) -->
+        <button onclick="shareApp()" class="hidden lg:block text-primary hover:scale-110 transition" title="Share App">
+          <i class="fas fa-share-alt text-md"></i>
+        </button>
+
+        <!-- Standard Search Button (Top Nav) -->
+        <button id="top-nav-search-btn" onclick="toggleSearch()"
+          class="hidden lg:block text-primary hover:scale-110 transition" title="Search"><i
+            class="fas fa-search text-md"></i></button>
+
+        <!-- Settings Button (Top Nav) -->
+        <button id="top-nav-settings-btn" onclick="toggleSettings()"
+          class="hidden text-xs lg:flex items-center gap-2 bg-primary/20 hover:bg-primary/40 px-2.5 py-1.5 rounded-full transition border border-primary text-primary font-bold"
+          title="Settings">
+          <i class="fas fa-cog"></i> <span>Settings</span>
+        </button>
+        <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
+        <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
+          class="w-9 h-9 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
+          <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+            class="w-full h-full object-cover opacity-80 animate-spin-slow">
+        </button>
+        <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
+        <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
+            class="fas fa-bars"></i></button>
+      </div>
+    </nav>
     <!-- SIDE NAVIGATION BAR (Modified for Resizability) -->
     <nav id="side-nav" style="width: var(--side-nav-width);"
       class="fixed left-0 top-0 h-full glass-panel transform -translate-x-full transition-transform duration-300 flex flex-col p-6 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
@@ -1217,7 +1252,7 @@
       <!-- Resizer Handle -->
       <div id="side-nav-resizer"></div>
 
-      <div class="flex items-center gap-3 mb-6 border-b border-gray-400 pb-4">
+      <div class="flex items-center gap-3 mb-0 pb-0">
 
       </div>
 
@@ -1291,15 +1326,16 @@
       <!-- HOME VIEW -->
       <section id="view-home" class="view-section animate-fade-in">
         <!-- Hero -->
-        <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12">
+        <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12 pt-5 -top-20">
           <div class="absolute inset-0 z-0">
-            <!-- <img id="hero-bg" src="https://images.unsplash.com/photo-1621827979802-6d779e19391d?q=80&w=2070"
-              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110"> -->
+            <img id="hero-bg"
+              src="https://scontent.fdel27-1.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=fjCR3hKv_ssQ7kNvwHQ0X4i&_nc_oc=AdkbzAlWXKpAHwsthMz572FHf3v_25EUoP8V71n0afVJ3LhQkQ3TCygxCDbygHilSGc&_nc_zt=23&_nc_ht=scontent.fdel27-1.fna&_nc_gid=GMCT_LwAyOYA8DpnWaCH4Q&oh=00_AfqovoJbg_lXjOlGyqHzIbHdKr7e1B7fWdgAA1Un2LYKSg&oe=697FBBB1"
+              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent "></div>
           </div>
 
-          <div class="relative z-10 container mx-auto px-4 text-center pt-4">
+          <div class="z-10 container mx-auto px-4 text-center pt-20 -top">
 
             <!-- FEATURE: DAILY PANCHANG & NEW: LIVE STATUS -->
             <div class="flex justify-center items-center gap-2 mb-4">
@@ -1312,7 +1348,7 @@
               <!-- NEW FEATURE: LIVE DARSHAN STATUS -->
               <div id="live-darshan-badge"
                 class="glass-panel inline-block px-4 py-2 rounded-full text-sm font-bold border border-white/30 backdrop-blur-md transition-colors duration-500">
-                <i class="fas fa-circle text-[10px] mr-1"></i> <span id="darshan-status-text">Checking...</span>
+                <i class="fas fa-circle text-[10px] mr-1 white"></i> <span id="darshan-status-text">Checking...</span>
               </div>
             </div>
 
@@ -2562,6 +2598,15 @@
         document.getElementById('welcome-popup').classList.remove('hide');
         setTimeout(() => document.getElementById('welcome-popup').classList.add('hide'), 8000);
       }, 1000);
+      window.addEventListener('scroll', () => {
+        const topNav = document.getElementById('top-nav');
+        // Threshold is 20px
+        if (window.scrollY > 20) {
+          topNav.classList.add('nav-scrolled');
+        } else {
+          topNav.classList.remove('nav-scrolled');
+        }
+      });
     });
 
     // Load heavy audio/images in background (Doesn't block UI anymore)
@@ -3144,8 +3189,8 @@
       if (isOpen) {
         text.innerText = "DARSHAN OPEN";
         dot.className = "fas fa-circle text-[10px] mr-1 text-green-400";
-        badge.classList.add('border-green-400/50', 'text-green-100');
-        badge.classList.remove('border-red-400/50', 'text-red-100');
+        badge.classList.add('border-green-400/50', 'text-green-300');
+        badge.classList.remove('border-red-400/50', 'text-red-300');
         dot.classList.add('animate-pulse');
       } else {
         // Calculate Next Opening Time
@@ -3157,8 +3202,8 @@
 
         text.innerText = nextOpenMsg;
         dot.className = "fas fa-circle text-[10px] mr-1 text-red-500";
-        badge.classList.add('border-red-400/50', 'text-red-100');
-        badge.classList.remove('border-green-400/50', 'text-green-100');
+        badge.classList.add('border-red-400/50', 'text-red-300');
+        badge.classList.remove('border-green-400/50', 'text-green-300');
         dot.classList.remove('animate-pulse');
       }
     }
@@ -3530,8 +3575,8 @@
         const targetId = item.tempId || item.id;
         const isActive = targetId === state.activeView ? 'active' : '';
 
-        html += `<button onclick="switchView('${targetId}')" class="nav-btn ${isActive} hover:text-primary transition text-left flex items-center gap-3 py-2 px-2 rounded">
-                            <i class="fas ${item.icon}"></i> ${label}
+        html += `<button onclick="switchView('${targetId}')" class="nav-btn ${isActive} hover:text-primary transition text-left flex items-center gap-3 py-1 px-1 rounded">
+                             ${label}
                          </button>`;
 
         dockHtml += `<button onclick="switchView('${targetId}')" class="dock-item ${isActive} flex flex-col items-center justify-center text-xs gap-1 opacity-70 hover:opacity-100 p-2 relative group">
@@ -3878,10 +3923,47 @@
       reader.readAsDataURL(event.target.files[0]);
     }
 
+    let currentGalleryIndex = 0;
+
     function openImagePreview(element) {
-      document.getElementById('preview-img-target').src = element.querySelector('img').src;
+      const images = Array.from(document.querySelectorAll('#gallery-grid img'));
+      currentGalleryIndex = images.indexOf(element.querySelector('img'));
+
+      const targetImg = document.getElementById('preview-img-target');
+      targetImg.src = element.querySelector('img').src;
       document.getElementById('image-preview-modal').classList.remove('hide');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling background
     }
+
+    function changePreviewImage(step, event) {
+      if (event) event.stopPropagation(); // Don't close the modal
+
+      const images = Array.from(document.querySelectorAll('#gallery-grid img'));
+      currentGalleryIndex += step;
+
+      // Loop logic: if at the end, go to start; if at start, go to end
+      if (currentGalleryIndex >= images.length) currentGalleryIndex = 0;
+      if (currentGalleryIndex < 0) currentGalleryIndex = images.length - 1;
+
+      const targetImg = document.getElementById('preview-img-target');
+
+      // Add a quick fade effect during switch
+      targetImg.style.opacity = '0';
+      setTimeout(() => {
+        targetImg.src = images[currentGalleryIndex].src;
+        targetImg.style.opacity = '1';
+      }, 150);
+    }
+
+    // Support for Keyboard Navigation (Left/Right Arrows)
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('image-preview-modal');
+      if (modal.classList.contains('hide')) return;
+
+      if (e.key === 'ArrowRight') changePreviewImage(1);
+      if (e.key === 'ArrowLeft') changePreviewImage(-1);
+      if (e.key === 'Escape') closeImagePreview();
+    });
     function closeImagePreview() { document.getElementById('image-preview-modal').classList.add('hide'); }
     function deleteGalleryItem(e, btn) { e.stopPropagation(); if (confirm('Delete?')) btn.closest('.gallery-item').remove(); }
 
