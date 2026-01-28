@@ -64,7 +64,7 @@
   <style>
     :root {
       /* Light Theme Defaults - Adopted from prep.html structure */
-      --primary: #ea580c;
+      /* --primary: #ea580c; */
       /* Orange-600 */
       --secondary: #facc15;
       /* Yellow-400 */
@@ -77,7 +77,7 @@
       --glass-border: rgba(255, 255, 255, 0.3);
 
       /* Fonts Defaults */
-      --font-primary: 'Noto Sans Devanagari';
+      --font-primary: 'gotu';
       --heading-font: var(--font-primary);
       --body-font: var(--font-primary);
       --shloka-font: 'Noto Sans Devanagari';
@@ -103,7 +103,7 @@
       --glass: rgba(20, 20, 20, 0.3);
       /* Darker glass */
       --glass-border: rgba(255, 255, 255, 0.05);
-      --primary: #fb923c;
+      /* --primary: #fb923c; */
       /* Orange-400 (High visibility on black) */
     }
 
@@ -308,15 +308,16 @@
 
     /* Bottom Nav Dock Style */
     .dock-nav {
-      width: 90%;
+      width: 98%;
       max-width: 800px;
+      min-width: none;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 20px;
-      border-radius: 2rem;
-      padding: 0.5rem 1rem;
+      bottom: 4px;
+      border-radius: 1rem;
+      padding: 0.5rem 0.7rem;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(169, 40, 40, 0.702);
     }
 
     @media (min-width: 768px) {
@@ -330,7 +331,7 @@
     }
 
     .dock-item:hover {
-      transform: scale(1.2) translateY(-10px);
+      transform: scale(1.1) translateY(-5px);
     }
 
     .dock-item.active {
@@ -766,7 +767,7 @@
     /* Add this to your style section */
     #top-nav {
       position: sticky !important;
-      top: 0 !important;
+      top: 0px !important;
       z-index: 40 !important;
       /* Ensure it floats above everything */
       transform: translateZ(0);
@@ -788,6 +789,37 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+    }
+
+    /* Ensure the search container inside side-nav is always on top */
+    #side-nav-search-container {
+      position: relative;
+      z-index: 60;
+    }
+
+    #announcement-bar {
+      position: relative;
+      z-index: 30;
+      width: 100%;
+      /* Ensure it doesn't get overlapped by the fixed top-nav */
+      margin-top: 0;
+    }
+
+    #theme-grid div,
+    #admin-theme-controls div {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-active {
+      ring-color: var(--primary);
+      transform: scale(1.1);
+      border-color: white !important;
+    }
+
+    html.dark #theme-grid div {
+      ring-offset-color: #0a0a0a;
+      /* Match your dark BG */
     }
   </style>
 </head>
@@ -1090,7 +1122,7 @@
   <!-- top-nav bar -->
 
   <nav id="top-nav"
-    class=" sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md bg-white/20 backdrop-blur-md">
+    class=" sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md bg-white/20 backdrop-blur-lg dark:bg-black/20">
 
     <!-- Left Group -->
     <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
@@ -1172,7 +1204,7 @@
     <!-- TOP NAVIGATION BAR (Adapts to all 3 modes) -->
 
     <!-- ANNOUNCEMENT TICKER -->
-    <div id="announcement-bar" class="ticker-wrap hide" data-feature="ticker">
+    <div id="announcement-bar" class="ticker-wrap" data-feature="ticker">
       <div class="ticker" id="announcement-text">
         🎉 Upcoming: Narsimha Jayanti Mela preparations are underway! 🙏
       </div>
@@ -1190,7 +1222,7 @@
       </div>
 
       <!-- Side Nav Search -->
-      <div id="side-nav-search-container" class="mb-4 mt-2 hide">
+      <div id="side-nav-search-container" class="mb-4 mt-2">
         <div class="relative">
           <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
           <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
@@ -1199,11 +1231,6 @@
       </div>
 
       <div class="flex flex-col gap-4" id="side-menu-items"></div>
-      <div class="relative">
-        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-        <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
-          class="w-full pl-10 p-2 rounded bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-primary outline-none">
-      </div>
       <div class="mt-auto border-t pt-4 space-y-3">
         <!-- Player Container for Side Nav -->
         <div id="side-nav-player-container"></div>
@@ -1217,13 +1244,13 @@
 
     <!-- BOTTOM NAVIGATION BAR (MacBook Dock Style) -->
     <nav id="bottom-nav"
-      class="fixed z-50 flex justify-between items-center hide dock-nav glass-panel bg-white/90 dark:bg-black/80 backdrop-blur-xl">
-      <div id="dock-items-container" class="flex justify-around flex-grow gap-1 sm:gap-4">
+      class="fixed z-50 flex justify-between items-center hide dock-nav glass-panel bg-white/70 dark:bg-black/80 backdrop-blur-xl">
+      <div id="dock-items-container" class="flex justify-around flex-grow gap-0 sm:gap-4">
         <!-- Items injected via JS -->
       </div>
       <!-- Accessibility/Settings Button in Dock -->
       <button onclick="toggleSettings()"
-        class="dock-item ml-2 sm:ml-4 text-primary bg-primary/10 p-2 sm:p-3 rounded-xl hover:bg-primary hover:text-white transition">
+        class="dock-item ml-0 sm:ml-4 text-primary bg-primary/10 p-2 sm:p-3 rounded-xl hover:bg-primary hover:text-white transition">
         <i class="fas fa-cog text-xl"></i>
       </button>
     </nav>
@@ -1266,8 +1293,8 @@
         <!-- Hero -->
         <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12">
           <div class="absolute inset-0 z-0">
-            <img id="hero-bg" src="https://images.unsplash.com/photo-1621827979802-6d779e19391d?q=80&w=2070"
-              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110">
+            <!-- <img id="hero-bg" src="https://images.unsplash.com/photo-1621827979802-6d779e19391d?q=80&w=2070"
+              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110"> -->
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
           </div>
@@ -1303,7 +1330,7 @@
                 id="idol-container">
                 <img id="main-idol-img"
                   src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-le5pjvyy3r.jpg"
-                  class="w-full h-full object-cover">
+                  class="w-full h-full object-cover" fetchpriority="high">
               </div>
 
               <!-- FEATURE BUTTONS CLUSTER -->
@@ -2049,6 +2076,7 @@
     };
 
     const themes = [
+      { id: 'earth', name: 'Earth', colors: { p: '#854d0e', s: '#fde047', bg: '#fefce8', t: '#422006' } },
       { id: 'saffron', name: 'Saffron', colors: { p: '#ea580c', s: '#facc15', bg: '#fff7ed', t: '#1f2937' } },
       { id: 'ocean', name: 'Ocean', colors: { p: '#0ea5e9', s: '#7dd3fc', bg: '#f0f9ff', t: '#1e293b' } },
       { id: 'forest', name: 'Forest', colors: { p: '#15803d', s: '#86efac', bg: '#f0fdf4', t: '#14532d' } },
@@ -2057,7 +2085,6 @@
       { id: 'midnight', name: 'Midnight', colors: { p: '#6366f1', s: '#818cf8', bg: '#1e293b', t: '#f8fafc' } },
       { id: 'sunset', name: 'Sunset', colors: { p: '#f97316', s: '#fdba74', bg: '#fff7ed', t: '#431407' } },
       { id: 'teal', name: 'Teal', colors: { p: '#0d9488', s: '#5eead4', bg: '#f0fdfa', t: '#134e4a' } },
-      { id: 'earth', name: 'Earth', colors: { p: '#854d0e', s: '#fde047', bg: '#fefce8', t: '#422006' } },
       { id: 'slate', name: 'Slate', colors: { p: '#475569', s: '#94a3b8', bg: '#f8fafc', t: '#0f172a' } },
     ];
 
@@ -2477,6 +2504,26 @@
       initSettingsUI();
       applyTheme(state.theme);
 
+      // // 1. Check Saved Theme
+      // const savedTheme = localStorage.getItem('selectedTheme') || 'saffron';
+      // applyTheme(savedTheme);
+
+      // // 2. Check System Preference or Saved Dark Mode
+      // const savedDarkMode = localStorage.getItem('darkMode');
+      // const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      // if (savedDarkMode !== null) {
+      //   toggleDarkMode(savedDarkMode === 'true');
+      // } else {
+      //   toggleDarkMode(systemPrefersDark);
+      // }
+
+      // // 3. Listen for System changes while the page is open
+      // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      //   if (localStorage.getItem('darkMode') === null) {
+      //     toggleDarkMode(e.matches);
+      //   }
+      // });
       // --- RESTORE LAST VIEW ---
       // Check memory: "Where was the user before refresh?"
       const savedView = localStorage.getItem('lastView');
@@ -2737,7 +2784,7 @@
       if (style === 'side') {
         // SIDE NAV MODE
         topNav.classList.remove('hide'); // Top bar always visible for heading
-        ticker.classList.add('hide');
+        // ticker.classList.add('hide');
 
         if (isDesktop) {
           sideNav.classList.remove('hide', '-translate-x-full');
@@ -2776,6 +2823,7 @@
           settingsBtn.classList.add('hide');
           // Hide Disk Trigger in Header
           document.getElementById('music-disk-trigger').classList.add('hide');
+          document.getElementById('side-nav-search-container').classList.remove('hide');
           // Move Player to Side Nav
           document.getElementById('side-nav-player-container').appendChild(fullPlayerUI);
           fullPlayerUI.style.display = 'flex';
@@ -2784,7 +2832,7 @@
       } else if (style === 'bottom') {
         // BOTTOM NAV MODE
         topNav.classList.remove('hide');
-        ticker.classList.add('hide');
+        // ticker.classList.add('hide');
         bottomNav.classList.remove('hide');
         footer.classList.add('pb-32');
 
@@ -3368,14 +3416,26 @@
     function initSettingsUI() {
       const grid = document.getElementById('theme-grid');
       const adminGrid = document.getElementById('admin-theme-controls');
+
       const createBtn = (t, container) => {
         const btn = document.createElement('div');
-        btn.className = 'w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer border-2 border-transparent hover:scale-110 transition shadow-sm';
+        // Added 'ring' and 'shadow' classes for better visibility in dark mode
+        btn.className = 'w-10 h-10 rounded-full cursor-pointer border-2 border-white/20 hover:scale-110 transition shadow-lg ring-2 ring-offset-2 ring-transparent hover:ring-primary';
+
+        // Use the primary color for the background
         btn.style.backgroundColor = t.colors.p;
+
+        // Add a subtle inner shadow or glow
+        btn.style.boxShadow = `0 0 10px ${t.colors.p}44`; // 44 adds transparency to the hex
+
         btn.onclick = () => applyTheme(t.id);
         btn.title = t.name;
         container.appendChild(btn);
       };
+      if (adminGrid) {
+        adminGrid.innerHTML = '';
+        themes.forEach(t => { createBtn(t, adminGrid); });
+      }
       themes.forEach(t => { createBtn(t, grid); createBtn(t, adminGrid); });
       document.querySelectorAll('.font-select').forEach(select => {
         fonts.forEach(f => {
@@ -3429,7 +3489,7 @@
         root.style.setProperty('--text', '#ffffff');
         root.style.setProperty('--bg', '#0a0a0a');
         // Ensure primary is visible on dark (Orange-400 from prep.html)
-        root.style.setProperty('--primary', '#fb923c');
+        // root.style.setProperty('--primary', '#fb923c');
       } else {
         // Re-apply current theme colors logic
         // If we are in light mode, revert to the theme's defined colors
