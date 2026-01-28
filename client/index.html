@@ -90,6 +90,10 @@
       --side-nav-width: 260px;
     }
 
+    #side-nav {
+      z-index: 38 !important;
+    }
+
     /* Dark Mode Override - Applied from prep.html logic */
     html.dark {
       --bg: #0a0a0a;
@@ -441,9 +445,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.321);
       backdrop-filter: blur(5px);
-      z-index: 45;
+      z-index: 35;
       /* Below side-nav (50) but above content */
       opacity: 0;
       pointer-events: none;
@@ -480,7 +484,7 @@
       font-size: 0.85rem;
       font-weight: bold;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      z-index: 2000;
+      z-index: 41;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -654,7 +658,7 @@
       height: 100%;
       cursor: col-resize;
       background: transparent;
-      z-index: 100;
+      z-index: 38;
       transition: background 0.2s;
     }
 
@@ -763,7 +767,7 @@
     #top-nav {
       position: sticky !important;
       top: 0 !important;
-      z-index: 1000 !important;
+      z-index: 40 !important;
       /* Ensure it floats above everything */
       transform: translateZ(0);
       /* Keep hardware acceleration */
@@ -1176,19 +1180,17 @@
 
     <!-- SIDE NAVIGATION BAR (Modified for Resizability) -->
     <nav id="side-nav" style="width: var(--side-nav-width);"
-      class="fixed left-0 top-0 h-full glass-panel z-50 transform -translate-x-full transition-transform duration-300 flex flex-col p-6 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
+      class="fixed left-0 top-0 h-full glass-panel transform -translate-x-full transition-transform duration-300 flex flex-col p-6 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
 
       <!-- Resizer Handle -->
       <div id="side-nav-resizer"></div>
 
       <div class="flex items-center gap-3 mb-6 border-b border-gray-400 pb-4">
-        <i class="fas fa-om text-3xl text-primary"></i>
-        <h1 class="text-lg font-bold text-primary leading-tight" data-key="templeNameShort">श्री नृसिंह मंदिर
-        </h1>
+
       </div>
 
       <!-- Side Nav Search -->
-      <div id="side-nav-search-container" class="mb-4 hide">
+      <div id="side-nav-search-container" class="mb-4 mt-2 hide">
         <div class="relative">
           <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
           <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
@@ -1197,7 +1199,11 @@
       </div>
 
       <div class="flex flex-col gap-4" id="side-menu-items"></div>
-
+      <div class="relative">
+        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+        <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
+          class="w-full pl-10 p-2 rounded bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-primary outline-none">
+      </div>
       <div class="mt-auto border-t pt-4 space-y-3">
         <!-- Player Container for Side Nav -->
         <div id="side-nav-player-container"></div>
@@ -1212,7 +1218,7 @@
     <!-- BOTTOM NAVIGATION BAR (MacBook Dock Style) -->
     <nav id="bottom-nav"
       class="fixed z-50 flex justify-between items-center hide dock-nav glass-panel bg-white/90 dark:bg-black/80 backdrop-blur-xl">
-      <div id="dock-items-container" class="flex justify-around flex-grow gap-2 sm:gap-4">
+      <div id="dock-items-container" class="flex justify-around flex-grow gap-1 sm:gap-4">
         <!-- Items injected via JS -->
       </div>
       <!-- Accessibility/Settings Button in Dock -->
@@ -1369,7 +1375,7 @@
                 <h4 class="text-xl font-bold text-secondary mb-4" data-key="timingMidday">मध्याह्न</h4>
                 <div class="space-y-2 text-sm md:text-base">
                   <p class="flex justify-between"><span class="opacity-70" data-key="labelOpen"> पट:</span> <span
-                      class="font-bold" id="time-mid-open">11:00 PM</span></p>
+                      class="font-bold" id="time-mid-open">11:00 AM</span></p>
                   <p class="flex justify-between"><span class="opacity-70" data-key="labelBhog">भोग:</span> <span
                       class="font-bold" id="time-mid-aarti">12:00 PM</span></p>
                   <p class="flex justify-between"><span class="opacity-70" data-key="labelClose">शयन:</span> <span
@@ -1961,7 +1967,7 @@
       class="bg-gray-900 text-white pt-10 pb-10 lg:pb-8 border-t-4 border-secondary mt-auto relative z-10 transition-all"
       id="main-footer">
       <div class="container mx-auto px-0">
-        <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div class="grid md:grid-cols-3 gap-8 mb-8 place-items-center">
           <div>
             <h3 class="font-bold text-xl text-secondary mb-4" data-key="footerContactTitle">संपर्क करें</h3>
             <div id="footer-contact-info">
@@ -1998,17 +2004,17 @@
               Live Devotees: <span id="visitor-count">108</span>
             </div>
           </div>
-          <!-- <div>
+          <div>
             <h3 class="font-bold text-xl text-secondary mb-4" data-key="footerLocationTitle">स्थान और लिंक
-            </h3> -->
-            <!-- <div class="rounded-lg overflow-hidden border border-gray-700 h-40 mb-0 bg-gray-800 relative"> -->
+            </h3>
+            <div class="rounded-lg overflow-hidden border border-gray-700 h-40 w-80 mb-4 bg-gray-800 relative">
               <!-- <iframe id="footer-map-frame" -->
-              <!-- <iframe
+              <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.651007515507!2d76.02246477554449!3d27.761745923089823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396d39db0417f251%3A0x1e678e4f685694d2!2sNarsingh%20Ji%20Bada%20Mandir!5e1!3m2!1sen!2sin!4v1768476864682!5m2!1sen!2sin"
                 width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div> -->
-          <!-- </div> -->
+            </div>
+          </div>
         </div>
         <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
           <p>&copy; 2026 Sri Narsimha Temple Trust.</p>
@@ -2025,7 +2031,7 @@
     const state = {
       lang: 'hi',
       navStyle: 'top',
-      theme: 'saffron',
+      theme: 'earth',
       user: null,
       activeView: 'view-home',
       melaDate: "2026-04-30T00:00:00",
@@ -3066,17 +3072,23 @@
       const now = new Date();
       const currentHour = now.getHours();
       const currentMin = now.getMinutes();
-      const totalMins = currentHour * 60 + currentMin;
 
-      // Define intervals in minutes
-      // 5:00 (300) to 12:00 (720)
-      // 12:30 (750) to 15:00 (900)
-      // 16:00 (960) to 21:00 (1260)
+      // Convert current time to total minutes from midnight (e.g., 1:30 AM = 90 mins)
+      const totalMins = (currentHour * 60) + currentMin;
 
-      const isOpen = (totalMins >= 300 && totalMins <= 720) ||
-        (totalMins >= 750 && totalMins <= 900) ||
-        (totalMins >= 960 && totalMins <= 1260);
+      // Define Intervals (In Minutes)
+      // Morning: 5:00 AM (300) to 8:00 AM (480)
+      const morningOpen = totalMins >= 300 && totalMins < 480;
 
+      // Mid-day: 11:00 AM (660) to 1:00 PM (780)
+      const middayOpen = totalMins >= 660 && totalMins < 780;
+
+      // Evening: 5:00 PM (1020) to 8:00 PM (1200)
+      const eveningOpen = totalMins >= 1020 && totalMins < 1200;
+
+      const isOpen = morningOpen || middayOpen || eveningOpen;
+
+      // Update UI
       const badge = document.getElementById('live-darshan-badge');
       const text = document.getElementById('darshan-status-text');
       const dot = badge.querySelector('i');
@@ -3088,7 +3100,14 @@
         badge.classList.remove('border-red-400/50', 'text-red-100');
         dot.classList.add('animate-pulse');
       } else {
-        text.innerText = "DARSHAN CLOSED";
+        // Calculate Next Opening Time
+        let nextOpenMsg = "CLOSED";
+        if (totalMins < 300) nextOpenMsg = "OPENS 5:00 AM";
+        else if (totalMins >= 480 && totalMins < 660) nextOpenMsg = "OPENS 11:00 AM";
+        else if (totalMins >= 780 && totalMins < 1020) nextOpenMsg = "OPENS 5:00 PM";
+        else nextOpenMsg = "OPENS TOMORROW 5:00 AM";
+
+        text.innerText = nextOpenMsg;
         dot.className = "fas fa-circle text-[10px] mr-1 text-red-500";
         badge.classList.add('border-red-400/50', 'text-red-100');
         badge.classList.remove('border-green-400/50', 'text-green-100');
