@@ -92,6 +92,22 @@
 
     #side-nav {
       z-index: 38 !important;
+      top: 32px;
+      /* Height of the ticker */
+      height: calc(100vh - 32px);
+      padding-top: 1rem;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      opacity: 0;
+      /* Start invisible */
+      pointer-events: none;
+      position: fixed;
+      left: 0;
+      /* Prevent clicks when closed */
+    }
+
+    #side-nav:not(.-translate-x-full) {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Dark Mode Override - Applied from prep.html logic */
@@ -768,7 +784,7 @@
     /* Ensure the search container inside side-nav is always on top */
     #side-nav-search-container {
       position: relative;
-      z-index: 60;
+      z-index: 70;
     }
 
     #announcement-bar {
@@ -1297,7 +1313,8 @@
         <!-- Hero -->
         <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12 pt-5 -top-20">
           <div class="absolute inset-0 z-0">
-            <img id="hero-bg" src="https://scontent.fdel27-1.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=fjCR3hKv_ssQ7kNvwHQ0X4i&_nc_oc=AdkbzAlWXKpAHwsthMz572FHf3v_25EUoP8V71n0afVJ3LhQkQ3TCygxCDbygHilSGc&_nc_zt=23&_nc_ht=scontent.fdel27-1.fna&_nc_gid=GMCT_LwAyOYA8DpnWaCH4Q&oh=00_AfqovoJbg_lXjOlGyqHzIbHdKr7e1B7fWdgAA1Un2LYKSg&oe=697FBBB1"
+            <img id="hero-bg"
+              src="https://scontent.fdel27-1.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=fjCR3hKv_ssQ7kNvwHQ0X4i&_nc_oc=AdkbzAlWXKpAHwsthMz572FHf3v_25EUoP8V71n0afVJ3LhQkQ3TCygxCDbygHilSGc&_nc_zt=23&_nc_ht=scontent.fdel27-1.fna&_nc_gid=GMCT_LwAyOYA8DpnWaCH4Q&oh=00_AfqovoJbg_lXjOlGyqHzIbHdKr7e1B7fWdgAA1Un2LYKSg&oe=697FBBB1"
               class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110"
               fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
@@ -2584,10 +2601,14 @@
         if (window.scrollY > 30) {
           topNav.classList.add('nav-scrolled');
         } else {
-          topNav.classList.remove('nav-scrolled');
+          // Only remove the class if we aren't in Mobile Side Nav mode
+          const isMobileSideNav = window.innerWidth < 1024 && state.navStyle === 'side';
+          if (!isMobileSideNav) {
+            topNav.classList.remove('nav-scrolled');
+          }
         }
 
-        // Show/Hide "Scroll to Top" button (Active after 300px)
+        // Scroll to Top button logic
         if (window.scrollY > 300) {
           scrollBtn.classList.remove('hide');
         } else {
@@ -2816,22 +2837,35 @@
             desktopBurger.classList.remove('hide');
             desktopBurger.innerHTML = '<i class="fas fa-times"></i>';
           }
-        } else {
-          // Mobile Side Nav Mode (Drawer behavior)
-          if (mobileBurger) mobileBurger.classList.remove('hide');
+        } if (style === 'side') {
+          if (isDesktop) {
+            // Desktop logic remains same
+            sideNav.classList.remove('hide', '-translate-x-full');
+            mainLayout.style.paddingLeft = 'var(--side-nav-width)';
+            document.getElementById('side-nav-search-container').style.marginTop = '0px';
+            // ...
+          } else {
+            // Mobile Side Nav Mode
+            if (mobileBurger) mobileBurger.classList.remove('hide');
 
-          document.getElementById('top-nav-mobile-menu-btn').classList.add('hide');
-          document.getElementById('top-nav-search-btn').classList.add('hide');
-          settingsBtn.classList.add('hide');
-          document.getElementById('music-disk-trigger').classList.add('hide');
-          document.getElementById('side-nav-search-container').classList.remove('hide');
+            document.getElementById('top-nav-mobile-menu-btn').classList.add('hide');
+            document.getElementById('top-nav-search-btn').classList.add('hide');
+            settingsBtn.classList.add('hide');
+            document.getElementById('music-disk-trigger').classList.add('hide');
+            document.getElementById('side-nav-search-container').classList.remove('hide');
 
-          document.getElementById('side-nav-player-container').appendChild(fullPlayerUI);
-          fullPlayerUI.style.display = 'flex';
-          fullPlayerUI.classList.remove('hidden');
+            document.getElementById('side-nav-player-container').appendChild(fullPlayerUI);
+            fullPlayerUI.style.display = 'flex';
+            fullPlayerUI.classList.remove('hidden');
+            document.getElementById('side-nav-search-container').style.marginTop = '50px';
+
+            // FIX: Add the scrolled background class by default for mobile side nav
+            topNav.classList.add('nav-scrolled');
+          }
         }
       } else {
         // TOP NAV MODE
+        document.getElementById('side-nav-search-container').style.marginTop = '0px';
         if (isDesktop) {
           settingsBtn.classList.remove('hide');
         } else {
@@ -2884,47 +2918,40 @@
         }
       } else {
         // MOBILE LOGIC
-        const body = document.body;
-        if (sideNav.classList.contains('hide') || sideNav.classList.contains('-translate-x-full')) {
-          // Open
-          sideNav.classList.remove('hide');
-          // Animate Slide In
-          setTimeout(() => sideNav.classList.remove('-translate-x-full'), 10);
+        const isOpening = sideNav.classList.contains('-translate-x-full');
 
-          // Styles for overlay mobile (width respects resize variable)
-          sideNav.style.zIndex = "1000";
-          sideNav.style.boxShadow = "5px 0 15px rgba(0,0,0,0.5)";
-          body.classList.add('nav-side-mobile-active');
-
-          if (mobileBurger) {
-            mobileBurger.classList.add('open');
-            mobileBurger.innerHTML = '<i class="fas fa-times"></i>'; // Change to X
-          }
+        if (isOpening) {
+          sideNav.classList.remove('hide'); // Make it exist in DOM
+          // Smallest possible delay to trigger the CSS transition
+          requestAnimationFrame(() => {
+            sideNav.classList.remove('-translate-x-full');
+            document.body.classList.add('nav-side-mobile-active');
+          });
+          if (burger) burger.innerHTML = '<i class="fas fa-times"></i>';
         } else {
           closeSideNavIfMobile();
         }
       }
     }
 
+
     function closeSideNavIfMobile() {
-      // Only close if in side mode AND active AND Mobile
       const sideNav = document.getElementById('side-nav');
+      const burger = document.getElementById('mobile-burger-btn');
       const isDesktop = window.innerWidth >= 1024;
 
-      if (state.navStyle !== 'side' || isDesktop || sideNav.classList.contains('hide')) return;
-
-      // Only strictly enforce closing via overlay on mobile, or toggle on desktop
-      const burger = document.getElementById('mobile-burger-btn');
-      const body = document.body;
+      if (state.navStyle !== 'side' || isDesktop) return;
 
       sideNav.classList.add('-translate-x-full');
-      setTimeout(() => sideNav.classList.add('hide'), 300); // Wait for transition
-      body.classList.remove('nav-side-mobile-active');
+      document.body.classList.remove('nav-side-mobile-active');
+      if (burger) burger.innerHTML = '<i class="fas fa-bars"></i>';
 
-      if (burger) {
-        burger.classList.remove('open');
-        burger.innerHTML = '<i class="fas fa-bars"></i>';
-      }
+      // Wait for the 0.4s transition to finish before hiding from DOM
+      setTimeout(() => {
+        if (sideNav.classList.contains('-translate-x-full')) {
+          sideNav.classList.add('hide');
+        }
+      }, 400);
     }
 
     // --- SIDE NAV RESIZER LOGIC ---
