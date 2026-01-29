@@ -12,7 +12,6 @@
   <!-- Google Fonts (From prep.html) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Gotu&family=Hind:wght@300;400;500;600;700&family=Kalam:wght@300;400;700&family=Martel:wght@300;400;700&family=Mukta:wght@300;400;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap"
     rel="stylesheet">
@@ -63,6 +62,764 @@
   </script>
 
   <style>
+    :root {
+      /* Light Theme Defaults - Adopted from prep.html structure */
+      /* --primary: #ea580c; */
+      /* Orange-600 */
+      --secondary: #facc15;
+      /* Yellow-400 */
+      --bg: #fff7ed;
+      /* Orange-50 */
+      --text: #1f2937;
+      /* Gray-800 - Default Light Text */
+
+      --glass: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.3);
+
+      /* Fonts Defaults */
+      --font-primary: 'gotu';
+      --heading-font: var(--font-primary);
+      --body-font: var(--font-primary);
+      --shloka-font: 'Noto Sans Devanagari';
+      --shloka-color: #facc15;
+      /* Default Yellow/Gold */
+
+      --font-size-base: 16px;
+
+      /* Resizable Side Nav Variable */
+      --side-nav-width: 260px;
+    }
+
+    #side-nav {
+      z-index: 38 !important;
+    }
+
+    /* Dark Mode Override - Applied from prep.html logic */
+    html.dark {
+      --bg: #0a0a0a;
+      /* Neutral-950 (Deep Black) */
+      --text: #ffffff;
+      /* White (Absolute Contrast) */
+      --glass: rgba(20, 20, 20, 0.3);
+      /* Darker glass */
+      --glass-border: rgba(255, 255, 255, 0.05);
+      /* --primary: #fb923c; */
+      /* Orange-400 (High visibility on black) */
+    }
+
+    /* Typography Mapping */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--heading-font), serif;
+    }
+
+    body {
+      font-family: var(--body-font), sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: var(--font-size-base);
+      /* Transition & Background Image from prep.html */
+      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(234, 88, 12, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(234, 88, 12, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* Selection Color */
+    ::selection {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .sanskrit {
+      font-family: var(--shloka-font), serif;
+      color: var(--shloka-color);
+      font-style: italic;
+    }
+
+    /* Glassmorphism Utility */
+    .glass-panel {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    /* Animations */
+    /* Slide and Zoom Animation */
+    /* Scale and Fade Transition */
+    @keyframes scaleFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.98);
+        /* Starts slightly smaller */
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        /* Grows to full size */
+      }
+    }
+
+    .animate-fade-in {
+      animation: scaleFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      will-change: opacity, transform;
+      /* Pre-optimizes the animation */
+    }
+
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .animate-spin-slow {
+      animation: spin-slow 8s linear infinite;
+      animation-play-state: paused;
+      /* Default paused as per requirement */
+    }
+
+    @keyframes bounce-x {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(5px);
+      }
+    }
+
+    .animate-bounce-x {
+      animation: bounce-x 1s infinite;
+    }
+
+    @keyframes pulse-green {
+      0% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
+      }
+    }
+
+    .animate-pulse-green {
+      animation: pulse-green 2s infinite;
+    }
+
+    /* ---- SCROLLBAR OVERLAY GLASS EFFECT ---- */
+    /* ---- FIXED SCROLLBAR OVERLAY ---- */
+    /* ---- DYNAMIC THEME SCROLLBAR ---- */
+    html,
+    body {
+      /* overflow-x: hidden; */
+      /* Keep this to prevent horizontal shaking */
+      height: auto;
+      /* Ensure the height isn't capped */
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: transparent;
+      /* Track is invisible */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+      margin-block: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      /* 1. We use the theme variable directly */
+      background-color: var(--primary);
+
+      /* 2. We use a border to 'fake' transparency and spacing */
+      /* This makes the bar look thinner and floating, without needing opacity */
+      border: 3px solid transparent;
+      border-radius: 10px;
+      background-clip: content-box;
+
+      /* 3. Smooth transition when theme changes */
+      transition: background-color 0.3s ease;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      /* On hover, we make it slightly 'thicker' by reducing the border */
+      border: 2px solid transparent;
+    }
+
+    /* Firefox Support (Standard CSS) */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary) transparent;
+    }
+
+    /* Helpers */
+    .hide {
+      display: none !important;
+    }
+
+    /* Fullscreen Modal */
+    .fullscreen-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 3000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Modal Overlay - Increased Z-Index to stay above Side Nav */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+
+    @media (min-width: 768px) {
+      .dock-nav {
+        width: 70%;
+      }
+    }
+
+    .dock-item {
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .dock-item:hover {
+      transform: scale(1.1) translateY(-5px);
+    }
+
+    .dock-item.active {
+      color: var(--primary);
+      transform: translateY(-5px);
+    }
+
+    .dock-item.active i {
+      text-shadow: 0 0 10px var(--primary);
+    }
+
+    .nav-btn.active {
+      color: var(--primary);
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 3px solid var(--primary);
+    }
+
+    #top-nav .nav-btn.active {
+      border-left: none;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    /* Flower Animation */
+    .flower {
+      position: absolute;
+      top: -50px;
+      font-size: 24px;
+      animation: fall linear forwards;
+      pointer-events: none;
+      z-index: 20;
+      color: #ff9900;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(500px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Announcement Ticker */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: var(--primary);
+      color: white;
+      padding: 2px 0;
+      font-size: 0.8rem;
+      font-weight: bold;
+      position: relative;
+      z-index: 60 !important;
+    }
+
+    .ticker {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 20s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      transform: translateY(100px);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    /* Full Screen Player Modal Animation */
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .animate-zoom-in {
+      animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* Side Nav Mobile Overlay Styles */
+    #side-nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.321);
+      backdrop-filter: blur(5px);
+      z-index: 35;
+      /* Below side-nav (50) but above content */
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    body.nav-side-mobile-active #side-nav-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.nav-side-mobile-active {
+      overflow: hidden;
+    }
+
+    /* Hamburger to X Animation */
+    .burger-icon {
+      transition: transform 0.3s ease;
+    }
+
+    .burger-icon.open {
+      transform: rotate(90deg);
+    }
+
+    /* Welcome Popup */
+    #welcome-popup {
+      position: fixed;
+      top: 65px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      z-index: 41;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: bounce-x 2s infinite;
+    }
+
+    #welcome-popup::after {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      background: var(--primary);
+      transform: rotate(45deg);
+    }
+
+    /* Global Player Styles */
+    #global-player-ui {
+      transition: width 0.5s ease-in-out, transform 0.3s ease, border-radius 0.5s ease;
+      overflow: hidden;
+    }
+
+    /* Collapsed Disk Mode Logic */
+    .player-collapsed {
+      width: 50px !important;
+      height: 50px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .player-collapsed .player-controls,
+    .player-collapsed .player-info,
+    .player-collapsed .player-minimize-btn {
+      display: none !important;
+    }
+
+    .player-collapsed .player-art-container {
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--secondary);
+    }
+
+    /* Side Nav Mode Styles */
+    body.nav-side #global-player-ui {
+      position: static;
+      /* Embedded in flow */
+      width: 100%;
+      box-shadow: none;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    body.nav-side #global-player-ui .player-minimize-btn {
+      display: none;
+    }
+
+    /* Hover Playlist Icon Effect - REFINED */
+    .player-art-container:hover::after {
+      content: '\f0ca';
+      /* fa-list-ul */
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 50%;
+      /* Make sure overlay is circular */
+      backdrop-filter: blur(2px);
+      transition: opacity 0.3s;
+    }
+
+    /* Virtual Aarti Cursor */
+    body.aarti-mode {
+      cursor: none;
+    }
+
+    #aarti-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 3rem;
+      transform: translate(-50%, -50%);
+      filter: drop-shadow(0 0 10px gold);
+    }
+
+    .sparkle {
+      position: fixed;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      animation: fadeOut 1s forwards;
+    }
+
+    /* Floating Diya (Deep Daan) */
+    .floating-diya {
+      position: fixed;
+      font-size: 2rem;
+      animation: floatUp 4s ease-in forwards;
+      pointer-events: none;
+      z-index: 80;
+      filter: drop-shadow(0 0 8px orange);
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-300px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    /* Japa Mala Animation */
+    .mala-bead {
+      transition: transform 0.1s;
+    }
+
+    .mala-bead:active {
+      transform: scale(0.9);
+    }
+
+    /* Resizer Handle */
+    #side-nav-resizer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      cursor: col-resize;
+      background: transparent;
+      z-index: 38;
+      transition: background 0.2s;
+    }
+
+    #side-nav-resizer:hover,
+    #side-nav-resizer.active {
+      background: var(--primary);
+      opacity: 0.5;
+    }
+
+    .no-transition {
+      transition: none !important;
+    }
+
+    /* Updated Mobile Menu Transition: Start hidden (above) */
+    #mobile-menu {
+      transition: transform 0.3s ease-in-out;
+      /* Default state is set via utility class -translate-y-full */
+    }
+
+    @keyframes pulse-highlight {
+      0% {
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 0 20px rgba(234, 88, 12, 0);
+        transform: scale(1.05);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+        transform: scale(1);
+      }
+    }
+
+    .search-highlight {
+      animation: pulse-highlight 2s ease-out;
+      z-index: 100;
+      border-color: var(--primary) !important;
+    }
+
+    /* This stays stable and won't break your layout */
+    .calendar-grid-stable {
+      display: grid !important;
+    }
+
+    /* Each card will trigger this when it is created */
+    .card-fade-in {
+      animation: fadeInUp 0.4s ease-out forwards;
+      opacity: 0;
+      /* Start invisible so the animation looks smooth */
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes divine-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px 5px rgba(234, 88, 12, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 40px 10px rgba(250, 204, 21, 0.6);
+      }
+    }
+
+    .idol-glow {
+      animation: divine-glow 4s ease-in-out infinite;
+      border: 4px solid var(--secondary) !important;
+    }
+
+    /* Advanced View Transition */
+    /* Advanced View Transition - STABLE VERSION */
+    .view-section {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Standard hidden state (Prevents the "Mess") */
+    .view-section.hide {
+      display: none !important;
+    }
+
+    /* Temporary class used during the transition to allow animation */
+    .view-animating {
+      display: block !important;
+      opacity: 0;
+      transform: scale(0.95) translateY(20px);
+      pointer-events: none;
+    }
+
+    /* Add this to your style section */
+    #top-nav {
+      position: sticky !important;
+      top: 0px;
+      /* Sits exactly below the ticker */
+      left: 0;
+      width: 100%;
+      /* background: transparent !important; */
+      /* Transparent background */
+      /* backdrop-filter: none !important; */
+      /* Remove blur if you want pure transparency */
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Keep these for smooth mobile scrolling only, NO sticky here */
+    .view-section,
+    .glass-panel {
+      backface-visibility: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #main-layout {
+      overflow: visible !important;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Ensure the search container inside side-nav is always on top */
+    #side-nav-search-container {
+      position: relative;
+      z-index: 60;
+    }
+
+    #announcement-bar {
+      position: relative;
+      z-index: 30;
+      width: 100%;
+      /* Ensure it doesn't get overlapped by the fixed top-nav */
+      margin-top: 0;
+    }
+
+    #theme-grid div,
+    #admin-theme-controls div {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-active {
+      /* ring-color: var(--primary); */
+      transform: scale(1.1);
+      border-color: white !important;
+    }
+
+    html.dark #side-nav {
+      background-color: var(--bg) !important;
+      border-right: 1px solid var(--glass-border);
+    }
+
+    /* Initial state: Pure transparent */
+    #top-nav {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+    }
+
+    /* Scrolled state: Frosted glass */
+    /* Scrolled state: Now uses adaptive variables */
+    #top-nav.nav-scrolled {
+      /* Use the theme's glass variable instead of hardcoded white */
+      background-color: var(--glass) !important;
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      /* Use the theme's glass-border variable */
+      border-bottom: 1px solid var(--glass-border) !important;
+    }
+
+    /* Ensure the Side Nav also adjusts its top position if needed */
+    body.nav-side #side-nav {
+      transition: top 0.4s ease;
+    }
   </style>
 </head>
 
