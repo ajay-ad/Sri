@@ -836,19 +836,6 @@
     body.nav-side #side-nav {
       transition: top 0.4s ease;
     }
-
-    #side-nav {
-      /* ... existing styles ... */
-      touch-action: pan-y;
-      /* Allows vertical scrolling while preventing browser swipe interference */
-      will-change: transform;
-      /* Optimizes for mobile hardware acceleration */
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-    }
-
-    .grabbing {
-      transition: none !important;
-    }
   </style>
 </head>
 
@@ -2628,31 +2615,6 @@
           scrollBtn.classList.add('hide');
         }
       });
-      let touchStartX = 0;
-      let touchEndX = 0;
-
-      function initSwipeToClose() {
-        const sideNav = document.getElementById('side-nav');
-
-        sideNav.addEventListener('touchstart', (e) => {
-          touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        sideNav.addEventListener('touchend', (e) => {
-          touchEndX = e.changedTouches[0].screenX;
-          handleSwipe();
-        }, { passive: true });
-
-        function handleSwipe() {
-          const swipeDistance = touchStartX - touchEndX;
-          const minSwipeDistance = 50; // Threshold in pixels
-
-          // If swipe left is detected and side-nav is currently open
-          if (swipeDistance > minSwipeDistance && !sideNav.classList.contains('-translate-x-full')) {
-            closeSideNavIfMobile();
-          }
-        }
-      }
     });
 
     // Load heavy audio/images in background (Doesn't block UI anymore)
@@ -2896,10 +2858,6 @@
             fullPlayerUI.style.display = 'flex';
             fullPlayerUI.classList.remove('hidden');
             document.getElementById('side-nav-search-container').style.marginTop = '50px';
-            const searchContainer = document.getElementById('side-nav-search-container');
-            if (searchContainer) searchContainer.style.marginTop = '60px';
-            // Inside setNavStyle mobile side block:
-            if (searchBar) searchBar.style.marginTop = '60px';
 
             // FIX: Add the scrolled background class by default for mobile side nav
             topNav.classList.add('nav-scrolled');
@@ -2975,7 +2933,6 @@
         }
       }
     }
-
 
     function closeSideNavIfMobile() {
       const sideNav = document.getElementById('side-nav');
@@ -4113,51 +4070,6 @@
         renderAdminPlaylist();
         renderUserPlaylist(); // Update user playlist immediately
       }
-    }
-
-    let touchStartX = 0;
-    let currentTranslateX = 0;
-    const sideNavWidth = 260; // Should match your --side-nav-width
-
-    function initSwipeToClose() {
-      const sideNav = document.getElementById('side-nav');
-
-      sideNav.addEventListener('touchstart', (e) => {
-        touchStartX = e.touches[0].clientX;
-        sideNav.classList.add('grabbing');
-      }, { passive: true });
-
-      sideNav.addEventListener('touchmove', (e) => {
-        const currentX = e.touches[0].clientX;
-        const diff = currentX - touchStartX;
-
-        // Only allow swiping to the left (closing)
-        if (diff < 0) {
-          // Rubber banding effect: as they pull further, it resists
-          currentTranslateX = diff;
-          sideNav.style.transform = `translateX(${currentTranslateX}px)`;
-
-          // Fade out opacity as it moves
-          const opacity = 1 + (diff / sideNavWidth);
-          sideNav.style.opacity = Math.max(opacity, 0.5);
-        }
-      }, { passive: true });
-
-      sideNav.addEventListener('touchend', (e) => {
-        sideNav.classList.remove('grabbing');
-        sideNav.style.transform = ''; // Clear inline styles to let CSS take over
-        sideNav.style.opacity = '';
-
-        const swipeDistance = touchStartX - e.changedTouches[0].clientX;
-
-        // Threshold: If swiped more than 25% of the width, close it
-        if (swipeDistance > (sideNavWidth / 4)) {
-          closeSideNavIfMobile();
-        } else {
-          // Snap back to open position
-          sideNav.classList.remove('-translate-x-full');
-        }
-      });
     }
   </script>
 </body>
