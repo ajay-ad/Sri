@@ -125,7 +125,8 @@
       --glass-border: rgba(255, 255, 255, 0.05);
       /* --primary: #fb923c; */
       --head-glass: rgba(20, 20, 20, 0.1);
-      --nav-shadow: 0 4px 30px rgba(255, 183, 75, 0.3); /* Darker shadow for dark mode */
+      --nav-shadow: 0 4px 30px rgba(255, 183, 75, 0.3);
+      /* Darker shadow for dark mode */
       /* Orange-400 (High visibility on black) */
     }
 
@@ -842,8 +843,8 @@
     body.nav-side #side-nav {
       transition: top 0.4s ease;
     }
-    
-    .gradient{
+
+    .gradient {
       background: linear-gradient(#0a0a0a, #ffffff);
     }
   </style>
@@ -1092,7 +1093,8 @@
         <i class="fas fa-times text-2xl"></i>
       </button>
 
-      <h2 class="text-2xl font-bold text-primary mb-6 border-b border-gray-400 pb-2 dark:text-gray-300" data-key="settingsTitle">
+      <h2 class="text-2xl font-bold text-primary mb-6 border-b border-gray-400 pb-2 dark:text-gray-300"
+        data-key="settingsTitle">
         Accessibility & Settings</h2>
 
       <!-- Language -->
@@ -1329,8 +1331,11 @@
               fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent "></div>
-            <div class="absolute inset-0 dark:hidden bg-gradient-to-b from-yellow-30 via-yellow-0 to-transparent z-10"></div>
-            <div class="absolute inset-0 hidden dark:block bg-gradient-to-b from-black/30 via-black/0 to-transparent z-10"></div>
+            <div class="absolute inset-0 dark:hidden bg-gradient-to-b from-yellow-30 via-yellow-0 to-transparent z-10">
+            </div>
+            <div
+              class="absolute inset-0 hidden dark:block bg-gradient-to-b from-black/30 via-black/0 to-transparent z-10">
+            </div>
           </div>
 
           <div class="z-10 container mx-auto px-4 text-center pt-20 -top">
@@ -1362,9 +1367,8 @@
               <div
                 class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-secondary overflow-hidden mx-auto shadow-2xl glass-panel flex items-center justify-center mb-6 ring-4 ring-primary/30 relative group z-10 idol-glow relative group z-10"
                 id="idol-container">
-                <img id="main-idol-img"
-                  src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-le5pjvyy3r.jpg"
-                  class="w-full h-full object-cover" fetchpriority="high">
+                <img id="main-idol-img" src="/public/assets/static/favicon.png" class="w-full h-full object-cover"
+                  fetchpriority="high">
               </div>
 
               <!-- FEATURE BUTTONS CLUSTER -->
@@ -1524,15 +1528,56 @@
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img
-              src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-xsj3w5rrli.jpg"
+            <img src="/public/assets/static/0.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/1.JPG"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/2.JPG"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/3.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/4.JPG"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/5.JPG"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/6.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/7.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img
-              src="https://scontent.fjai1-3.fna.fbcdn.net/v/t51.82787-15/587951883_17967382274988920_6614558592535786365_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=GvxLczoJi3wQ7kNvwG4gDrG&_nc_oc=AdmoHOxBds9tmEOf8PMoOKMgzOrOjY41SeQdMgkNumK54emZ7ExDSUztZxd5gaUqXj9mAOPjFEf85f3sGkzGGBsq&_nc_zt=23&_nc_ht=scontent.fjai1-3.fna&_nc_gid=LlSbT4g79MNjH8dB3bESMg&oh=00_AfrtC0hymB9JoZHWulWMGOKTh0u3Su9bNnaM7K1UKd5bxQ&oe=696EAB15"
+              src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-xsj3w5rrli.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
         </div>
@@ -1732,7 +1777,8 @@
               <div class="relative">
                 <input type="password" id="password"
                   class="w-full p-3 rounded bg-white dark:bg-gray-800 border border-gray-300 text-black dark:text-white pr-10">
-                <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-3.5 text-gray-500 hover:text-primary focus:outline-none">
+                <button type="button" onclick="togglePasswordVisibility()"
+                  class="absolute right-3 top-3.5 text-gray-500 hover:text-primary focus:outline-none">
                   <i class="fas fa-eye" id="password-eye-icon"></i>
                 </button>
               </div>
@@ -2526,7 +2572,7 @@
     document.addEventListener('DOMContentLoaded', () => {
 
       const isDesktop = window.innerWidth >= 1024;
-      
+
       // Force Top Nav on Desktop initially (unless overridden later), and Side Nav on Mobile
       let initialStyle;
       if (!isDesktop) {
@@ -2534,7 +2580,7 @@
       } else {
         initialStyle = state.desktopNavDefault || 'top';
       }
-      
+
       setNavStyle(initialStyle);
 
       initSettingsUI();
@@ -2607,54 +2653,54 @@
 
     // Updated Resize Listener to enforce navigation rules
     window.addEventListener('resize', () => {
-        const isDesktop = window.innerWidth >= 1024;
-        
-        updateSettingsVisibility(); // Hide/Show nav settings based on width
-        
-        if (!isDesktop) {
-            // Force side nav on mobile
-            if (state.navStyle !== 'side') {
-                setNavStyle('side');
-            }
-        } else {
-            // Restore desktop preference if returning to desktop
-            // Only if we haven't manually set it during this session, or reload logic
-            // For now, let's keep it simple: if resizing to desktop, let it stay what it was or default
-            // If it was forced to side by mobile view, we might want to revert to 'top' if that's default
-             if (state.navStyle === 'side' && state.desktopNavDefault === 'top') {
-                 // Optional: auto-switch back to top? 
-                 // User asked for "Settings should have option to switch side nav" on desktop.
-                 // We won't force 'top' here to respect if they chose 'side' on desktop previously.
-             }
+      const isDesktop = window.innerWidth >= 1024;
+
+      updateSettingsVisibility(); // Hide/Show nav settings based on width
+
+      if (!isDesktop) {
+        // Force side nav on mobile
+        if (state.navStyle !== 'side') {
+          setNavStyle('side');
         }
-        
-        // Call the layout adjuster
-        setNavStyle(state.navStyle); 
+      } else {
+        // Restore desktop preference if returning to desktop
+        // Only if we haven't manually set it during this session, or reload logic
+        // For now, let's keep it simple: if resizing to desktop, let it stay what it was or default
+        // If it was forced to side by mobile view, we might want to revert to 'top' if that's default
+        if (state.navStyle === 'side' && state.desktopNavDefault === 'top') {
+          // Optional: auto-switch back to top? 
+          // User asked for "Settings should have option to switch side nav" on desktop.
+          // We won't force 'top' here to respect if they chose 'side' on desktop previously.
+        }
+      }
+
+      // Call the layout adjuster
+      setNavStyle(state.navStyle);
     });
 
     // New function to toggle visibility of Nav Settings based on device
     function updateSettingsVisibility() {
-        const isDesktop = window.innerWidth >= 1024;
-        const navSettings = document.getElementById('nav-style-setting-container');
-        if (navSettings) {
-            navSettings.style.display = isDesktop ? 'block' : 'none';
-        }
+      const isDesktop = window.innerWidth >= 1024;
+      const navSettings = document.getElementById('nav-style-setting-container');
+      if (navSettings) {
+        navSettings.style.display = isDesktop ? 'block' : 'none';
+      }
     }
-    
+
     // New function to toggle password visibility
     function togglePasswordVisibility() {
-        const passInput = document.getElementById('password');
-        const icon = document.getElementById('password-eye-icon');
-        
-        if (passInput.type === 'password') {
-            passInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            passInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
+      const passInput = document.getElementById('password');
+      const icon = document.getElementById('password-eye-icon');
+
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        passInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
     }
 
     // Load heavy audio players only after everything else is done
@@ -2811,9 +2857,9 @@
       // FORCE MOBILE SIDE NAV: Logic override
       const isDesktop = window.innerWidth >= 1024;
       if (!isDesktop) {
-          style = 'side';
+        style = 'side';
       }
-    
+
       state.navStyle = style;
       const body = document.body;
 
