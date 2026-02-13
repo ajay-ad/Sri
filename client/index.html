@@ -91,14 +91,14 @@
       --font-size-base: 16px;
 
       /* Resizable Side Nav Variable */
-      --side-nav-width: 260px;
+      --side-nav-width: 200px;
     }
 
     #side-nav {
       z-index: 38 !important;
-      top: 32px;
+      /* top: 24px; */
       /* Height of the ticker */
-      height: calc(100vh - 32px);
+      /* height: calc(100vh - 24px); */
       padding-top: 1rem;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
       opacity: 0;
@@ -106,7 +106,16 @@
       pointer-events: none;
       position: fixed;
       left: 0;
+      padding-top: 32px;
       /* Prevent clicks when closed */
+    }
+
+
+    #side-nav.nav-scroll {
+      margin-top: 0 !important;
+      height: 100dvh !important;
+      padding-top: 8px;
+      transition: padding-top 0.2s linear !important;
     }
 
     #side-nav:not(.-translate-x-full) {
@@ -861,10 +870,6 @@
     </div>
   </div>
 
-  <!-- AUDIO ELEMENT & BELL -->
-  <audio id="global-audio-player" preload="auto" onended="audioNext()"></audio>
-  <audio id="bell-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
-  <audio id="bead-sound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
 
   <!-- SIDE NAV OVERLAY (Mobile Blur) -->
   <div id="side-nav-overlay" onclick="toggleSideNav()"></div>
@@ -1192,7 +1197,8 @@
         </div>
 
         <div id="top-nav-title-group" class="transition-all duration-300">
-          <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
+          <h1 class="text-xl font-bold leading-none text-primary dark:text-primary-400" data-key="templeName"
+            id="nav-title">श्री
             नृसिंह बड़ा मंदिर हसामपुर</h1>
         </div>
 
@@ -1212,7 +1218,7 @@
 
         <!-- Desktop Burger (For Side Nav Desktop - MOVED TO FAR RIGHT) -->
         <button id="desktop-side-burger"
-          class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
+          class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-103"
           onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
 
 
@@ -1327,8 +1333,7 @@
         <!-- Hero -->
         <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12 pt-5 -top-20">
           <div class="absolute inset-0 z-0">
-            <img id="hero-bg"
-              src="https://scontent.fdel27-1.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=ZE9GOqXl05kQ7kNvwGa4wzZ&_nc_oc=AdmQ86M6lXZD_sLC6JQPgIEnP2t2XlQ8yPBDLCI3p7mhZubXw-oL-qXuTGXOE0VPFd0&_nc_zt=23&_nc_ht=scontent.fdel27-1.fna&_nc_gid=ewOyoeVOeYe4p6yObZrdoA&oh=00_AfvpJH7Ab7R-s52i6jEWs46SQR8eIBws7iGVV3yFJnN40Q&oe=69903671"
+            <img id="hero-bg" src="/public/assets/static/home.jpg"
               class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110"
               fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
@@ -1525,58 +1530,83 @@
           </div>
         </div>
 
-        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div id="gallery-grid"
+          class="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
           <!-- Default Images -->
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/0A.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/0.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/1.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
-          <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+          <!-- <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/2.JPG"
+            <img src="/public/assets/static/0B.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div> -->
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/9.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/3.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/4.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/2.JPG"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/5.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/6.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img src="/public/assets/static/7.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
-            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img src="/public/assets/static/8.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
             <img
               src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-xsj3w5rrli.jpg"
@@ -1672,8 +1702,7 @@
           onclick="toggleMelaOverlay()">
           <div
             class="relative h-64 rounded-2xl overflow-hidden border-4 border-yellow-500/50 shadow-[0_0_30px_rgba(234,88,12,0.5)]">
-            <img
-              src="https://scontent.fjai14-3.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=Y7sfuTH1nM0Q7kNvwFQHJKe&_nc_oc=AdnvGfXo6UDFAPG6sTIp1t10W2j85HvP5buT6F4Y0KYTGUsSiV32dCcD2yj4w9DgMtYYlKr5m4C1FQRegOo2fo9_&_nc_zt=23&_nc_ht=scontent.fjai14-3.fna&_nc_gid=Ymk-GACK05r016N32Wp39Q&oh=00_AfoTlD1x6o2wSLnHiX8QCHQy8_FZjQAuew2pUs-vfqisXg&oe=69744EB1"
+            <img src="/public/assets/static/live-mela.jpg"
               class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" loading="lazy">
             <div
               class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-8">
@@ -2105,9 +2134,13 @@
           <div>
             <h3 class="font-bold text-xl text-secondary mb-4" data-key="footerContactTitle">संपर्क करें</h3>
             <div id="footer-contact-info">
-              <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-primary"></i> <span
-                  data-key="templeNameShort">श्री नृसिंह बड़ा मंदिर, हसामपुर</span></p>
-              <p class="mb-2 pl-6 text-gray-400">Hasampur Village, Rajasthan</p>
+              <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-primary"></i> <a data-key="templeNameShort"
+                  href="https://www.google.com/search?q=Narsingh+Bada+Mandir,+Hasampur" target="_blank">श्री नृसिंह बड़ा
+                  मंदिर, हसामपुर</a></p>
+              <a class="mb-2 pl-6 text-gray-400 block"
+                href="https://www.google.com/search?q=Hasampur,+Teh:+Patan+Dist:+Sikar+(Rajasthan)"
+                target="_blank">Hasampur, Teh:
+                Patan<br>Dist: Sikar (Rajasthan)</a>
               <p class="mt-4"><i class="fas fa-phone mr-2 text-primary"></i> +91 9xxx xxxxx</p>
               <!-- FEATURE: SANKALP BUTTON -->
               <div class="flex gap-2 mt-4">
@@ -2144,8 +2177,8 @@
             <div class="rounded-lg overflow-hidden border border-gray-700 h-40 w-80 mb-4 bg-gray-800 relative">
               <!-- <iframe id="footer-map-frame" -->
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.651007515507!2d76.02246477554449!3d27.761745923089823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396d39db0417f251%3A0x1e678e4f685694d2!2sNarsingh%20Ji%20Bada%20Mandir!5e1!3m2!1sen!2sin!4v1768476864682!5m2!1sen!2sin"
-                width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d606.1643114027172!2d76.02495857169707!3d27.761627677065185!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396d39db0417f251%3A0x1e678e4f685694d2!2sNarsingh%20Ji%20Bada%20Mandir!5e1!3m2!1sen!2sin!4v1770995034240!5m2!1sen!2sin"
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
@@ -2237,8 +2270,8 @@
     // FULL TRANSLATIONS
     const translations = {
       hi: {
-        templeName: "श्री नृसिंह बड़ा मंदिर हसामपुर",
-        templeNameShort: "श्री नृसिंह मंदिर",
+        templeName: "श्री नृसिंह बड़ा मंदिर, हसामपुर",
+        templeNameShort: "श्री नृसिंह बड़ा मंदिर, हसामपुर",
         navHome: "मुख्य पृष्ठ",
         navAbout: "इतिहास",
         navGallery: "गैलरी",
@@ -2286,8 +2319,8 @@
         navTop: "शीर्ष", navSide: "साइड",
       },
       en: {
-        templeName: "Sri Narsimha Bada Mandir Hasampur",
-        templeNameShort: "Sri Narsimha Temple",
+        templeName: "Sri Narsingh Bada Mandir, Hasampur",
+        templeNameShort: "Sri Narsingh Bada Mandir, Hasampur",
         navHome: "Home", navAbout: "History", navGallery: "Gallery", navBhajans: "Bhajans",
         navLeela: "Leela 2026", navCalendar: "Calendar", navLogin: "Login", navAdmin: "Admin", navMember: "Member",
         mainHeading: "Jai Sri Narsimha",
@@ -2569,87 +2602,6 @@
     // ----------------------------------
 
     let countdownInterval;
-
-    // Run immediately when HTML is ready (Fixes 3-4s Lag)
-    document.addEventListener('DOMContentLoaded', () => {
-
-      const isDesktop = window.innerWidth >= 1024;
-
-      // Force Top Nav on Desktop initially (unless overridden later), and Side Nav on Mobile
-      let initialStyle;
-      if (!isDesktop) {
-        initialStyle = 'side';
-      } else {
-        initialStyle = state.desktopNavDefault || 'top';
-      }
-
-      setNavStyle(initialStyle);
-
-      initSettingsUI();
-      applyTheme(state.theme);
-      // --- RESTORE LAST VIEW ---
-      // Check memory: "Where was the user before refresh?"
-      const savedView = localStorage.getItem('lastView');
-
-      if (savedView && document.getElementById(savedView)) {
-        // If we have a memory, go there immediately
-        switchView(savedView);
-      } else {
-        // First time visitor? Go Home.
-        renderNavigation();
-        // Ensure Home is visible if no switchView happened
-        document.getElementById('view-home').classList.remove('hide');
-      }
-
-      // Initialize other lightweight features
-      startCountdown(state.melaDate);
-      renderCalendar();
-      updateLanguage();
-      startShlokaRotation();
-      updateVisitorCount();
-      initPanchang();
-      renderAdminFeatures();
-      applyFeatureStates();
-      renderUserPlaylist();
-      updateDarshanStatus();
-      initSideNavResizer();
-      updateSettingsVisibility(); // Hide top nav option on mobile
-
-      // Dark mode check
-      if (document.documentElement.classList.contains('dark')) {
-        toggleDarkMode();
-        if (!document.documentElement.classList.contains('dark')) toggleDarkMode();
-      }
-
-      // Show welcome popup slightly later
-      setTimeout(() => {
-        document.getElementById('welcome-popup').classList.remove('hide');
-        setTimeout(() => document.getElementById('welcome-popup').classList.add('hide'), 8000);
-      }, 1000);
-
-      window.addEventListener('scroll', () => {
-        const topNav = document.getElementById('top-nav');
-        const scrollBtn = document.getElementById('scroll-top-btn');
-
-        // Threshold logic
-        if (window.scrollY > 30) {
-          topNav.classList.add('nav-scrolled');
-        } else {
-          // Only remove the class if we aren't in Mobile Side Nav mode
-          const isMobileSideNav = window.innerWidth < 1024 && state.navStyle === 'side';
-          if (!isMobileSideNav) {
-            topNav.classList.remove('nav-scrolled');
-          }
-        }
-
-        // Scroll to Top button logic
-        if (window.scrollY > 300) {
-          scrollBtn.classList.remove('hide');
-        } else {
-          scrollBtn.classList.add('hide');
-        }
-      });
-    });
 
     // Load heavy audio/images in background (Doesn't block UI anymore)
 
@@ -3637,33 +3589,168 @@
       dockContainer.innerHTML = dockHtml;
     }
 
+
+    // --- 1. ROUTER CONFIGURATION ---
+    const routeMap = {
+      '/': 'view-home',
+      '/history': 'view-about',
+      '/gallery': 'view-gallery',
+      '/bhajans': 'view-bhajans',
+      '/calendar': 'view-calendar',
+      '/leela': 'view-leela',
+      '/login': 'view-login',
+      // '/admin': 'view-admin' // Hidden/Protected route
+    };
+
+    // Create a reverse map to find Path from View ID
+    const viewToPath = Object.fromEntries(Object.entries(routeMap).map(a => a.reverse()));
+
+    // --- 2. SWITCH VIEW (UPDATES URL) ---
     function switchView(viewId) {
       const sections = document.querySelectorAll('.view-section');
       const target = document.getElementById(viewId);
 
       if (!target) return;
 
-      // 1. Instantly hide all and strip the animation class
+      // Hide all sections & remove animation class to reset it
       sections.forEach(el => {
         el.classList.add('hide');
         el.classList.remove('animate-fade-in');
       });
 
-      // 2. Make the target visible
+      // Show target & trigger animation
       target.classList.remove('hide');
-
-      // 3. Re-trigger the scale-fade animation
-      void target.offsetWidth; // Force reflow
+      void target.offsetWidth; // Force reflow (restarts animation)
       target.classList.add('animate-fade-in');
 
-      // 4. Persistence & Navigation updates
+      // Update State
       state.activeView = viewId;
-      localStorage.setItem('lastView', viewId);
+
+      // Update Navigation UI (Active Highlight)
       renderNavigation();
+
+      // Scroll to top smoothly
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // PUSH TO HISTORY (Change URL without reload)
+      const newPath = viewToPath[viewId] || '/';
+
+      // Only push if we are changing to a new path
+      if (window.location.pathname !== newPath) {
+        window.history.pushState({ viewId: viewId }, "", newPath);
+      }
+    }
+    // --- 3. HANDLE INITIAL LOAD (READS URL) ---
+    function handleInitialLoad() {
+      const path = window.location.pathname;
+
+      // Handle trailing slashes (e.g. "/history/" becomes "/history")
+      const cleanPath = path.endsWith('/') && path.length > 1 ? path.slice(0, -1) : path;
+
+      // Find view ID or default to Home
+      const viewId = routeMap[cleanPath] || 'view-home';
+
+      // Update State
+      state.activeView = viewId;
+
+      // Manually update DOM (No animation needed on first load usually, but we keep it consistent)
+      document.querySelectorAll('.view-section').forEach(el => el.classList.add('hide'));
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.classList.remove('hide');
+        target.classList.add('animate-fade-in');
+      }
+
+      renderNavigation();
     }
 
-    // function toggleReadMore(btn) {
+    // --- 4. BROWSER BACK BUTTON SUPPORT ---
+    window.onpopstate = function (event) {
+      if (event.state && event.state.viewId) {
+        // User clicked Back/Forward -> Restore that view
+        state.activeView = event.state.viewId;
+
+        document.querySelectorAll('.view-section').forEach(el => el.classList.add('hide'));
+        const target = document.getElementById(event.state.viewId);
+        if (target) {
+          target.classList.remove('hide');
+          target.classList.add('animate-fade-in');
+        }
+        renderNavigation();
+      } else {
+        // Fallback if history state is empty
+        handleInitialLoad();
+      }
+    };
+
+    // --- 5. INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // Navigation Defaults
+      const isDesktop = window.innerWidth >= 1024;
+      let initialStyle = isDesktop ? (state.desktopNavDefault || 'top') : 'side';
+      setNavStyle(initialStyle);
+
+      initSettingsUI();
+      applyTheme(state.theme);
+
+      // *** USE ROUTER INSTEAD OF LOCALSTORAGE ***
+      handleInitialLoad();
+
+      // Init Features
+      startCountdown(state.melaDate);
+      renderCalendar();
+      updateLanguage();
+      startShlokaRotation();
+      updateVisitorCount();
+      initPanchang();
+      renderAdminFeatures();
+      applyFeatureStates();
+      renderUserPlaylist();
+      updateDarshanStatus();
+      initSideNavResizer();
+      updateSettingsVisibility();
+
+      // Dark Mode Check
+      if (document.documentElement.classList.contains('dark')) {
+        toggleDarkMode();
+        if (!document.documentElement.classList.contains('dark')) toggleDarkMode();
+      }
+
+      // Welcome Popup
+      setTimeout(() => {
+        document.getElementById('welcome-popup').classList.remove('hide');
+        setTimeout(() => document.getElementById('welcome-popup').classList.add('hide'), 8000);
+      }, 1000);
+
+      // Scroll Listener
+      window.addEventListener('scroll', () => {
+        const topNav = document.getElementById('top-nav');
+        const scrollBtn = document.getElementById('scroll-top-btn');
+        const sideNav = document.getElementById('side-nav');
+
+        if (window.scrollY > 30) {
+          topNav.classList.add('nav-scrolled');
+        } else {
+          const isMobileSideNav = window.innerWidth < 1024 && state.navStyle === 'side';
+          if (!isMobileSideNav) {
+            topNav.classList.remove('nav-scrolled');
+            sideNav.classList.remove('nav-scroll')
+          }
+        }
+
+        if (window.scrollY > 5) {
+          sideNav.classList.add('nav-scroll');
+        } else {
+          sideNav.classList.remove('nav-scroll');
+        }
+
+        if (window.scrollY > 300) {
+          scrollBtn.classList.remove('hide');
+        } else {
+          scrollBtn.classList.add('hide');
+        }
+      });
+    });    // function toggleReadMore(btn) {
     //   if (window.event) window.event.stopPropagation(); // Prevent card clicks
 
     //   const parent = btn.parentElement;
@@ -3960,7 +4047,7 @@
       reader.onload = function () {
         const grid = document.getElementById('gallery-grid');
         const div = document.createElement('div');
-        div.className = 'gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative animate-fade-in border border-white/20 cursor-pointer';
+        div.className = 'gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative animate-fade-in border border-white/20 cursor-pointer';
         div.onclick = function () { openImagePreview(this); };
         div.innerHTML = `<img src="${reader.result}" class="w-full h-full object-cover"><button class="delete-btn absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full ${state.user === 'admin' ? '' : 'hide'}" onclick="deleteGalleryItem(event, this)" loading="lazy" ><i class="fas fa-trash"></i></button>`;
         grid.insertBefore(div, grid.firstChild);
@@ -3976,8 +4063,12 @@
 
       const targetImg = document.getElementById('preview-img-target');
       targetImg.src = element.querySelector('img').src;
-      document.getElementById('image-preview-modal').classList.remove('hide');
-      document.body.style.overflow = 'hidden'; // Prevent scrolling background
+
+      const modal = document.getElementById('image-preview-modal');
+      modal.classList.remove('hide');
+
+      // Disable scrolling on body
+      document.body.style.overflow = 'hidden';
     }
 
     function changePreviewImage(step, event) {
@@ -4009,7 +4100,7 @@
       if (e.key === 'ArrowLeft') changePreviewImage(-1);
       if (e.key === 'Escape') closeImagePreview();
     });
-    function closeImagePreview() { document.getElementById('image-preview-modal').classList.add('hide'); }
+    function closeImagePreview() { document.getElementById('image-preview-modal').classList.add('hide'); document.body.style.overflow = ''; }
     function deleteGalleryItem(e, btn) { e.stopPropagation(); if (confirm('Delete?')) btn.closest('.gallery-item').remove(); }
 
     function handleLogin(e) {
