@@ -5,10 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>श्री नृसिंह बड़ा मंदिर हसामपुर</title>
-  <link rel="icon" type="image/png" href="/public/assets/static/favicon.png">
-
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="/assets/static/favicon.png">
+  <link rel="stylesheet" href="/src/style.css">
 
   <!-- Google Fonts (From prep.html) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,47 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: 'var(--primary)',
-            secondary: 'var(--secondary)',
-            bg: 'var(--bg)',
-            text: 'var(--text)',
-            glass: 'var(--glass)',
-            glassBorder: 'var(--glass-border)',
-            headglass: 'var(--head-glass)'
-          },
-          fontFamily: {
-            heading: ['var(--heading-font)', 'serif'],
-            body: ['var(--body-font)', 'sans-serif'],
-            shloka: ['var(--shloka-font)', 'serif'],
-          },
-          screens: {
-            'xs': '480px',
-            'sm': '640px',
-            'md': '768px',
-            'lg': '1024px',
-            'xl': '1280px',
-            '2xl': '1536px',
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          },
-          keyframes: {
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
+
 
   <style>
     :root {
@@ -91,7 +49,7 @@
       --font-size-base: 16px;
 
       /* Resizable Side Nav Variable */
-      --side-nav-width: 200px;
+      --side-nav-width: 240px;
     }
 
     #side-nav {
@@ -497,8 +455,8 @@
     /* Welcome Popup */
     #welcome-popup {
       position: fixed;
-      top: 65px;
-      right: 20px;
+      top: 75px;
+      right: 10px;
       background: var(--primary);
       color: white;
       padding: 10px 15px;
@@ -517,7 +475,7 @@
       content: '';
       position: absolute;
       top: -6px;
-      right: 20px;
+      right: 15px;
       width: 12px;
       height: 12px;
       background: var(--primary);
@@ -863,6 +821,8 @@
 
 <body class="min-h-screen overflow-x-hidden relative nav-top">
 
+  <audio id="global-audio-player" preload="auto" onended="audioNext()"></audio>
+
   <!-- ANNOUNCEMENT TICKER -->
   <div id="announcement-bar" class="ticker-wrap" data-feature="ticker">
     <div class="ticker" id="announcement-text">
@@ -885,13 +845,14 @@
       <div class="text-center mb-6">
         <div
           class="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-primary mx-auto mb-4 overflow-hidden shadow-2xl relative">
-          <img id="overlay-art" src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+          <img id="overlay-art" src="/assets/static/music-disk.jpeg"
             class="w-full h-full object-cover animate-spin-slow">
           <div class="absolute inset-0 flex items-center justify-center bg-black/20">
             <i class="fas fa-music text-3xl text-white/80"></i>
           </div>
         </div>
         <h3 id="overlay-title" class="text-2xl font-bold text-white mb-1">Loading...</h3>
+        <p id="overlay-credit" class="text-xs text-white/50 mb-1"></p>
         <p class="text-white/60 text-sm">Bhajan Player</p>
       </div>
 
@@ -934,16 +895,25 @@
       class="player-minimize-btn text-white/70 hover:text-white mr-1 text-xs hide"><i
         class="fas fa-compress-arrows-alt"></i></button>
     <div
-      class="player-art-container relative w-8 h-8 rounded-full overflow-hidden border border-primary bg-black flex-shrink-0 cursor-pointer">
-      <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
-        class="w-full h-full object-cover animate-spin-slow" id="player-art">
+      class="player-art-container relative w-8 h-8 rounded-full overflow-hidden bg-black flex-shrink-0 cursor-pointer">
+      <img src="public/assets/static/music-disk.jpeg" class="w-full h-full object-cover animate-spin-slow"
+        id="player-art">
     </div>
     <div class="player-info flex flex-col w-24 overflow-hidden cursor-pointer">
-      <span id="player-title" class="text-[10px] font-bold truncate text-secondary">Loading...</span>
+      <span id="player-title" class="text-[10px] font-bold truncate text-yellow-600">Loading...</span>
+
+      <span id="player-credit" class="text-[8px] text-black/70 truncate dark:text-white/100"></span>
+
       <div class="w-full h-1 bg-white/20 rounded-full mt-0.5 overflow-hidden cursor-pointer" onclick="seekAudio(event)">
         <div id="player-progress" class="h-full bg-primary w-0 transition-all duration-100"></div>
       </div>
     </div>
+    <!-- <div class="player-info flex flex-col w-24 overflow-hidden cursor-pointer">
+      <span id="player-title" class="text-[10px] font-bold truncate text-secondary">Loading...</span>
+      <div class="w-full h-1 bg-white/20 rounded-full mt-0.5 overflow-hidden cursor-pointer" onclick="seekAudio(event)">
+        <div id="player-progress" class="h-full bg-primary w-0 transition-all duration-100"></div>
+      </div>
+    </div> -->
     <div class="player-controls flex items-center gap-2 text-xs">
       <button onclick="audioPrev(event)" class="hover:text-primary transition"><i
           class="fas fa-step-backward"></i></button>
@@ -1241,9 +1211,9 @@
         </button>
         <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
         <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
-          class="w-9 h-9 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
-          <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
-            class="w-full h-full object-cover opacity-80 animate-spin-slow">
+          class="w-7 h-7 border-0 border-primary overflow-visible animate-spin-slow scale-90 hover:scale-110 transition">
+          <img src="/assets/static/music-disk.png"
+            class="object-contain opacity-100 animate-spin-slow">
         </button>
         <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
         <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
@@ -1252,7 +1222,7 @@
     </nav>
     <!-- SIDE NAVIGATION BAR (Modified for Resizability) -->
     <nav id="side-nav" style="width: var(--side-nav-width);"
-      class="fixed left-0 top-0 h-full glass-panel transform -translate-x-full transition-transform duration-300 flex flex-col p-6 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
+      class="fixed left-0 top-0 h-full glass-panel transform -translate-x-full transition-transform duration-300 flex flex-col p-3 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
 
       <!-- Resizer Handle -->
       <div id="side-nav-resizer"></div>
@@ -1271,7 +1241,10 @@
       </div>
 
       <div class="flex flex-col gap-4" id="side-menu-items"></div>
-      <div class="mt-auto border-t pt-4 space-y-3">
+      <div class="mt-auto pt-4 space-y-3">
+        <div class="text-center mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 opacity-75 text-xs">
+              <i class="fas fa-info-circle"></i> <span>Tap on the disk to see full playlist.</span>
+            </div>
         <!-- Player Container for Side Nav -->
         <div id="side-nav-player-container"></div>
         <div class="w-full h-[1px] bg-gray-300 dark:bg-gray-700 my-2"></div>
@@ -1333,8 +1306,8 @@
         <!-- Hero -->
         <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12 pt-5 -top-20">
           <div class="absolute inset-0 z-0">
-            <img id="hero-bg" src="/public/assets/static/home.jpg"
-              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110"
+            <img id="hero-bg" src="/assets/static/home.jpg"
+              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-100 mt-3"
               fetchpriority="high">
             <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent "></div>
@@ -1374,7 +1347,7 @@
               <div
                 class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-secondary overflow-hidden mx-auto shadow-2xl glass-panel flex items-center justify-center mb-6 ring-4 ring-primary/30 relative group z-10 idol-glow relative group z-10"
                 id="idol-container">
-                <img id="main-idol-img" src="/public/assets/static/favicon.png" class="w-full h-full object-cover"
+                <img id="main-idol-img" src="/assets/static/favicon.png" class="w-full h-full object-cover"
                   fetchpriority="high">
               </div>
 
@@ -1489,7 +1462,7 @@
         </div>
         <div class="glass-panel p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
           <div class="flex flex-col md:flex-row gap-8 items-center">
-            <img src="https://images.unsplash.com/photo-1561361058-c24ce813d943?q=80"
+            <img src="/assets/static/VDJ.JPG"
               class="w-full md:w-1/3 rounded-lg shadow-md hover:scale-105 transition">
             <div>
               <p class="text-lg leading-relaxed mb-4 text-justify" data-key="historyText1">
@@ -1536,73 +1509,73 @@
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/0A.jpg"
+            <img src="/assets/static/0A.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/0.jpg"
+            <img src="/assets/static/0.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/1.JPG"
+            <img src="/assets/static/1.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <!-- <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/0B.jpg"
+            <img src="/assets/static/0B.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div> -->
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/9.jpg"
+            <img src="/assets/static/9.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/3.jpg"
+            <img src="/assets/static/3.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/4.JPG"
+            <img src="/assets/static/4.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/2.JPG"
+            <img src="/assets/static/2.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/5.JPG"
+            <img src="/assets/static/5.JPG"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/6.jpg"
+            <img src="/assets/static/6.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/7.jpg"
+            <img src="/assets/static/7.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
             class="gallery-item rounded-xl overflow-hidden shadow-lg h-96 group relative border border-white/20 cursor-pointer"
             onclick="openImagePreview(this)">
-            <img src="/public/assets/static/8.jpg"
+            <img src="/assets/static/8.jpg"
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy">
           </div>
           <div
@@ -1702,7 +1675,7 @@
           onclick="toggleMelaOverlay()">
           <div
             class="relative h-64 rounded-2xl overflow-hidden border-4 border-yellow-500/50 shadow-[0_0_30px_rgba(234,88,12,0.5)]">
-            <img src="/public/assets/static/live-mela.jpg"
+            <img src="/assets/static/live-mela.jpg"
               class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" loading="lazy">
             <div
               class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-8">
@@ -2258,9 +2231,9 @@
 
     // --- GLOBAL AUDIO STATE ---
     const playlist = [
-      { title: "Namaste Narsimhaya", url: "https://www.srinarsinghdevji.com/public/assets/static/Namaste_Narasimhaya.webm" },
-      { title: "Madhurastakam", url: "https://www.srinarsinghdevji.com/public/assets/static/MADHURASHTAKAM.webm" },
-      { title: "Radha Ramanam Hare Hare", url: "https://www.srinarsinghdevji.com/public/assets/static/Radha_Ramanam_Hare_Hare.webm" }
+      { title: "Namaste Narsimhaya", url: "/assets/static/Namaste_Narasimhaya.webm", credit: "Source: RAYS STUDIO (YouTube)" },
+      { title: "Madhurastakam", url: "/assets/static/MADHURASHTAKAM.webm", credit: "Source: Spiritual Mantra (YouTube)" },
+      { title: "Radha Ramanam Hare Hare", url: "/assets/static/Radha_Ramanam_Hare_Hare.webm", credit: "Source: BhaktiPath (YouTube)" }
     ];
     let currentTrack = 0;
     let isPlaying = false;
@@ -2667,7 +2640,17 @@
     // --- AUDIO PLAYER LOGIC ---
     function initAudioPlayer() {
       audioPlayer = document.getElementById('global-audio-player');
+
+      // Existing progress bar listener
       audioPlayer.addEventListener('timeupdate', updateProgressBar);
+
+      // NEW: Sync Play/Pause buttons automatically
+      audioPlayer.addEventListener('play', updatePlayerUI);
+      audioPlayer.addEventListener('pause', updatePlayerUI);
+      audioPlayer.addEventListener('ended', () => {
+        isPlaying = false;
+        updatePlayerUI();
+      });
 
       // Load first track
       if (playlist.length > 0) loadTrack(0);
@@ -2678,10 +2661,21 @@
       currentTrack = index;
       audioPlayer.src = playlist[index].url;
 
-      // Update Full UI (Bottom Desktop)
+      // 1. Update Bottom Bar Title & Credit
       document.querySelector('#global-player-ui #player-title').innerText = playlist[index].title;
-      // Update Overlay UI
+      const bottomCredit = document.querySelector('#global-player-ui #player-credit');
+      if (bottomCredit) {
+        bottomCredit.innerText = playlist[index].credit || '';
+      }
+
+      // 2. Update Overlay Title & Credit
       document.querySelector('#overlay-title').innerText = playlist[index].title;
+
+      // FIX: This line was missing!
+      const overlayCredit = document.getElementById('overlay-credit');
+      if (overlayCredit) {
+        overlayCredit.innerText = playlist[index].credit || '';
+      }
 
       updatePlayerUI();
     }
@@ -2690,14 +2684,11 @@
       if (e) e.stopPropagation();
 
       if (audioPlayer.paused) {
-        audioPlayer.play().then(() => {
-          isPlaying = true;
-          updatePlayerUI();
-        }).catch(e => console.error("Play error", e));
+        audioPlayer.play().catch(e => console.error("Play error:", e));
+        isPlaying = true;
       } else {
         audioPlayer.pause();
         isPlaying = false;
-        updatePlayerUI();
       }
     }
 
@@ -2738,29 +2729,31 @@
     }
 
     function updatePlayerUI() {
-      // Update Overlay Controls
+      // Select buttons from both the Bottom Bar and the Overlay
       const overlayBtn = document.getElementById('overlay-play-btn');
-
-      // Update Full Bar Controls
       const fullBarBtn = document.querySelector('#global-player-ui #play-pause-btn');
 
-      // Toggle Rotation on all music disks
-      const artElements = document.querySelectorAll('#music-disk-trigger img, .player-art-container img, #overlay-art, #mobile-menu-player-container img');
+      // Select all spinning art elements
+      const artElements = document.querySelectorAll(
+        '#music-disk-trigger img, .player-art-container img, #overlay-art, #mobile-menu-player-container img'
+      );
 
-      if (!audioPlayer.paused) {
+      if (audioPlayer && !audioPlayer.paused) {
+        // STATE: PLAYING -> Show Pause Icon
         if (overlayBtn) overlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
         if (fullBarBtn) fullBarBtn.innerHTML = '<i class="fas fa-pause"></i>';
 
-        // Start rotation
+        // Start rotation animation
         artElements.forEach(img => {
           img.style.animationPlayState = 'running';
         });
 
       } else {
+        // STATE: PAUSED -> Show Play Icon
         if (overlayBtn) overlayBtn.innerHTML = '<i class="fas fa-play pl-1"></i>';
         if (fullBarBtn) fullBarBtn.innerHTML = '<i class="fas fa-play pl-0.5"></i>';
 
-        // Pause rotation
+        // Stop rotation animation
         artElements.forEach(img => {
           img.style.animationPlayState = 'paused';
         });
