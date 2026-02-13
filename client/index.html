@@ -1063,9 +1063,9 @@
   </div>
 
   <!-- SETTINGS / ACCESSIBILITY MODAL -->
-  <div id="settings-modal" class="modal-overlay hide animate-fade-in bg-white/10 backdrop-blur-md dark:bg-black/20">
+  <div id="settings-modal" class="modal-overlay hide animate-fade-in bg-white/40 backdrop-blur-md dark:bg-black/20">
     <div
-      class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative bg-white/50 backdrop-blur-md dark:bg-black/50 text-left">
+      class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative bg-white/80 backdrop-blur-md dark:bg-black/50 text-left">
       <button onclick="toggleSettings()" class="absolute top-4 right-4 text-red-500 hover:text-red-700 transition">
         <i class="fas fa-times text-2xl"></i>
       </button>
@@ -1212,8 +1212,7 @@
         <!-- Music Disk Trigger (Top Nav & Mobile Bottom Nav) -->
         <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
           class="w-7 h-7 border-0 border-primary overflow-visible animate-spin-slow scale-90 hover:scale-110 transition">
-          <img src="/assets/static/music-disk.png"
-            class="object-contain opacity-100 animate-spin-slow">
+          <img src="/assets/static/music-disk.png" class="object-contain opacity-100 animate-spin-slow">
         </button>
         <!-- Top Nav Mobile Menu Trigger (Only for Default Top Nav Mobile - Uses Glassmorphism) -->
         <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
@@ -1243,8 +1242,8 @@
       <div class="flex flex-col gap-4" id="side-menu-items"></div>
       <div class="mt-auto pt-4 space-y-3">
         <div class="text-center mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 opacity-75 text-xs">
-              <i class="fas fa-info-circle"></i> <span>Tap on the disk to see full playlist.</span>
-            </div>
+          <i class="fas fa-info-circle"></i> <span>Tap on the disk to see full playlist.</span>
+        </div>
         <!-- Player Container for Side Nav -->
         <div id="side-nav-player-container"></div>
         <div class="w-full h-[1px] bg-gray-300 dark:bg-gray-700 my-2"></div>
@@ -1454,30 +1453,79 @@
 
       <!-- ABOUT VIEW -->
       <section id="view-about" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
-        <div class="text-center mb-10">
-          <p class="sanskrit text-lg mb-4">नमस्ते नरसिंहाय प्रह्लादाह्लाद दायिने।<br>हिरण्यकशिपोर्वक्षः
-            शिलाटङ्क नखालये॥</p>
-          <h2 class="text-4xl font-bold text-primary border-b-2 border-secondary inline-block pb-2"
-            data-key="aboutTitle">इतिहास और महत्व</h2>
+
+        <div class="text-center mb-8">
+          <p class="sanskrit text-lg md:text-xl mb-4 opacity-90 drop-shadow-md">
+            नमस्ते नरसिंहाय प्रह्लादाह्लाद दायिने।
+          </p>
+          <h2 class="text-4xl md:text-5xl font-bold text-primary" data-key="aboutTitle">
+            इतिहास और महत्व
+          </h2>
         </div>
-        <div class="glass-panel p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
-          <div class="flex flex-col md:flex-row gap-8 items-center">
-            <img src="/assets/static/VDJ.JPG"
-              class="w-full md:w-1/3 rounded-lg shadow-md hover:scale-105 transition">
-            <div>
-              <p class="text-lg leading-relaxed mb-4 text-justify" data-key="historyText1">
-                हसामपुर का श्री नृसिंह बड़ा मंदिर एक अत्यंत प्राचीन और पवित्र स्थल है। मान्यताओं के
-                अनुसार, यहाँ भगवान नृसिंह स्वयंभू रूप में विराजमान हैं।
-              </p>
-              <p class="text-lg leading-relaxed text-justify" data-key="historyText2">
-                हर साल वैशाख शुक्ल पक्ष में यहाँ भव्य मेले का आयोजन होता है, जिसमें दूर-दूर से श्रद्धालु
-                अपनी मनोकामनाएं लेकर आते हैं। मंदिर की वास्तुकला प्राचीन भारतीय संस्कृति का अद्वितीय
-                उदाहरण है।
-              </p>
-            </div>
+
+        <div class="flex items-center justify-center mb-8">
+          <div id="history-tabs-container"
+            class="flex gap-3 overflow-x-auto px-4 py-2 max-w-full scrollbar-hide snap-x items-center">
           </div>
+
+          <button onclick="handleAddStoryClick()"
+            class="ml-2 flex-shrink-0 w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition border-2 border-white"
+            title="Add New Story">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div id="history-content-container"
+          class="glass-panel p-2 md:p-4 rounded-3xl shadow-2xl max-w-6xl mx-auto border border-white/20 relative overflow-hidden min-h-[500px]">
         </div>
       </section>
+
+      <div id="history-modal" class="modal-overlay hide animate-fade-in z-[6000]">
+        <div
+          class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl border border-primary">
+          <button onclick="closeHistoryModal()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
+              class="fas fa-times"></i></button>
+          <h3 id="history-modal-title" class="text-2xl font-bold text-primary mb-4">Edit Story</h3>
+
+          <form onsubmit="saveHistoryStory(event)" class="space-y-4">
+            <input type="hidden" id="hist-id">
+            <div>
+              <label class="text-xs font-bold opacity-70">Tab Title (Short)</label>
+              <input type="text" id="hist-tab-title" required placeholder="e.g. Patotsav"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold opacity-70">Main Title</label>
+              <input type="text" id="hist-title" required placeholder="e.g. Maha Patotsav History"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold opacity-70">Subtitle / Tag</label>
+              <input type="text" id="hist-subtitle" placeholder="e.g. ANNUAL FESTIVAL"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold opacity-70">Image URL</label>
+              <input type="text" id="hist-image" required placeholder="/public/assets/static/..."
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold opacity-70">Story Content</label>
+              <textarea id="hist-text" required rows="5" placeholder="Write the full katha here..."
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40"></textarea>
+            </div>
+
+            <button type="submit"
+              class="w-full bg-primary text-white font-bold py-3 rounded hover:bg-orange-700 transition">
+              Save Story
+            </button>
+          </form>
+        </div>
+      </div>
 
       <!-- GALLERY VIEW -->
       <section id="view-gallery" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
@@ -3297,6 +3345,212 @@
         reader.readAsDataURL(file);
       }
     }
+   // --- DYNAMIC HISTORY DATA (CONNECTED TO DB) ---
+let historyData = [];
+let activeHistoryId = null; 
+const API_URL = 'https://sri-xpvu.onrender.com/api'; // Use your actual live backend URL
+
+// --- 1. INITIAL FETCH ---
+async function fetchHistory() {
+  try {
+    const res = await fetch(`${API_URL}/history`);
+    const data = await res.json();
+    
+    if (data.length > 0) {
+      historyData = data.map(item => ({
+        id: item._id, // MongoDB ID
+        tabTitle: item.tabTitle,
+        title: item.title,
+        subtitle: item.subtitle,
+        icon: 'fa-landmark', // Default icon
+        image: item.image,
+        text: item.text
+      }));
+      
+      // Set active tab to the first one if not set
+      if (!activeHistoryId) activeHistoryId = historyData[0].id;
+      
+      renderHistory();
+    } else {
+      // Fallback if DB is empty (Optional)
+      document.getElementById('history-content-container').innerHTML = 
+        '<p class="text-center p-10 opacity-50">No history stories found. Add one!</p>';
+    }
+  } catch (err) {
+    console.error("Failed to load history:", err);
+  }
+}
+
+// --- 2. RENDER FUNCTION ---
+function renderHistory() {
+  const tabContainer = document.getElementById('history-tabs-container');
+  const contentContainer = document.getElementById('history-content-container');
+  
+  if(!tabContainer || !contentContainer) return;
+
+  // A. Render Tabs
+  tabContainer.innerHTML = historyData.map(item => {
+    const isActive = item.id === activeHistoryId;
+    const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
+    const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
+    
+    return `
+      <button onclick="switchHistoryTab('${item.id}')" 
+        class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
+        <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
+      </button>
+    `;
+  }).join('');
+
+  // B. Render Content
+  const activeItem = historyData.find(i => i.id === activeHistoryId);
+  if (activeItem) {
+    const adminControls = state.user === 'admin' ? `
+      <div class="absolute top-4 right-4 flex gap-2 z-50">
+        <button onclick="editHistory('${activeItem.id}')" class="bg-blue-600 text-white w-10 h-10 rounded-full shadow-lg hover:scale-110 transition flex items-center justify-center"><i class="fas fa-edit"></i></button>
+        <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-600 text-white w-10 h-10 rounded-full shadow-lg hover:scale-110 transition flex items-center justify-center"><i class="fas fa-trash"></i></button>
+      </div>
+    ` : '';
+
+    const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
+
+    contentContainer.innerHTML = `
+      <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
+        ${adminControls} 
+        <div class="w-full md:w-1/2 h-64 md:h-auto relative rounded-2xl overflow-hidden group">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+          <img src="${activeItem.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-1000">
+          <div class="absolute bottom-4 left-4 z-20 text-white">
+            <span class="bg-secondary text-black text-xs font-bold px-2 py-1 rounded mb-2 inline-block uppercase">${activeItem.subtitle || ''}</span>
+            <h3 class="text-2xl font-bold">${activeItem.title}</h3>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 p-4 md:p-8 flex flex-col">
+          <i class="fas fa-quote-left text-4xl text-secondary/30 mb-4"></i>
+          <div class="overflow-y-auto h-64 md:h-80 pr-4 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
+            ${formattedText}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function switchHistoryTab(id) {
+  activeHistoryId = id;
+  renderHistory();
+}
+
+// --- 3. ADMIN ACTIONS (CONNECTED TO DB) ---
+
+function handleAddStoryClick() {
+  if (state.user !== 'admin') {
+    alert("🔒 Restricted Access: Please log in as Admin.");
+    switchView('view-login');
+  } else {
+    openHistoryModal();
+  }
+}
+
+function openHistoryModal(item = null) {
+  const modal = document.getElementById('history-modal');
+  modal.classList.remove('hide');
+  
+  if (item) {
+    document.getElementById('history-modal-title').innerText = "Edit Story";
+    document.getElementById('hist-id').value = item.id;
+    document.getElementById('hist-tab-title').value = item.tabTitle;
+    document.getElementById('hist-title').value = item.title;
+    document.getElementById('hist-subtitle').value = item.subtitle;
+    document.getElementById('hist-image').value = item.image;
+    document.getElementById('hist-text').value = item.text;
+  } else {
+    document.getElementById('history-modal-title').innerText = "Add New Story";
+    document.getElementById('hist-id').value = ""; 
+    document.querySelector('#history-modal form').reset();
+  }
+}
+
+function closeHistoryModal() {
+  document.getElementById('history-modal').classList.add('hide');
+}
+
+function editHistory(id) {
+  const item = historyData.find(i => i.id === id);
+  if (item) openHistoryModal(item);
+}
+
+// --- SAVE TO DATABASE ---
+async function saveHistoryStory(e) {
+  e.preventDefault();
+  
+  const id = document.getElementById('hist-id').value;
+  const payload = {
+    tabTitle: document.getElementById('hist-tab-title').value,
+    title: document.getElementById('hist-title').value,
+    subtitle: document.getElementById('hist-subtitle').value,
+    image: document.getElementById('hist-image').value,
+    text: document.getElementById('hist-text').value
+  };
+
+  try {
+    let response;
+    if (id) {
+      // UPDATE (PUT)
+      response = await fetch(`${API_URL}/history/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } else {
+      // CREATE (POST)
+      response = await fetch(`${API_URL}/history`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+
+    if (response.ok) {
+      alert(id ? "✅ Story Updated!" : "✅ New Story Added!");
+      closeHistoryModal();
+      fetchHistory(); // Reload from DB
+    } else {
+      alert("❌ Error saving story");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ Server Error");
+  }
+}
+
+// --- DELETE FROM DATABASE ---
+async function deleteHistory(id) {
+  if (confirm("Are you sure you want to delete this story? This cannot be undone.")) {
+    try {
+      const response = await fetch(`${API_URL}/history/${id}`, { method: 'DELETE' });
+      
+      if (response.ok) {
+        alert("🗑 Story Deleted");
+        // Reset active ID if we deleted the current one
+        if (activeHistoryId === id) activeHistoryId = null;
+        fetchHistory(); // Reload from DB
+      } else {
+        alert("❌ Error deleting story");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Server Error");
+    }
+  }
+}
+
+// --- INITIALIZE ---
+// Add this line inside your DOMContentLoaded event listener:
+// fetchHistory();
+    // --- 3. INIT ---
+    // Add this inside your existing document.addEventListener('DOMContentLoaded', ...) block
+    // Just call renderHistory() once to load the initial state.
 
     // --- ADMIN: FEATURE TOGGLES ---
     function renderAdminFeatures() {
@@ -3691,6 +3945,7 @@
 
       // Init Features
       startCountdown(state.melaDate);
+      fetchHistory();
       renderCalendar();
       updateLanguage();
       startShlokaRotation();
