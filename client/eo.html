@@ -1,0 +1,3312 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>श्री नृसिंह बड़ा मंदिर हसामपुर</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Gotu&family=Hind:wght@300;400;500;600;700&family=Kalam:wght@300;400;700&family=Martel:wght@300;400;700&family=Mukta:wght@300;400;600;700&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: 'var(--primary)',
+            secondary: 'var(--secondary)',
+            bg: 'var(--bg)',
+            text: 'var(--text)',
+            glass: 'var(--glass)',
+            glassBorder: 'var(--glass-border)',
+          },
+          fontFamily: {
+            heading: ['var(--heading-font)', 'serif'],
+            body: ['var(--body-font)', 'sans-serif'],
+            shloka: ['var(--shloka-font)', 'serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --primary: #ea580c;
+      --secondary: #facc15;
+      --bg: #fff7ed;
+      --text: #1f2937;
+      --glass: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --font-primary: 'Noto Sans Devanagari';
+      --heading-font: var(--font-primary);
+      --body-font: var(--font-primary);
+      --shloka-font: 'Noto Sans Devanagari';
+      --shloka-color: #facc15;
+      --font-size-base: 16px;
+      --side-nav-width: 260px;
+    }
+
+    html.dark {
+      --bg: #0a0a0a;
+      --text: #ffffff;
+      --glass: rgba(20, 20, 20, 0.3);
+      --glass-border: rgba(255, 255, 255, 0.05);
+      --primary: #fb923c;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-family: var(--heading-font), serif; }
+
+    /* --- CORE LAYOUT & SCROLLING --- */
+    html {
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--body-font), sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: var(--font-size-base);
+      transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(234, 88, 12, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(234, 88, 12, 0.05) 0px, transparent 50%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* --- INSTANT CSS LAYOUT HANDLING (Solves the Flash) --- */
+    
+    /* 1. TOP NAV BEHAVIOR */
+    #top-nav {
+      position: fixed !important;
+      top: 0; left: 0; width: 100%; z-index: 1000;
+      background: var(--glass);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transform: translateZ(0); border-bottom: 1px solid var(--glass-border);
+      transition: transform 0.3s ease;
+    }
+
+    /* 2. SIDE NAV BEHAVIOR */
+    #side-nav {
+      z-index: 1001 !important; /* Above everything */
+    }
+
+    /* 3. MAIN LAYOUT DEFAULT (Assumes Top Nav) */
+    #main-layout {
+      padding-top: 80px; /* Space for Top Nav */
+      display: flex; flex-direction: column; min-height: 100vh;
+      overflow: visible !important;
+      transition: padding 0.3s ease;
+    }
+
+    /* --- OVERRIDES FOR SIDE NAV MODE (Applied immediately via body class) --- */
+    
+    /* Hide Top Nav completely in Side Mode */
+    body.nav-side #top-nav {
+      display: none !important;
+    }
+
+    /* Adjust Main Layout for Side Mode (Desktop) */
+    @media (min-width: 1024px) {
+      body.nav-side #main-layout {
+        padding-top: 0 !important; /* No top nav space needed */
+        padding-left: var(--side-nav-width) !important; /* Push content right */
+      }
+      
+      /* Force Side Nav to show on Desktop in Side Mode */
+      body.nav-side #side-nav {
+        transform: translateX(0) !important;
+        display: flex !important;
+      }
+    }
+    
+    /* Adjust Main Layout for Side Mode (Mobile) */
+    @media (max-width: 1023px) {
+       body.nav-side #main-layout {
+         padding-top: 0 !important;
+       }
+       /* In mobile side mode, we need a burger button somewhere if top nav is hidden. 
+          Usually, we keep a minimal top bar or floating button. 
+          For now, we'll ensure the existing mobile burger logic works. */
+    }
+
+
+    /* --- UTILITIES & ANIMATIONS --- */
+    ::selection { background-color: var(--primary); color: white; }
+    .sanskrit { font-family: var(--shloka-font), serif; color: var(--shloka-color); font-style: italic; }
+
+    .glass-panel {
+      background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    @keyframes scaleFadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+    .animate-fade-in { animation: scaleFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; will-change: opacity, transform; }
+    
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .animate-spin-slow { animation: spin-slow 8s linear infinite; animation-play-state: paused; }
+    
+    @keyframes bounce-x { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+    .animate-bounce-x { animation: bounce-x 1s infinite; }
+    
+    @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); } 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); } }
+    .animate-pulse-green { animation: pulse-green 2s infinite; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 10px; background: transparent; }
+    ::-webkit-scrollbar-track { background: transparent; margin-block: 4px; }
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--primary); border: 3px solid transparent;
+      border-radius: 10px; background-clip: content-box; transition: background-color 0.3s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover { border: 2px solid transparent; }
+
+    .hide { display: none !important; }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6); z-index: 2500;
+      display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px);
+    }
+    .fullscreen-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9); z-index: 3000;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    /* Dock & Nav Helpers */
+    .dock-nav {
+      width: 90%; max-width: 800px; left: 50%; transform: translateX(-50%); bottom: 20px;
+      border-radius: 2rem; padding: 0.5rem 1rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    @media (min-width: 768px) { .dock-nav { width: 70%; } }
+    .dock-item { transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .dock-item:hover { transform: scale(1.2) translateY(-10px); }
+    .dock-item.active { color: var(--primary); transform: translateY(-5px); }
+    .dock-item.active i { text-shadow: 0 0 10px var(--primary); }
+
+    .nav-btn.active { color: var(--primary); font-weight: bold; background-color: rgba(255, 255, 255, 0.1); border-left: 3px solid var(--primary); }
+    #top-nav .nav-btn.active { border-left: none; border-bottom: 2px solid var(--primary); }
+
+    .flower {
+      position: absolute; top: -50px; font-size: 24px; animation: fall linear forwards;
+      pointer-events: none; z-index: 20; color: #ff9900; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    @keyframes fall { to { transform: translateY(500px) rotate(360deg); opacity: 0; } }
+
+    .ticker-wrap {
+      width: 100%; overflow: hidden; background: var(--primary); color: white;
+      padding: 5px 0; font-size: 0.9rem; font-weight: bold; position: relative; z-index: 30;
+    }
+    .ticker { display: inline-block; white-space: nowrap; animation: ticker 20s linear infinite; }
+    @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white;
+      padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 10000; transform: translateY(100px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .toast.show { transform: translateY(0); }
+
+    @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .animate-zoom-in { animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+    #side-nav-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);
+      z-index: 45; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    body.nav-side-mobile-active #side-nav-overlay { opacity: 1; pointer-events: auto; }
+    body.nav-side-mobile-active { overflow: hidden; }
+
+    .burger-icon { transition: transform 0.3s ease; }
+    .burger-icon.open { transform: rotate(90deg); }
+
+    #welcome-popup {
+      position: fixed; top: 80px; right: 20px; background: var(--primary); color: white;
+      padding: 10px 15px; border-radius: 8px; font-size: 0.85rem; font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); z-index: 200; display: flex; align-items: center;
+      gap: 10px; animation: bounce-x 2s infinite;
+    }
+    #welcome-popup::after {
+      content: ''; position: absolute; top: -6px; right: 20px; width: 12px; height: 12px;
+      background: var(--primary); transform: rotate(45deg);
+    }
+
+    #global-player-ui { transition: width 0.5s ease-in-out, transform 0.3s ease, border-radius 0.5s ease; overflow: hidden; }
+    .player-collapsed {
+      width: 50px !important; height: 50px !important; padding: 0 !important;
+      border-radius: 50% !important; background: transparent !important;
+      border: none !important; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+    }
+    .player-collapsed .player-controls, .player-collapsed .player-info, .player-collapsed .player-minimize-btn { display: none !important; }
+    .player-collapsed .player-art-container { width: 100%; height: 100%; border: 2px solid var(--secondary); }
+    body.nav-side #global-player-ui {
+      position: static; width: 100%; box-shadow: none; background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1); margin-top: 10px; padding: 10px; border-radius: 12px;
+    }
+    body.nav-side #global-player-ui .player-minimize-btn { display: none; }
+    #player-modal-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8);
+      z-index: 3000; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px);
+    }
+    .player-art-container:hover::after {
+      content: '\f0ca'; font-family: "Font Awesome 6 Free"; font-weight: 900;
+      position: absolute; inset: 0; background: rgba(0, 0, 0, 0.7); display: flex; align-items: center;
+      justify-content: center; color: white; font-size: 1.2rem; cursor: pointer;
+      border-radius: 50%; backdrop-filter: blur(2px); transition: opacity 0.3s;
+    }
+
+    body.aarti-mode { cursor: none; }
+    #aarti-cursor {
+      position: fixed; pointer-events: none; z-index: 9999; font-size: 3rem;
+      transform: translate(-50%, -50%); filter: drop-shadow(0 0 10px gold);
+    }
+    .sparkle {
+      position: fixed; background: white; border-radius: 50%; pointer-events: none;
+      z-index: 9998; animation: fadeOut 1s forwards;
+    }
+    .floating-diya {
+      position: fixed; font-size: 2rem; animation: floatUp 4s ease-in forwards;
+      pointer-events: none; z-index: 80; filter: drop-shadow(0 0 8px orange);
+    }
+    @keyframes floatUp { 0% { transform: translateY(0) scale(1); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-300px) scale(1.5); opacity: 0; } }
+    @keyframes fadeOut { to { opacity: 0; transform: scale(0); } }
+
+    .mala-bead { transition: transform 0.1s; }
+    .mala-bead:active { transform: scale(0.9); }
+
+    #side-nav-resizer {
+      position: absolute; top: 0; right: 0; width: 5px; height: 100%; cursor: col-resize;
+      background: transparent; z-index: 100; transition: background 0.2s;
+    }
+    #side-nav-resizer:hover, #side-nav-resizer.active { background: var(--primary); opacity: 0.5; }
+    .no-transition { transition: none !important; }
+
+    #mobile-menu { transition: transform 0.3s ease-in-out; }
+
+    @keyframes pulse-highlight {
+      0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7); transform: scale(1); }
+      50% { box-shadow: 0 0 0 20px rgba(234, 88, 12, 0); transform: scale(1.05); }
+      100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); transform: scale(1); }
+    }
+    .search-highlight { animation: pulse-highlight 2s ease-out; z-index: 100; border-color: var(--primary) !important; }
+    .calendar-grid-stable { display: grid !important; }
+    .card-fade-in { animation: fadeInUp 0.4s ease-out forwards; opacity: 0; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes divine-glow {
+      0%, 100% { box-shadow: 0 0 20px 5px rgba(234, 88, 12, 0.4); }
+      50% { box-shadow: 0 0 40px 10px rgba(250, 204, 21, 0.6); }
+    }
+    .idol-glow { animation: divine-glow 4s ease-in-out infinite; border: 4px solid var(--secondary) !important; }
+
+    .view-section {
+      opacity: 1; transform: scale(1) translateY(0);
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .view-section.hide { display: none !important; }
+    .view-animating {
+      display: block !important; opacity: 0; transform: scale(0.95) translateY(20px); pointer-events: none;
+    }
+    .view-section, .glass-panel {
+      backface-visibility: hidden; -webkit-overflow-scrolling: touch;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen nav-side">
+
+  <audio id="global-audio-player" preload="auto" onended="audioNext()"></audio>
+  <audio id="bell-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
+  <audio id="bead-sound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+
+  <div id="side-nav-overlay" onclick="toggleSideNav()"></div>
+
+  <div id="player-overlay"
+    class="hide fixed inset-0 z-[3000] flex items-center justify-center bg-black/80 backdrop-blur-md"
+    onclick="togglePlayerOverlay()">
+    <div class="glass-panel w-[90%] max-w-lg p-8 rounded-3xl animate-zoom-in relative bg-white/10"
+      onclick="event.stopPropagation()">
+      <button onclick="togglePlayerOverlay()" class="absolute top-4 right-4 text-white text-2xl hover:text-red-500"><i
+          class="fas fa-times"></i></button>
+      <div class="text-center mb-6">
+        <div
+          class="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-primary mx-auto mb-4 overflow-hidden shadow-2xl relative">
+          <img id="overlay-art" src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+            class="w-full h-full object-cover animate-spin-slow">
+          <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+            <i class="fas fa-music text-3xl text-white/80"></i>
+          </div>
+        </div>
+        <h3 id="overlay-title" class="text-2xl font-bold text-white mb-1">Loading...</h3>
+        <p class="text-white/60 text-sm">Bhajan Player</p>
+      </div>
+
+      <div class="flex items-center justify-center gap-6 mb-8">
+        <button onclick="audioPrev(event)" class="text-white hover:text-primary text-2xl"><i
+            class="fas fa-step-backward"></i></button>
+        <button onclick="audioToggle(event)" id="overlay-play-btn"
+          class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:scale-110 transition shadow-lg text-xl"><i
+            class="fas fa-play pl-1"></i></button>
+        <button onclick="audioNext(event)" class="text-white hover:text-primary text-2xl"><i
+            class="fas fa-step-forward"></i></button>
+      </div>
+      <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden mb-6 cursor-pointer" onclick="seekAudio(event)">
+        <div id="overlay-progress" class="bg-primary h-full w-0 transition-all duration-100"></div>
+      </div>
+
+      <div class="border-t border-white/20 pt-4">
+        <h4 class="text-secondary font-bold mb-3">Up Next</h4>
+        <div id="overlay-playlist" class="max-h-40 overflow-y-auto space-y-2 pr-2">
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="welcome-popup" class="hide">
+    <span>Listen bhajans while navigating !</span>
+    <button onclick="this.parentElement.remove()" class="text-white hover:text-black"><i
+        class="fas fa-times"></i></button>
+  </div>
+
+  <div id="global-player-ui"
+    class="glass-panel p-2 rounded-full hidden items-center gap-3 pr-4 shadow-lg border-white/40 bg-black/60 backdrop-blur-md text-white"
+    onclick="handlePlayerClick()">
+    <button onclick="togglePlayerCollapse(event)"
+      class="player-minimize-btn text-white/70 hover:text-white mr-1 text-xs hide"><i
+        class="fas fa-compress-arrows-alt"></i></button>
+    <div
+      class="player-art-container relative w-8 h-8 rounded-full overflow-hidden border border-primary bg-black flex-shrink-0 cursor-pointer">
+      <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+        class="w-full h-full object-cover animate-spin-slow" id="player-art">
+    </div>
+    <div class="player-info flex flex-col w-24 overflow-hidden cursor-pointer">
+      <span id="player-title" class="text-[10px] font-bold truncate text-secondary">Loading...</span>
+      <div class="w-full h-1 bg-white/20 rounded-full mt-0.5 overflow-hidden cursor-pointer" onclick="seekAudio(event)">
+        <div id="player-progress" class="h-full bg-primary w-0 transition-all duration-100"></div>
+      </div>
+    </div>
+    <div class="player-controls flex items-center gap-2 text-xs">
+      <button onclick="audioPrev(event)" class="hover:text-primary transition"><i
+          class="fas fa-step-backward"></i></button>
+      <button onclick="audioToggle(event)" id="play-pause-btn"
+        class="w-6 h-6 rounded-full bg-white text-primary flex items-center justify-center hover:scale-110 transition"><i
+          class="fas fa-play pl-0.5"></i></button>
+      <button onclick="audioNext(event)" class="hover:text-primary transition"><i
+          class="fas fa-step-forward"></i></button>
+    </div>
+  </div>
+
+  <div id="aarti-cursor" class="hide">🪔</div>
+
+  <div id="toast" class="toast flex items-center gap-3">
+    <i class="fas fa-info-circle"></i>
+    <span id="toast-msg">Notification</span>
+  </div>
+
+  <button id="scroll-top-btn" onclick="scrollToTop()"
+    class="fixed bottom-6 right-6 z-50 bg-primary text-white w-12 h-12 rounded-full shadow-lg hide transition-transform hover:scale-110 flex items-center justify-center border-2 border-white/50">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <div id="mala-modal" class="modal-overlay hide animate-fade-in">
+    <div
+      class="glass-panel w-full max-w-sm p-8 rounded-full aspect-square relative bg-white/95 dark:bg-slate-900/95 shadow-2xl flex flex-col items-center justify-center border-4 border-secondary/50">
+      <button onclick="toggleJapaMala()" class="absolute top-8 right-8 text-red-500 text-2xl"><i
+          class="fas fa-times"></i></button>
+      <h2 class="text-xl font-bold text-primary mb-2">Japa Mala</h2>
+      <div
+        class="mala-bead w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-red-600 shadow-inner flex items-center justify-center cursor-pointer mb-4 border-4 border-white select-none"
+        onclick="countMala()">
+        <span id="mala-count" class="text-5xl font-bold text-white drop-shadow-md">0</span>
+      </div>
+      <p class="text-sm opacity-70 text-center mb-4">Tap the bead to chant.<br>Target: 108</p>
+      <button onclick="resetMala()" class="text-xs text-gray-500 hover:text-red-500"><i class="fas fa-redo"></i>
+        Reset</button>
+    </div>
+  </div>
+
+  <div id="oracle-modal" class="modal-overlay hide animate-fade-in">
+    <div
+      class="glass-panel w-full max-w-md p-8 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl text-center border border-secondary">
+      <button onclick="toggleOracle()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
+          class="fas fa-times"></i></button>
+      <i class="fas fa-om text-5xl text-primary mb-4 animate-pulse"></i>
+      <h2 class="text-2xl font-bold text-secondary mb-6">Prabhu Sandesh</h2>
+      <p id="oracle-msg"
+        class="text-xl font-heading leading-relaxed mb-8 min-h-[100px] flex items-center justify-center italic">
+        "Wait for the message..."
+      </p>
+      <button onclick="askOracle()"
+        class="bg-primary text-white px-6 py-2 rounded-full hover:bg-orange-700 transition">Receive Another
+        Message</button>
+    </div>
+  </div>
+
+  <div id="contact-modal" class="modal-overlay hide animate-fade-in">
+    <div class="glass-panel w-full max-w-md p-8 rounded-2xl relative bg-white/90 dark:bg-slate-900/90 shadow-2xl">
+      <button onclick="toggleContactModal()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
+          class="fas fa-times"></i></button>
+      <h2 class="text-2xl font-bold text-primary mb-4" data-key="contactTitle">संदेश भेजें</h2>
+      <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+        <input type="text" placeholder="Name" required
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+        <input type="text" placeholder="Email/Phone" required
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+        <textarea placeholder="Message" required
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white"
+          rows="3"></textarea>
+        <button type="submit"
+          class="w-full bg-primary text-white font-bold py-2 rounded hover:bg-orange-700 transition">Send
+          Message</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="sankalp-modal" class="modal-overlay hide animate-fade-in">
+    <div class="glass-panel w-full max-w-lg p-8 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl">
+      <button onclick="toggleSankalp()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
+          class="fas fa-times"></i></button>
+      <h2 class="text-2xl font-bold text-primary mb-2">Digital Sankalp</h2>
+      <p class="text-sm opacity-70 mb-4">Post your prayer to the Lord.</p>
+      <form onsubmit="handleSankalpSubmit(event)" class="space-y-3 mb-6">
+        <input type="text" id="sankalp-name" placeholder="Your Name" required
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+        <input type="text" id="sankalp-gotra" placeholder="Gotra (Optional)"
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+        <textarea id="sankalp-wish" placeholder="Your Wish/Prayer..." required
+          class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white"
+          rows="2"></textarea>
+        <button type="submit"
+          class="w-full bg-secondary text-black font-bold py-2 rounded hover:bg-yellow-400 transition">Post
+          Sankalp</button>
+      </form>
+      <div class="border-t border-gray-400 pt-4">
+        <h3 class="font-bold mb-2">Recent Prayers:</h3>
+        <div class="h-32 overflow-hidden relative bg-black/5 rounded p-2">
+          <div id="sankalp-marquee" class="absolute w-full space-y-2 transition-transform duration-1000"
+            style="top: 0;">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="search-modal" class="modal-overlay hide animate-fade-in">
+    <div class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/90 dark:bg-slate-900/90 mt-[-10vh]">
+      <div class="flex items-center border-b border-gray-400 pb-2 mb-4">
+        <i class="fas fa-search text-gray-500 mr-3"></i>
+        <input type="text" id="search-input" onkeyup="performSearch()" placeholder="Search site..."
+          class="flex-grow bg-transparent outline-none text-lg text-black dark:text-white">
+        <button onclick="toggleSearch()" class="text-red-500"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="search-results" class="max-h-60 overflow-y-auto space-y-2">
+        <p class="text-center opacity-50 text-sm py-4">Start typing to search...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="image-preview-modal" class="fullscreen-modal hide" onclick="closeImagePreview()">
+    <img id="preview-img-target" src=""
+      class="max-h-[90vh] max-w-[90vw] object-contain shadow-2xl border-4 border-white rounded-lg">
+    <button class="absolute top-5 right-5 text-white text-4xl hover:text-red-500"><i class="fas fa-times"></i></button>
+  </div>
+
+  <div id="settings-modal" class="modal-overlay hide animate-fade-in bg-white/10 backdrop-blur-md dark:bg-black/20">
+    <div
+      class="glass-panel w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl p-8 relative bg-white/70 backdrop-blur-md dark:bg-black/60 text-left">
+      <button onclick="toggleSettings()" class="absolute top-4 right-4 text-red-500 hover:text-red-700 transition">
+        <i class="fas fa-times text-2xl"></i>
+      </button>
+
+      <h2 class="text-2xl font-bold text-primary mb-6 border-b border-gray-400 pb-2" data-key="settingsTitle">
+        Accessibility & Settings</h2>
+
+      <div class="mb-6">
+        <h3 class="font-bold mb-2" data-key="labelLang">Language / भाषा</h3>
+        <select id="lang-select" onchange="changeLanguage(this.value)"
+          class="w-full p-2 rounded bg-white/50 border border-gray-400 dark:bg-black/50 dark:border-gray-600 text-black dark:text-white">
+          <option value="hi">Hindi (हिंदी)</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="font-bold mb-2" data-key="labelNavStyle">Navigation Style</h3>
+        <div class="flex gap-2 text-sm">
+          <button onclick="setNavStyle('top')"
+            class="flex-1 p-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-primary hover:text-white transition"
+            data-key="navTop">Top</button>
+          <button onclick="setNavStyle('side')"
+            class="flex-1 p-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-primary hover:text-white transition"
+            data-key="navSide">Side</button>
+          <button onclick="setNavStyle('bottom')"
+            class="flex-1 p-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-primary hover:text-white transition"
+            data-key="navBottom">Bottom (Dock)</button>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="font-bold mb-2" data-key="labelTheme">Theme Colors</h3>
+        <div class="grid grid-cols-5 gap-3" id="theme-grid"></div>
+      </div>
+
+      <div class="mb-6 space-y-3">
+        <h3 class="font-bold" data-key="labelFonts">Fonts</h3>
+        <div>
+          <label class="text-xs opacity-70" data-key="labelHeadFont">Heading Font</label>
+          <select onchange="updateCustomFont('heading', this.value)"
+            class="font-select w-full p-2 rounded bg-white/50 border border-gray-400 dark:bg-black/50 text-black dark:text-white"></select>
+        </div>
+        <div>
+          <label class="text-xs opacity-70" data-key="labelBodyFont">Body Font</label>
+          <select onchange="updateCustomFont('body', this.value)"
+            class="font-select w-full p-2 rounded bg-white/50 border border-gray-400 dark:bg-black/50 text-black dark:text-white"></select>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <h3 class="font-bold mb-2" data-key="labelTypo">Typography & Contrast</h3>
+        <div class="flex items-center gap-4 mb-3">
+          <button onclick="adjustFontSize(-1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"><i
+              class="fas fa-minus"></i> A</button>
+          <span class="font-bold" data-key="labelSize">Size</span>
+          <button onclick="adjustFontSize(1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded"><i
+              class="fas fa-plus"></i> A</button>
+        </div>
+        <div class="flex items-center justify-between mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded">
+          <span class="font-bold" data-key="labelDark">Dark Mode</span>
+          <button id="dark-mode-btn" onclick="toggleDarkMode()"
+            class="text-2xl text-gray-700 dark:text-yellow-400 hover:scale-110 transition">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav id="top-nav"
+    class="glass-panel sticky top-0 z-40 px-6 py-3 flex justify-between items-center transition-all shadow-md">
+
+    <div class="flex items-center gap-3 w-full lg:w-auto" id="top-nav-left">
+      <button id="top-nav-search-trigger" onclick="toggleSearch()"
+        class="hide text-primary text-xl hover:scale-110 transition"><i class="fas fa-search"></i></button>
+
+      <div id="desktop-bottom-search-container" class="hide relative w-64">
+        <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
+          class="w-full pl-3 pr-8 py-1 rounded-full bg-black/10 border border-gray-400 outline-none text-sm">
+        <i class="fas fa-search absolute right-3 top-1.5 text-gray-500"></i>
+      </div>
+
+      <div id="top-nav-icon-container">
+        <i class="fas fa-om text-3xl text-primary animate-pulse" id="top-nav-icon"></i>
+      </div>
+
+      <div id="top-nav-title-group" class="transition-all duration-300">
+        <h1 class="text-xl font-bold leading-none text-primary" data-key="templeName" id="nav-title">श्री
+          नृसिंह बड़ा मंदिर हसामपुर</h1>
+      </div>
+
+      <button id="mobile-burger-btn"
+        class="hide text-2xl text-primary z-50 transition-transform burger-icon absolute right-6 lg:static"
+        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div class="hidden lg:flex gap-6 font-bold text-sm uppercase tracking-wide items-center" id="top-menu-items">
+      </div>
+
+    <div class="flex items-center gap-4" id="top-nav-right">
+      <button id="desktop-side-burger"
+        class="hide text-2xl text-primary z-50 transition-transform burger-icon ml-3 hover:scale-110"
+        onclick="toggleSideNav()"><i class="fas fa-bars"></i></button>
+
+      <div id="desktop-bottom-player-container"></div>
+
+      <button onclick="shareApp()" class="hidden lg:block text-primary hover:scale-110 transition" title="Share App">
+        <i class="fas fa-share-alt text-xl"></i>
+      </button>
+
+      <button id="top-nav-search-btn" onclick="toggleSearch()"
+        class="hidden lg:block text-primary hover:scale-110 transition" title="Search"><i
+          class="fas fa-search text-xl"></i></button>
+
+      <button id="top-nav-settings-btn" onclick="toggleSettings()"
+        class="hidden lg:flex items-center gap-2 bg-primary/20 hover:bg-primary/40 px-4 py-2 rounded-full transition border border-primary text-primary font-bold"
+        title="Settings">
+        <i class="fas fa-cog"></i> <span>Settings</span>
+      </button>
+
+      <button id="music-disk-trigger" onclick="togglePlayerOverlay()"
+        class="w-10 h-10 rounded-full border-2 border-primary bg-black overflow-hidden animate-spin-slow shadow-lg hover:scale-110 transition">
+        <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+          class="w-full h-full object-cover opacity-80 animate-spin-slow">
+      </button>
+
+      <button id="top-nav-mobile-menu-btn" class="lg:hidden text-2xl text-primary" onclick="toggleMobileMenu()"><i
+          class="fas fa-bars"></i></button>
+    </div>
+  </nav>
+
+  <div id="main-layout" class="flex flex-col min-h-screen transition-all duration-300">
+
+    <div id="announcement-bar" class="ticker-wrap hide" data-feature="ticker">
+      <div class="ticker" id="announcement-text">
+        🎉 Upcoming: Narsimha Jayanti Mela preparations are underway! 🙏
+      </div>
+    </div>
+
+    <nav id="side-nav" style="width: var(--side-nav-width);"
+      class="fixed left-0 top-0 h-full glass-panel z-50 transform -translate-x-full transition-transform duration-300 flex flex-col p-6 hide shadow-2xl bg-white dark:bg-neutral-900 overflow-y-auto">
+      <div id="side-nav-resizer"></div>
+      <div class="flex items-center gap-3 mb-6 border-b border-gray-400 pb-4">
+        <i class="fas fa-om text-3xl text-primary"></i>
+        <h1 class="text-lg font-bold text-primary leading-tight" data-key="templeNameShort">श्री नृसिंह मंदिर</h1>
+      </div>
+      <div id="side-nav-search-container" class="mb-4 hide">
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          <input type="text" onkeyup="performSearch(this)" placeholder="Search..."
+            class="w-full pl-10 p-2 rounded bg-gray-100 dark:bg-gray-800 border border-transparent focus:border-primary outline-none">
+        </div>
+      </div>
+      <div class="flex flex-col gap-4" id="side-menu-items"></div>
+      <div class="mt-auto border-t pt-4 space-y-3">
+        <div id="side-nav-player-container"></div>
+        <div class="w-full h-[1px] bg-gray-300 dark:bg-gray-700 my-2"></div>
+        <button onclick="toggleSettings()"
+          class="flex items-center gap-3 w-full text-left hover:text-primary transition font-bold">
+          <i class="fas fa-universal-access"></i> <span data-key="settingsBtn">Settings</span>
+        </button>
+      </div>
+    </nav>
+
+    <nav id="bottom-nav"
+      class="fixed z-50 flex justify-between items-center hide dock-nav glass-panel bg-white/90 dark:bg-black/80 backdrop-blur-xl">
+      <div id="dock-items-container" class="flex justify-around flex-grow gap-2 sm:gap-4"></div>
+      <button onclick="toggleSettings()"
+        class="dock-item ml-2 sm:ml-4 text-primary bg-primary/10 p-2 sm:p-3 rounded-xl hover:bg-primary hover:text-white transition">
+        <i class="fas fa-cog text-xl"></i>
+      </button>
+    </nav>
+
+    <div id="mobile-menu"
+      class="fixed inset-0 glass-panel z-50 -translate-y-full flex flex-col items-center justify-center space-y-6 text-text font-bold text-xl bg-white/10 backdrop-blur-md dark:bg-black/80 backdrop-blur-lg">
+      <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-3xl hover:text-red-500 hamburger-to-x"><i
+          class="fas fa-times"></i></button>
+      <div id="mobile-menu-links" class="flex flex-col text-center gap-6"></div>
+      <div id="mobile-menu-player-container" class="mt-4 p-4 border border-white/20 rounded-xl bg-white/30">
+        <div class="flex items-center gap-4 cursor-pointer" onclick="togglePlayerOverlay(); toggleMobileMenu();">
+          <div class="w-10 h-10 rounded-full border border-primary bg-black overflow-hidden animate-spin-slow">
+            <img src="https://images.unsplash.com/photo-1582236894372-a4f65342898c?q=80"
+              class="w-full h-full object-cover opacity-80 animate-spin-slow">
+          </div>
+          <span class="text-sm font-normal opacity-80">Open Music Player</span>
+        </div>
+      </div>
+      <div class="flex gap-4 mt-8">
+        <button onclick="toggleSearch(); toggleMobileMenu();"
+          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20 bg-white/50">
+          <i class="fas fa-search mr-2"></i> Search
+        </button>
+        <button onclick="toggleSettings(); toggleMobileMenu();"
+          class="px-6 py-2 border border-current rounded-full hover:bg-primary/20 bg-white/50">
+          <i class="fas fa-universal-access mr-2"></i> <span data-key="settingsBtn">Settings</span>
+        </button>
+      </div>
+    </div>
+
+    <main id="content-area" class="flex-grow transition-all duration-300" onclick="closeSideNavIfMobile()">
+      
+      <section id="view-home" class="view-section animate-fade-in">
+        <div class="relative min-h-screen flex items-center justify-center overflow-hidden pb-12">
+          <div class="absolute inset-0 z-0">
+            <img id="hero-bg" src="https://images.unsplash.com/photo-1621827979802-6d779e19391d?q=80&w=2070"
+              class="w-full h-full object-cover transition-transform duration-[20s] hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
+          </div>
+
+          <div class="relative z-10 container mx-auto px-4 text-center pt-4">
+            <div class="flex justify-center items-center gap-2 mb-4">
+              <div
+                class="glass-panel inline-block px-4 py-2 rounded-full text-sm font-bold text-secondary border border-secondary/50 backdrop-blur-md"
+                data-feature="panchang">
+                📅 <span id="panchang-text">Loading Panchang...</span>
+              </div>
+              <div id="live-darshan-badge"
+                class="glass-panel inline-block px-4 py-2 rounded-full text-sm font-bold border border-white/30 backdrop-blur-md transition-colors duration-500">
+                <i class="fas fa-circle text-[10px] mr-1"></i> <span id="darshan-status-text">Checking...</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <p id="shloka-display"
+                class="sanskrit text-lg md:text-xl font-bold tracking-wider drop-shadow-md bg-black/40 inline-block px-4 py-1 rounded transition-opacity duration-1000">
+                उग्रं वीरं महाविष्णुं ज्वलन्तं सर्वतोमुखम् ।<br>
+                नृसिंहं भीषणं भद्रं मृत्युमृत्युं नमाम्यहम् ॥
+              </p>
+            </div>
+
+            <div class="relative mx-auto w-fit">
+              <div
+                class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-secondary overflow-hidden mx-auto shadow-2xl glass-panel flex items-center justify-center mb-6 ring-4 ring-primary/30 relative group z-10 idol-glow relative group z-10"
+                id="idol-container">
+                <img id="main-idol-img"
+                  src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-le5pjvyy3r.jpg"
+                  class="w-full h-full object-cover">
+              </div>
+              <div class="absolute bottom-1 -right-4 md:-right-1 flex gap-2 z-20">
+                <button onclick="offerFlowers()"
+                  class="bg-secondary text-primary font-bold p-3 scale-90 rounded-full shadow-lg hover:scale-95 transition border-2 border-white"
+                  title="Offer Flowers (Pushpanjali)" data-feature="pushpanjali">
+                  <i class="fas fa-spa text-xl"></i>
+                </button>
+              </div>
+              <div id="flower-container"></div>
+            </div>
+
+            <h2 id="main-heading-display"
+              class="text-4xl md:text-7xl font-bold text-white mb-4 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]"
+              data-key="mainHeading">जय श्री नृसिंह</h2>
+            <p class="text-xl md:text-2xl text-secondary mb-8 font-light drop-shadow-md bg-black/30 inline-block px-4 py-1 rounded-full"
+              data-key="subHeading">हसामपुर धाम में आपका स्वागत है</p>
+
+            <div
+              class="glass-panel rounded-xl p-6 max-w-2xl mx-auto border-t-4 border-secondary transform hover:scale-105 transition-transform bg-black/40 backdrop-blur-md">
+              <h3 class="text-2xl font-bold text-secondary mb-2"><i class="fas fa-fire-alt mr-2"></i>
+                <span data-key="melaTitle">महा मेला 2026</span>
+              </h3>
+              <p class="text-white mb-4 font-bold tracking-wider" id="mela-date-display">30 April 2026</p>
+              <div class="grid grid-cols-4 gap-4 text-center text-white">
+                <div><span id="days" class="text-3xl font-bold block text-secondary">00</span><span
+                    class="text-xs uppercase" data-key="unitDays">दिन</span></div>
+                <div><span id="hours" class="text-3xl font-bold block text-secondary">00</span><span
+                    class="text-xs uppercase" data-key="unitHrs">घंटे</span></div>
+                <div><span id="minutes" class="text-3xl font-bold block text-secondary">00</span><span
+                    class="text-xs uppercase" data-key="unitMins">मिनट</span></div>
+                <div><span id="seconds" class="text-3xl font-bold block text-secondary">00</span><span
+                    class="text-xs uppercase" data-key="unitSecs">सेकंड</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-16">
+          <div class="glass-panel p-8 rounded-2xl shadow-xl max-w-6xl mx-auto relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+            <h3 class="text-3xl font-bold text-center text-primary mb-8"><i class="far fa-clock mr-3"></i>
+              <span data-key="templeScheduleTitle">दर्शन समय</span>
+            </h3>
+            <div
+              class="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-300 dark:divide-gray-600">
+              <div class="text-center px-4 py-4 md:py-0">
+                <div class="text-4xl text-yellow-500 mb-2"><i class="fas fa-sun"></i></div>
+                <h4 class="text-xl font-bold text-secondary mb-4" data-key="timingMorning">प्रातः</h4>
+                <div class="space-y-2 text-sm md:text-base">
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelOpen">पट:</span> <span
+                      class="font-bold" id="time-morning-open">5:00 AM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelAarti">आरती:</span> <span
+                      class="font-bold" id="time-morning-aarti">6:00 AM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelClose">शयन:</span> <span
+                      class="font-bold" id="time-morning-close">8:00 AM</span></p>
+                </div>
+              </div>
+              <div class="text-center px-4 py-4 md:py-0">
+                <div class="text-4xl text-orange-500 mb-2"><i class="fas fa-cloud-sun"></i></div>
+                <h4 class="text-xl font-bold text-secondary mb-4" data-key="timingMidday">मध्याह्न</h4>
+                <div class="space-y-2 text-sm md:text-base">
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelOpen"> पट:</span> <span
+                      class="font-bold" id="time-mid-open">11:00 PM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelBhog">भोग:</span> <span
+                      class="font-bold" id="time-mid-aarti">12:00 PM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelClose">शयन:</span> <span
+                      class="font-bold" id="time-mid-close">1:00 PM</span></p>
+                </div>
+              </div>
+              <div class="text-center px-4 py-4 md:py-0">
+                <div class="text-4xl text-blue-400 mb-2"><i class="fas fa-moon"></i></div>
+                <h4 class="text-xl font-bold text-secondary mb-4" data-key="timingEvening">सायं</h4>
+                <div class="space-y-2 text-sm md:text-base">
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelOpen">पट:</span> <span
+                      class="font-bold" id="time-evening-open">5:00 PM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelAarti">आरती:</span> <span
+                      class="font-bold" id="time-evening-aarti">6:00 PM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelBhog">भोग:</span> <span
+                      class="font-bold" id="time-evening-aarti">7:00 PM</span></p>
+                  <p class="flex justify-between"><span class="opacity-70" data-key="labelClose">शयन:</span> <span
+                      class="font-bold" id="time-evening-close">8:00 PM</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-8 pt-6 border-t border-gray-300 dark:border-gray-600 opacity-75 text-sm">
+              <i class="fas fa-info-circle"></i> <span data-key="timingNote">त्योहारों के दौरान समय बदल सकता है।</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-about" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="text-center mb-10">
+          <p class="sanskrit text-lg mb-4">नमस्ते नरसिंहाय प्रह्लादाह्लाद दायिने।<br>हिरण्यकशिपोर्वक्षः शिलाटङ्क
+            नखालये॥</p>
+          <h2 class="text-4xl font-bold text-primary border-b-2 border-secondary inline-block pb-2"
+            data-key="aboutTitle">इतिहास और महत्व</h2>
+        </div>
+        <div class="glass-panel p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+          <div class="flex flex-col md:flex-row gap-8 items-center">
+            <img src="https://images.unsplash.com/photo-1561361058-c24ce813d943?q=80"
+              class="w-full md:w-1/3 rounded-lg shadow-md hover:scale-105 transition">
+            <div>
+              <p class="text-lg leading-relaxed mb-4 text-justify" data-key="historyText1">
+                हसामपुर का श्री नृसिंह बड़ा मंदिर एक अत्यंत प्राचीन और पवित्र स्थल है। मान्यताओं के अनुसार, यहाँ भगवान
+                नृसिंह स्वयंभू रूप में विराजमान हैं।
+              </p>
+              <p class="text-lg leading-relaxed text-justify" data-key="historyText2">
+                हर साल वैशाख शुक्ल पक्ष में यहाँ भव्य मेले का आयोजन होता है, जिसमें दूर-दूर से श्रद्धालु अपनी मनोकामनाएं
+                लेकर आते हैं। मंदिर की वास्तुकला प्राचीन भारतीय संस्कृति का अद्वितीय उदाहरण है।
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-gallery" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="text-center mb-4">
+          <p class="sanskrit text-sm">तव करकमलवरे नखम् अद्भुतशृङ्गम् । दलितहिरण्यकशिपुतनुभृङ्गम् ॥</p>
+        </div>
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+          <h2 class="text-4xl font-bold text-primary" data-key="galleryTitle">दर्शन गैलरी</h2>
+          <div class="flex gap-2">
+            <label
+              class="glass-panel px-4 py-2 cursor-pointer hover:bg-white/20 rounded transition flex items-center gap-2"
+              data-feature="selfie">
+              <i class="fas fa-camera-retro text-secondary"></i> <span>Selfie Frame</span>
+              <input type="file" accept="image/*" class="hidden" onchange="createSelfie(event)">
+            </label>
+            <label
+              class="glass-panel px-4 py-2 cursor-pointer hover:bg-white/20 rounded transition flex items-center gap-2">
+              <i class="fas fa-upload text-primary"></i> <span data-key="uploadPhoto">फोटो अपलोड करें</span>
+              <input type="file" accept="image/*" class="hidden" onchange="addToGallery(event)">
+            </label>
+          </div>
+        </div>
+        <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img
+              src="https://content3.jdmagicbox.com/v2/comp/sikar/q3/9999p1572.1572.190911003614.r5q3/catalogue/narsingh-ji-mandir-hasampur-sikar-temples-xsj3w5rrli.jpg"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+          </div>
+          <div
+            class="gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative border border-white/20 cursor-pointer"
+            onclick="openImagePreview(this)">
+            <img
+              src="https://scontent.fjai1-3.fna.fbcdn.net/v/t51.82787-15/587951883_17967382274988920_6614558592535786365_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=GvxLczoJi3wQ7kNvwG4gDrG&_nc_oc=AdmoHOxBds9tmEOf8PMoOKMgzOrOjY41SeQdMgkNumK54emZ7ExDSUztZxd5gaUqXj9mAOPjFEf85f3sGkzGGBsq&_nc_zt=23&_nc_ht=scontent.fjai1-3.fna&_nc_gid=LlSbT4g79MNjH8dB3bESMg&oh=00_AfrtC0hymB9JoZHWulWMGOKTh0u3Su9bNnaM7K1UKd5bxQ&oe=696EAB15"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+          </div>
+        </div>
+      </section>
+
+      <section id="view-bhajans" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-4xl font-bold text-primary mb-4" data-key="navBhajans">भजन और ग्रंथ</h2>
+          <p class="text-xl opacity-80" data-key="subBhajanLibrary">डिजिटल लाइब्रेरी</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="bhajan-container">
+          <div
+            class="glass-panel p-6 rounded-xl flex items-center gap-4 hover:bg-white/5 transition border border-orange-500/30 cursor-pointer"
+            onclick="toggleJapaMala()">
+            <div
+              class="bg-gradient-to-r from-orange-500 to-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg">
+              <i class="fas fa-ring"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-primary">Digital Japa Mala</h4>
+              <p class="text-xs opacity-70">Interactive • Meditation</p>
+            </div>
+            <button class="ml-auto text-secondary hover:scale-110 transition"><i
+                class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="glass-panel p-6 rounded-xl flex items-center gap-4 hover:bg-white/5 transition">
+            <div
+              class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center text-xl">
+              <i class="fas fa-music"></i>
+            </div>
+            <div>
+              <h4 class="font-bold">Narasimha Kavacham</h4>
+              <p class="text-xs opacity-70">Audio • 15 mins</p>
+            </div>
+            <button onclick="playBhajan('Narasimha Kavacham')"
+              class="ml-auto text-secondary hover:scale-110 transition"><i
+                class="fas fa-play-circle text-3xl"></i></button>
+          </div>
+          <div class="glass-panel p-6 rounded-xl flex items-center gap-4 hover:bg-white/5 transition">
+            <div
+              class="bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <div>
+              <h4 class="font-bold">Temple History PDF</h4>
+              <p class="text-xs opacity-70">Document • 2 MB</p>
+            </div>
+            <button class="ml-auto text-secondary hover:scale-110 transition"><i
+                class="fas fa-download text-3xl"></i></button>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-calendar" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="max-w-md mx-auto mb-10 px-4 relative">
+          <div class="relative group">
+            <i
+              class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors"></i>
+            <input type="text" id="calendar-search" onkeyup="filterCalendar()"
+              placeholder="Search pooja, mela, or dates..."
+              class="w-full pl-12 pr-4 py-3 rounded-full border-2 border-primary/20 bg-white/10 backdrop-blur-md outline-none focus:border-primary transition-all text-text">
+          </div>
+          <div id="search-results-overlay"
+            class="absolute left-4 right-4 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-white/20 bg-white/90 dark:bg-black/80 backdrop-blur-xl shadow-2xl z-[100] hide">
+          </div>
+        </div>
+        <div class="max-w-4xl mx-auto mb-10 px-4 flex flex-wrap gap-4 justify-center items-center">
+          <div class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full border border-primary/20">
+            <label class="text-xs font-bold opacity-60 uppercase">From:</label>
+            <input type="date" id="date-from" onchange="filterCalendarByDate()"
+              class="bg-transparent outline-none text-sm">
+          </div>
+          <div class="flex items-center gap-2 glass-panel px-4 py-2 rounded-full border border-primary/20">
+            <label class="text-xs font-bold opacity-60 uppercase">To:</label>
+            <input type="date" id="date-to" onchange="filterCalendarByDate()"
+              class="bg-transparent outline-none text-sm">
+          </div>
+          <button onclick="resetDateFilter()" class="text-xs font-bold text-primary underline">Clear Dates</button>
+        </div>
+        <div class="text-center mb-10">
+          <h2 class="text-4xl font-bold text-primary mb-4" data-key="calendarTitle">इवेंट कैलेंडर</h2>
+          <p class="text-xl opacity-80" data-key="calendarSub">आगामी कार्यक्रम - 2026</p>
+        </div>
+
+        <div id="mela-trigger-wrapper" class="max-w-4xl mx-auto mb-16 hide cursor-pointer group"
+          onclick="toggleMelaOverlay()">
+          <div
+            class="relative h-64 rounded-2xl overflow-hidden border-4 border-yellow-500/50 shadow-[0_0_30px_rgba(234,88,12,0.5)]">
+            <img
+              src="https://scontent.fjai14-3.fna.fbcdn.net/v/t39.30808-6/469246855_864151245932692_2474651813081826433_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=Y7sfuTH1nM0Q7kNvwFQHJKe&_nc_oc=AdnvGfXo6UDFAPG6sTIp1t10W2j85HvP5buT6F4Y0KYTGUsSiV32dCcD2yj4w9DgMtYYlKr5m4C1FQRegOo2fo9_&_nc_zt=23&_nc_ht=scontent.fjai14-3.fna&_nc_gid=Ymk-GACK05r016N32Wp39Q&oh=00_AfoTlD1x6o2wSLnHiX8QCHQy8_FZjQAuew2pUs-vfqisXg&oe=69744EB1"
+              class="w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent flex items-center p-8">
+              <div>
+                <span
+                  class="bg-red-600 text-white font-bold px-3 py-1 rounded text-xs uppercase tracking-widest mb-2 inline-block animate-pulse">Live
+                  Now</span>
+                <h3 class="text-4xl font-bold text-yellow-400 mb-2 drop-shadow-lg">Grand Mela 2026</h3>
+                <p class="text-white text-lg opacity-90">Tap to view the full 5-day divine schedule</p>
+              </div>
+              <div
+                class="ml-auto bg-black/10 backdrop-blur-md w-16 h-16 rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition">
+                <i class="fas fa-arrow-right text-white text-2xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="other-events-heading" class="max-w-7xl mx-auto mb-8 border-l-4 border-primary pl-4">
+          <h3 class="text-2xl font-bold text-primary dark:text-white">Other Events</h3>
+          <p class="text-sm opacity-60">Regular temple programs and poojas</p>
+        </div>
+        <div class="max-w-7xl mx-auto" id="calendar-events-container">
+        </div>
+      </section>
+
+      <section id="view-leela" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
+        <div class="text-center mb-12">
+          <h2 class="text-5xl font-bold text-primary mb-4" data-key="leelaTitle">लीला 2026</h2>
+          <p class="text-xl opacity-80" data-key="leelaSubtitle">भव्य मेला आयोजन समिति</p>
+        </div>
+
+        <div id="leela-public"
+          class="glass-panel p-8 rounded-xl max-w-3xl mx-auto text-center border border-red-200">
+          <i class="fas fa-lock text-5xl text-red-500 mb-6"></i>
+          <h3 class="text-2xl font-bold mb-4" data-key="leelaLoginPrompt">सुरक्षित प्रवेश</h3>
+          <p class="mb-6" data-key="leelaMsg">कृपया 5-दिवसीय योजना देखने के लिए लॉगिन करें।</p>
+          <button onclick="switchView('view-login')"
+            class="bg-primary text-white px-8 py-3 rounded-full hover:bg-orange-700 transition shadow-lg font-bold"
+            data-key="btnGoLogin">लॉगिन करें</button>
+        </div>
+
+        <div id="leela-member-dashboard" class="hide">
+          <div class="flex justify-between items-center mb-6">
+            <div class="glass-panel px-4 py-2 rounded text-green-600 font-bold border-green-500 border">
+              <span data-key="welcomeMember">स्वागत है, सदस्य!</span>
+            </div>
+            <button onclick="handleLogout()"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+              data-key="btnLogout">लॉगआउट</button>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            <div
+              class="glass-panel p-4 rounded text-center border-t-4 border-red-500 transform hover:-translate-y-2 transition">
+              <h4 class="font-bold text-lg">Day 1</h4>
+              <p class="text-sm font-bold text-primary">Ganesh Puja</p>
+            </div>
+            <div
+              class="glass-panel p-4 rounded text-center border-t-4 border-orange-500 transform hover:-translate-y-2 transition">
+              <h4 class="font-bold text-lg">Day 2</h4>
+              <p class="text-sm font-bold text-primary">Kalash Yatra</p>
+            </div>
+            <div
+              class="glass-panel p-4 rounded text-center border-t-4 border-yellow-500 transform hover:-translate-y-2 transition">
+              <h4 class="font-bold text-lg">Day 3</h4>
+              <p class="text-sm font-bold text-primary">Bhajan Sandhya</p>
+            </div>
+            <div
+              class="glass-panel p-4 rounded text-center border-t-4 border-green-500 transform hover:-translate-y-2 transition">
+              <h4 class="font-bold text-lg">Day 4</h4>
+              <p class="text-sm font-bold text-primary">Nagar Bhraman</p>
+            </div>
+            <div
+              class="glass-panel p-4 rounded text-center border-t-4 border-purple-500 transform hover:-translate-y-2 transition">
+              <h4 class="font-bold text-lg">Day 5</h4>
+              <p class="text-sm font-bold text-primary">Maha Abhishek</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-login"
+        class="view-section container mx-auto px-4 py-10 hide animate-fade-in flex justify-center">
+        <div
+          class="glass-panel p-10 rounded-2xl w-full max-w-md relative overflow-hidden shadow-2xl border border-white/30">
+          <div class="text-center mb-6">
+            <i class="fas fa-user-circle text-5xl text-primary mb-2"></i>
+            <h2 class="text-2xl font-bold" data-key="secureAccess">सुरक्षित प्रवेश</h2>
+          </div>
+          <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="mb-4">
+              <label class="block mb-2 text-sm font-bold opacity-80" data-key="labelUserType">उपयोगकर्ता
+                प्रकार</label>
+              <div class="relative">
+                <select id="login-type"
+                  class="w-full p-3 rounded bg-white dark:bg-gray-800 border border-gray-300 text-black dark:text-white">
+                  <option value="member">Member</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block mb-2 text-sm font-bold opacity-80" data-key="labelPassword">पासवर्ड</label>
+              <input type="password" id="password"
+                class="w-full p-3 rounded bg-white dark:bg-gray-800 border border-gray-300 text-black dark:text-white">
+            </div>
+            <button type="submit"
+              class="w-full bg-gradient-to-r from-primary to-orange-600 text-white font-bold py-3 rounded-lg"
+              data-key="btnSignIn">साइन इन</button>
+          </form>
+          <div id="login-msg" class="mt-4 text-center text-sm font-bold min-h-[20px]"></div>
+        </div>
+      </section>
+
+      <section id="view-admin" class="view-section container mx-auto px-4 py-20 hide animate-fade-in">
+        <div class="glass-panel p-8 rounded-xl shadow-2xl">
+          <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-400 pb-4">
+            <h2 class="text-3xl font-bold text-primary">Admin Control Panel</h2>
+            <button onclick="handleLogout()"
+              class="bg-red-500 text-white px-6 py-2 rounded-full font-bold">Logout</button>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <div class="space-y-8">
+              <div class="glass-panel bg-white/10 p-6 rounded-lg border-l-4 border-green-500">
+                <h3 class="text-xl font-bold mb-4 text-green-400"><i class="fas fa-toggle-on mr-2"></i>
+                  Feature Manager</h3>
+                <div class="grid grid-cols-2 gap-4" id="admin-feature-toggles">
+                  </div>
+              </div>
+
+              <div class="glass-panel bg-white/10 p-6 rounded-lg mt-6 border-l-4 border-primary">
+                <div class="glass-panel bg-white/10 p-6 rounded-lg mb-6 border-l-4 border-yellow-500">
+                  <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-cog mr-2"></i> Global Settings</h3>
+
+                  <label class="block text-sm font-bold mb-2">Default Event Image (Fallback)</label>
+                  <div class="flex gap-2 mb-2">
+                    <input type="text" id="admin-default-url" placeholder="Paste URL..."
+                      class="flex-grow p-2 rounded text-black bg-white/80">
+                    <input type="file" id="admin-default-file" accept="image/*"
+                      class="w-1/3 text-xs p-2 bg-white/20 rounded">
+                  </div>
+                  <button onclick="saveDefaultImage()"
+                    class="bg-yellow-600 text-white font-bold py-2 px-4 rounded hover:bg-yellow-700 transition w-full">
+                    Save Default Image
+                  </button>
+                  <p id="default-save-msg" class="text-xs text-green-400 mt-2 hidden">Saved Successfully!</p>
+                </div>
+                <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-calendar-plus mr-2"></i> Event
+                  Manager</h3>
+
+                <div class="space-y-3 mb-4">
+                  <input type="text" id="admin-event-title" placeholder="Event Title (e.g. Holi)"
+                    class="w-full p-2 rounded text-black bg-white/80">
+
+                  <input type="text" id="admin-event-location" placeholder="Location (e.g. Main Hall)"
+                    class="w-full p-2 rounded text-black bg-white/80">
+
+                  <input type="date" id="admin-event-date" class="w-full p-2 rounded text-black bg-white/80">
+                  <input type="text" id="admin-event-desc" placeholder="Description..."
+                    class="w-full p-2 rounded text-black bg-white/80">
+
+                  <input type="text" id="admin-event-image" placeholder="Option A: Paste Image URL"
+                    class="w-full p-2 rounded text-black bg-white/80">
+                  <div class="text-xs text-white/70 font-bold uppercase">OR Upload from Device:</div>
+                  <input type="file" id="admin-event-file" accept="image/*"
+                    class="w-full p-2 rounded bg-white/20 text-white text-sm">
+
+                  <div class="flex gap-2">
+                    <button id="btn-submit-event" onclick="handleFormSubmit()"
+                      class="flex-grow bg-primary text-white font-bold py-2 rounded hover:bg-orange-600 transition">
+                      Add Event to Calendar
+                    </button>
+
+                    <button id="btn-cancel-edit" onclick="exitEditMode()"
+                      class="hidden bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-600 transition">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+
+                <h4 class="font-bold text-sm mb-2 opacity-70">Manage Existing Events:</h4>
+                <div id="admin-event-list" class="max-h-48 overflow-y-auto pr-2">
+                </div>
+
+                <button onclick="renderAdminEvents()"
+                  class="text-xs underline opacity-50 hover:opacity-100 mt-2">Refresh List</button>
+              </div>
+              <div class="glass-panel bg-white/10 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-edit mr-2"></i>
+                  Content & Media</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Heading</label>
+                    <input type="text" id="admin-heading-input" class="w-full p-2 rounded text-black bg-white/80"
+                      placeholder="Jai Sri Narsimha">
+                    <button onclick="updateHeading()"
+                      class="mt-2 bg-primary text-white px-4 py-1 rounded text-sm hover:bg-orange-700">Update</button>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Announcement</label>
+                    <input type="text" id="admin-ticker-input" class="w-full p-2 rounded text-black bg-white/80"
+                      placeholder="Ticker Text...">
+                    <button onclick="updateTicker()"
+                      class="mt-2 bg-primary text-white px-4 py-1 rounded text-sm hover:bg-orange-700">Update
+                      Ticker</button>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Mela Date</label>
+                    <input type="date" id="admin-date-input" class="w-full p-2 rounded text-black bg-white/80">
+                    <button onclick="updateMelaDate()"
+                      class="mt-2 bg-primary text-white px-4 py-1 rounded text-sm hover:bg-orange-700">Update
+                      Date</button>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Main Idol Photo</label>
+                    <div class="flex flex-col gap-2">
+                      <input type="file" id="admin-photo-file" accept="image/*"
+                        class="w-full text-xs p-2 bg-white/80 rounded text-black">
+                      <div class="flex gap-2">
+                        <input type="text" id="admin-photo-url"
+                          class="flex-grow p-2 rounded text-black text-xs bg-white/80" placeholder="Or Image URL">
+                        <button onclick="updateMainPhoto()"
+                          class="bg-primary text-white px-3 py-1 rounded text-xs hover:bg-orange-700">Set</button>
+                      </div>
+                      <label class="text-xs mt-2">Image Focus (Crop)</label>
+                      <select id="admin-photo-focus" onchange="updateMainPhotoFocus(this.value)"
+                        class="w-full p-2 rounded text-black text-xs bg-white/80">
+                        <option value="center">Center</option>
+                        <option value="top">Top</option>
+                        <option value="bottom">Bottom</option>
+                        <option value="left">Left</option>
+                        <option value="right">Right</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-8">
+              <div class="glass-panel bg-white/10 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-music mr-2"></i>
+                  Playlist Manager</h3>
+                <div class="flex flex-col gap-2 mb-4">
+                  <label class="text-xs font-bold">Add from URL</label>
+                  <input type="text" id="playlist-title" class="p-2 rounded text-black text-xs bg-white/80"
+                    placeholder="Track Title">
+                  <div class="flex gap-2">
+                    <input type="text" id="playlist-url" class="flex-grow p-2 rounded text-black text-xs bg-white/80"
+                      placeholder="MP3 URL">
+                    <button onclick="addToPlaylist()"
+                      class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">Add</button>
+                  </div>
+
+                  <label class="text-xs font-bold mt-2">Or Upload Audio</label>
+                  <div class="flex gap-2 items-center">
+                    <input type="file" id="playlist-file" accept="audio/*"
+                      class="w-full text-xs p-1 bg-white/80 rounded text-black">
+                    <button onclick="uploadAudio()"
+                      class="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700">Upload</button>
+                  </div>
+                </div>
+                <div id="admin-playlist-list" class="max-h-32 overflow-y-auto space-y-2 text-xs"></div>
+              </div>
+
+              <div class="glass-panel bg-white/10 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-cog mr-2"></i>
+                  Settings & Uploads</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Default Nav Style</label>
+                    <select id="admin-default-nav" onchange="setDefaultNav(this.value)"
+                      class="w-full p-2 rounded text-black bg-white/80">
+                      <option value="top">Top Bar</option>
+                      <option value="side">Side Bar</option>
+                      <option value="bottom">Bottom Dock</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-bold mb-1">Add Bhajan (Library)</label>
+                    <div class="flex gap-2">
+                      <input type="text" id="bhajan-title" class="flex-grow p-2 rounded text-black text-xs bg-white/80"
+                        placeholder="Bhajan Title">
+                      <button onclick="addBhajan()"
+                        class="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700"><i
+                          class="fas fa-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-panel bg-white/10 p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-font mr-2"></i>
+                  Typography & Styles</h3>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold mb-1">Shloka Color</label>
+                    <input type="color" onchange="updateShlokaStyle('color', this.value)"
+                      class="w-full h-8 rounded cursor-pointer border border-white/30">
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold mb-1">Shloka Font</label>
+                    <select onchange="updateShlokaStyle('font', this.value)"
+                      class="font-select w-full p-1 text-black text-xs rounded bg-white/80"></select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold mb-1">Heading Font</label>
+                    <select onchange="updateCustomFont('heading', this.value)"
+                      class="font-select w-full p-1 text-black text-xs rounded bg-white/80"></select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold mb-1">Body Font</label>
+                    <select onchange="updateCustomFont('body', this.value)"
+                      class="font-select w-full p-1 text-black text-xs rounded bg-white/80"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel bg-white/10 p-6 rounded-lg mt-8">
+            <h3 class="text-xl font-bold mb-4 text-secondary"><i class="fas fa-palette mr-2"></i> Quick
+              Theme Control</h3>
+            <div class="flex flex-wrap gap-4" id="admin-theme-controls"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer
+      class="bg-gray-900 text-white pt-16 pb-24 lg:pb-8 border-t-4 border-secondary mt-auto relative z-10 transition-all"
+      id="main-footer">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="font-bold text-xl text-secondary mb-4" data-key="footerContactTitle">संपर्क करें</h3>
+            <div id="footer-contact-info">
+              <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-primary"></i> <span
+                  data-key="templeNameShort">श्री नृसिंह बड़ा मंदिर, हसामपुर</span></p>
+              <p class="mb-2 pl-6 text-gray-400">Hasampur Village, Rajasthan</p>
+              <p class="mt-4"><i class="fas fa-phone mr-2 text-primary"></i> +91 9xxx xxxxx</p>
+              <div class="flex gap-2 mt-4">
+                <button onclick="toggleContactModal()"
+                  class="text-sm bg-primary/20 text-primary border border-primary px-3 py-1 rounded hover:bg-primary hover:text-white transition">
+                  <i class="fas fa-envelope mr-1"></i> Msg
+                </button>
+                <button onclick="toggleSankalp()"
+                  class="text-sm bg-secondary/20 text-secondary border border-secondary px-3 py-1 rounded hover:bg-secondary hover:text-black transition"
+                  data-feature="sankalp">
+                  <i class="fas fa-praying-hands mr-1"></i> Sankalp
+                </button>
+                <button onclick="shareApp()"
+                  class="text-sm bg-blue-600/20 text-blue-400 border border-blue-400 px-3 py-1 rounded hover:bg-blue-600 hover:text-white transition">
+                  <i class="fas fa-share-alt mr-1"></i> Share
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <i class="fas fa-om text-4xl text-secondary mb-4 block"></i>
+            <p class="text-gray-400 italic">"Sarve Jana Sukhino Bhavantu"</p>
+            <div
+              class="mt-6 inline-block bg-black/50 px-4 py-1 rounded text-xs font-mono text-green-400 border border-green-900"
+              data-feature="visitor">
+              Live Devotees: <span id="visitor-count">108</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-xl text-secondary mb-4" data-key="footerLocationTitle">स्थान और लिंक
+            </h3>
+            <div class="rounded-lg overflow-hidden border border-gray-700 h-32 mb-4 bg-gray-800 relative">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3700.651007515507!2d76.02246477554449!3d27.761745923089823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396d39db0417f251%3A0x1e678e4f685694d2!2sNarsingh%20Ji%20Bada%20Mandir!5e1!3m2!1sen!2sin!4v1768476864682!5m2!1sen!2sin" width="600" height="600" style="border:0;"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+          <p>© 2026 Sri Narsimha Temple Trust.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="mela-overlay" class="fixed inset-0 z-[5000] hide flex flex-col overflow-hidden 
+            transition-all duration-500 ease-in-out opacity-0 translate-y-10
+            bg-white/ backdrop-blur-md dark:bg-black/40 dark:backdrop-blur-lg">
+
+    <div
+      class="relative z-10 p-6 flex justify-between items-center border-b border-gray-200 dark:border-white/10  bg-white/30 backdrop-blur-md dark:bg-black/40 backdrop-blur-lg">
+      <div class="flex items-center gap-4">
+        <i class="fas fa-om text-4xl text-yellow-500 animate-pulse"></i>
+        <div>
+          <h2 class="text-2xl md:text-3xl font-bold text-primary dark:text-white leading-none">Maha Mela 2026</h2>
+          <p class="text-yellow-600 dark:text-yellow-500 text-sm font-bold tracking-widest uppercase">Official Schedule
+          </p>
+        </div>
+      </div>
+      <button onclick="toggleMelaOverlay()"
+        class="w-12 h-12 rounded-full bg-primary/10 dark:bg-white/10 hover:bg-red-600 text-primary dark:text-white transition flex items-center justify-center text-xl border border-primary/20 dark:border-white/20">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto p-4 md:p-10 relative">
+      <div id="mela-overlay-grid"
+        class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- DATA & STATE ---
+    const state = {
+      lang: 'hi',
+      navStyle: 'side',
+      theme: 'saffron',
+      user: null,
+      activeView: 'view-home',
+      melaDate: "2026-04-30T00:00:00",
+      malaCount: 0,
+      features: {
+        pushpanjali: true,
+        aarti: true,
+        sankalp: true,
+        panchang: true,
+        selfie: true,
+        visitor: true,
+        ticker: true
+      }
+
+    };
+
+    const themes = [
+      { id: 'saffron', name: 'Saffron', colors: { p: '#ea580c', s: '#facc15', bg: '#fff7ed', t: '#1f2937' } },
+      { id: 'ocean', name: 'Ocean', colors: { p: '#0ea5e9', s: '#7dd3fc', bg: '#f0f9ff', t: '#1e293b' } },
+      { id: 'forest', name: 'Forest', colors: { p: '#15803d', s: '#86efac', bg: '#f0fdf4', t: '#14532d' } },
+      { id: 'royal', name: 'Royal', colors: { p: '#7e22ce', s: '#d8b4fe', bg: '#faf5ff', t: '#3b0764' } },
+      { id: 'cherry', name: 'Cherry', colors: { p: '#be123c', s: '#fda4af', bg: '#fff1f2', t: '#881337' } },
+      { id: 'midnight', name: 'Midnight', colors: { p: '#6366f1', s: '#818cf8', bg: '#1e293b', t: '#f8fafc' } },
+      { id: 'sunset', name: 'Sunset', colors: { p: '#f97316', s: '#fdba74', bg: '#fff7ed', t: '#431407' } },
+      { id: 'teal', name: 'Teal', colors: { p: '#0d9488', s: '#5eead4', bg: '#f0fdfa', t: '#134e4a' } },
+      { id: 'earth', name: 'Earth', colors: { p: '#854d0e', s: '#fde047', bg: '#fefce8', t: '#422006' } },
+      { id: 'slate', name: 'Slate', colors: { p: '#475569', s: '#94a3b8', bg: '#f8fafc', t: '#0f172a' } },
+    ];
+
+    // Updated Fonts List (Matched with prep.html)
+    const fonts = [
+      'Noto Sans Devanagari', 'Poppins', 'Mukta', 'Baloo 2', 'Yatra One',
+      'Martel', 'Tiro Devanagari Hindi', 'Hind', 'Kalam', 'Gotu'
+    ];
+
+    const shlokas = [
+      "उग्रं वीरं महाविष्णुं ज्वलन्तं सर्वतोमुखम् ।<br>नृसिंहं भीषणं भद्रं मृत्युमृत्युं नमाम्यहम् ॥",
+      "नमस्ते नरसिंहाय प्रह्लादाह्लाद दायिने।<br>हिरण्यकशिपोर्वक्षः शिलाटङ्क नखालये॥",
+      "तव करकमलवरे नखम् अद्भुतशृङ्गम् ।<br>दलितहिरण्यकशिपुतनुभृङ्गम् ॥",
+      "यतो यतो यामि ततो नृसिंहः ।<br>बहिर्नृसिंहो हृदये नृसिंहः ॥"
+    ];
+    let currentShlokaIndex = 0;
+
+    // ORACLE MESSAGES
+    const oracleMessages = [
+      "Faith is the only power that can destroy fear.",
+      "Surrender your worries to Me, I shall protect you.",
+      "Patience is the key to spiritual growth.",
+      "Do your duty without attachment to the results.",
+      "See the Divine in every being you meet today.",
+      "Your prayers have been heard. Have faith.",
+      "Peace comes from within. Do not seek it without.",
+      "The storm will pass. Stand strong like a pillar."
+    ];
+
+    // --- GLOBAL AUDIO STATE ---
+    const playlist = [
+      { title: "Narasimha Maha Mantra", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+      { title: "Divine Flute", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+      { title: "Temple Ambience", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+    ];
+    let currentTrack = 0;
+    let isPlaying = false;
+    let audioPlayer;
+    let collapseTimeout;
+
+    // FULL TRANSLATIONS
+    const translations = {
+      hi: {
+        templeName: "श्री नृसिंह बड़ा मंदिर हसामपुर",
+        templeNameShort: "श्री नृसिंह मंदिर",
+        navHome: "मुख्य पृष्ठ",
+        navAbout: "इतिहास",
+        navGallery: "गैलरी",
+        navBhajans: "भजन/ग्रंथ",
+        navLeela: "लीला 2026",
+        navCalendar: "कैलेंडर",
+        navLogin: "लॉगिन",
+        navAdmin: "एडमिन",
+        navMember: "सदस्य",
+        mainHeading: "जय श्री नृसिंह",
+        subHeading: "हसामपुर धाम में आपका स्वागत है",
+        melaTitle: "महा मेला 2026",
+        unitDays: "दिन", unitHrs: "घंटे", unitMins: "मिनट", unitSecs: "सेकंड",
+        templeScheduleTitle: "दर्शन समय",
+        timingMorning: "प्रातः",
+        timingMidday: "राजभोग",
+        timingEvening: "सायं",
+        labelOpen: "खुलना:", labelAarti: "आरती:", labelBhog: "भोग:", labelClose: "बंद:",
+        timingNote: "त्योहारों के दौरान समय बदल सकता है।",
+        aboutTitle: "इतिहास और महत्व",
+        historyText1: "हसामपुर का श्री नृसिंह बड़ा मंदिर एक अत्यंत प्राचीन और पवित्र स्थल है। मान्यताओं के अनुसार, यहाँ भगवान नृसिंह स्वयंभू रूप में विराजमान हैं।",
+        historyText2: "हर साल वैशाख शुक्ल पक्ष में यहाँ भव्य मेले का आयोजन होता है, जिसमें दूर-दूर से श्रद्धालु अपनी मनोकामनाएं लेकर आते हैं। मंदिर की वास्तुकला प्राचीन भारतीय संस्कृति का अद्वितीय उदाहरण है।",
+        galleryTitle: "दर्शन गैलरी",
+        uploadPhoto: "फोटो अपलोड करें",
+        subBhajanLibrary: "डिजिटल लाइब्रेरी",
+        calendarTitle: "इवेंट कैलेंडर",
+        calendarSub: "आगामी कार्यक्रम - 2026",
+        leelaTitle: "लीला 2026",
+        leelaSubtitle: "भव्य मेला आयोजन समिति",
+        leelaLoginPrompt: "सुरक्षित प्रवेश",
+        leelaMsg: "कृपया 5-दिवसीय योजना देखने के लिए लॉगिन करें।",
+        btnGoLogin: "लॉगिन करें",
+        welcomeMember: "स्वागत है, सदस्य!",
+        btnLogout: "लॉगआउट",
+        secureAccess: "सुरक्षित प्रवेश",
+        labelUserType: "उपयोगकर्ता प्रकार",
+        labelPassword: "पासवर्ड",
+        btnSignIn: "साइन इन",
+        settingsTitle: "सेटिंग्स और पहुंच",
+        labelLang: "भाषा", labelNavStyle: "नेविगेशन शैली", labelTheme: "थीम रंग",
+        labelFonts: "फ़ॉन्ट्स", labelHeadFont: "शीर्षक फ़ॉन्ट (Heading)", labelBodyFont: "मुख्य फ़ॉन्ट (Body)",
+        labelTypo: "टाइपोग्राफी", labelSize: "आकार", labelDark: "डार्क मोड",
+        footerContactTitle: "संपर्क करें", footerLocationTitle: "स्थान और लिंक",
+        settingsBtn: "सेटिंग्स", searchBtn: "खोज", contactTitle: "संदेश भेजें",
+        navTop: "शीर्ष", navSide: "साइड", navBottom: "नीचे (डॉक)",
+      },
+      en: {
+        templeName: "Sri Narsimha Bada Mandir Hasampur",
+        templeNameShort: "Sri Narsimha Temple",
+        navHome: "Home", navAbout: "History", navGallery: "Gallery", navBhajans: "Bhajans",
+        navLeela: "Leela 2026", navCalendar: "Calendar", navLogin: "Login", navAdmin: "Admin", navMember: "Member",
+        mainHeading: "Jai Sri Narsimha",
+        subHeading: "Welcome to Hasampur Dham",
+        melaTitle: "Maha Mela 2026",
+        unitDays: "Days", unitHrs: "Hrs", unitMins: "Mins", unitSecs: "Secs",
+        templeScheduleTitle: "Temple Schedule",
+        timingMorning: "Morning", timingMidday: "Mid-day", timingEvening: "Evening",
+        labelOpen: "Open:", labelAarti: "Aarti:", labelBhog: "Bhog:", labelClose: "Close:",
+        timingNote: "Timings may vary during festivals.",
+        aboutTitle: "History & Significance",
+        historyText1: "The Sri Narsimha Bada Mandir in Hasampur is an ancient and sacred site. It is believed that Lord Narsimha appeared here in a Swayambhu form.",
+        historyText2: "Every year during Vaishakh Shukla Paksha, a grand fair is organized here where devotees come from far and wide to seek blessings.",
+        galleryTitle: "Darshan Gallery", uploadPhoto: "Upload Photo", subBhajanLibrary: "Digital Library",
+        calendarTitle: "Event Calendar", calendarSub: "Upcoming Events - 2026",
+        leelaTitle: "Leela 2026", leelaSubtitle: "Grand Fair Organizing Committee",
+        leelaLoginPrompt: "Restricted Access", leelaMsg: "Please log in as a Member to view the 5-day event plan.",
+        btnGoLogin: "Go to Login", welcomeMember: "Welcome, Member!", btnLogout: "Logout",
+        secureAccess: "Secure Access", labelUserType: "User Type", labelPassword: "Password", btnSignIn: "Sign In",
+        settingsTitle: "Settings & Accessibility",
+        labelLang: "Language", labelNavStyle: "Navigation Style", labelTheme: "Theme Colors",
+        labelFonts: "Fonts", labelHeadFont: "Heading Font", labelBodyFont: "Body Font",
+        labelTypo: "Typography", labelSize: "Size", labelDark: "Dark Mode",
+        footerContactTitle: "Contact Us", footerLocationTitle: "Location & Links",
+        settingsBtn: "Settings", searchBtn: "Search", contactTitle: "Send Message",
+        navTop: "Top", navSide: "Side", navBottom: "Bottom (Dock)",
+      }
+    };
+
+    const navItems = [
+      { id: 'view-home', labelKey: 'navHome', icon: 'fa-place-of-worship' },
+      { id: 'view-about', labelKey: 'navAbout', icon: 'fa-scroll' },
+      { id: 'view-gallery', labelKey: 'navGallery', icon: 'fa-photo-film' },
+      { id: 'view-bhajans', labelKey: 'navBhajans', icon: 'fa-music' },
+      { id: 'view-calendar', labelKey: 'navCalendar', icon: 'fa-calendar-days' },
+      { id: 'view-leela', labelKey: 'navLeela', icon: 'fa-wand-magic-sparkles' },
+      { id: 'view-login', labelKey: 'navLogin', icon: 'fa-fingerprint' },
+    ];
+
+    // Calendar Data
+    // --- NEW: LIVE SERVER CONNECTION ---
+    let calendarEvents = []; // Start empty
+
+    // Function to fetch real data from your "Soul" (Server)
+    // 1. Create a variable to store the default image
+    let globalDefaultImage = "https://images.unsplash.com/photo-1604537466158-719b1972feb8?q=80&w=1000"; // Fallback if DB is empty
+
+    async function fetchLiveEvents() {
+      try {
+        // A. FIRST: Fetch the Default Image Setting from DB
+        const settingRes = await fetch('https://sri-xpvu.onrender.com/api/settings/default_event_image');
+        const settingData = await settingRes.json();
+        if (settingData.value) {
+          globalDefaultImage = settingData.value;
+        }
+
+        // B. SECOND: Fetch Events
+        const response = await fetch('https://sri-xpvu.onrender.com/api/events');
+        const realData = await response.json();
+
+        calendarEvents = realData.map(event => ({
+          date: new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+          title: event.title,
+          desc: event.description || event.location,
+          image: event.image
+        }));
+
+        renderCalendar();
+
+      } catch (error) {
+        console.error("❌ Could not connect:", error);
+      }
+    }
+
+    // --- ADMIN: MANAGE EVENTS ---
+    // --- GLOBAL STATE ---
+    let editingEventId = null; // Stores the ID if we are editing
+    let allAdminEvents = [];   // Stores list so we can find event details easily
+
+    // --- 1. SMART SUBMIT (Handles Add AND Edit) ---
+    async function handleFormSubmit() {
+      // ✅ FIX: We get the values INSIDE the function (Safe!)
+      const title = document.getElementById('admin-event-title').value;
+      const date = document.getElementById('admin-event-date').value;
+      const desc = document.getElementById('admin-event-desc').value;
+      const location = document.getElementById('admin-event-location').value;
+
+      const imageUrl = document.getElementById('admin-event-image').value;
+      const fileInput = document.getElementById('admin-event-file');
+
+      // Validation
+      if (!title || !date) {
+        alert("Please fill in Title and Date!");
+        return;
+      }
+
+      // Prepare Data
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('date', date);
+      formData.append('description', desc || "Temple Event");
+      formData.append('location', location || "Temple Premises");
+
+      // Handle Image (File OR URL)
+      if (fileInput && fileInput.files.length > 0) {
+        formData.append('imageFile', fileInput.files[0]);
+      } else if (imageUrl) {
+        formData.append('image', imageUrl);
+      }
+
+      try {
+        let url = 'https://sri-xpvu.onrender.com/api/events';
+        let method = 'POST';
+
+        // Check if we are Updating or Creating
+        if (editingEventId) {
+          url = `https://sri-xpvu.onrender.com/api/events/${editingEventId}`;
+          method = 'PUT';
+        }
+
+        const response = await fetch(url, {
+          method: method,
+          body: formData
+        });
+
+        if (response.ok) {
+          alert(editingEventId ? "✅ Event Updated!" : "✅ Event Added!");
+          exitEditMode(); // Reset the form
+          renderAdminEvents(); // Refresh Admin list
+          fetchLiveEvents();   // Refresh Public Calendar
+        } else {
+          alert("❌ Operation Failed");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Server Error. Is the backend running?");
+      }
+    }
+
+    // --- 2. RENDER ADMIN LIST ---
+    async function renderAdminEvents() {
+      const list = document.getElementById('admin-event-list');
+      if (!list) return;
+
+      list.innerHTML = '<p>Loading...</p>';
+
+      try {
+        const response = await fetch('https://sri-xpvu.onrender.com/api/events');
+        allAdminEvents = await response.json(); // Save to global variable
+
+        list.innerHTML = '';
+
+        allAdminEvents.forEach(event => {
+          const div = document.createElement('div');
+          div.className = 'flex justify-between items-center bg-white/5 p-3 rounded mb-2 border border-white/10';
+          div.innerHTML = `
+                <div>
+                    <h4 class="font-bold text-sm text-primary">${event.title}</h4>
+                    <span class="text-xs opacity-70">${new Date(event.date).toDateString()}</span>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="startEdit('${event._id}')" class="text-blue-400 p-2 bg-white/10 rounded hover:bg-white/20">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button onclick="deleteEvent('${event._id}')" class="text-red-500 p-2 bg-white/10 rounded hover:bg-white/20">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+          list.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Error loading admin events:", err);
+      }
+    }
+
+    // --- 3. DELETE EVENT ---
+    async function deleteEvent(id) {
+      if (!confirm("Are you sure you want to delete?")) return;
+      try {
+        await fetch(`https://sri-xpvu.onrender.com/api/events/${id}`, { method: 'DELETE' });
+        renderAdminEvents();
+        fetchLiveEvents();
+      } catch (err) { console.error(err); }
+    }
+
+    // --- 4. START EDIT MODE ---
+    function startEdit(id) {
+      const event = allAdminEvents.find(e => e._id === id);
+      if (!event) return;
+
+      // Fill Inputs
+      document.getElementById('admin-event-title').value = event.title;
+      // Safe date split
+      if (event.date) document.getElementById('admin-event-date').value = event.date.split('T')[0];
+      document.getElementById('admin-event-desc').value = event.description || "";
+      document.getElementById('admin-event-location').value = event.location || "";
+      document.getElementById('admin-event-image').value = event.image || "";
+
+      // Set Mode
+      editingEventId = id;
+
+      // Update Button
+      const btn = document.getElementById('btn-submit-event');
+      if (btn) {
+        btn.innerText = "Update Event";
+        btn.classList.add('bg-blue-600');
+        btn.classList.remove('bg-primary');
+      }
+
+      // Show Cancel Button
+      const cancelBtn = document.getElementById('btn-cancel-edit');
+      if (cancelBtn) cancelBtn.classList.remove('hidden');
+    }
+
+    // --- 5. EXIT EDIT MODE ---
+    function exitEditMode() {
+      editingEventId = null;
+
+      // Clear Inputs
+      const ids = ['admin-event-title', 'admin-event-date', 'admin-event-desc', 'admin-event-location', 'admin-event-image', 'admin-event-file'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+
+      // Reset Button
+      const btn = document.getElementById('btn-submit-event');
+      if (btn) {
+        btn.innerText = "Add Event to Calendar";
+        btn.classList.remove('bg-blue-600');
+        btn.classList.add('bg-primary');
+      }
+
+      // Hide Cancel Button
+      const cancelBtn = document.getElementById('btn-cancel-edit');
+      if (cancelBtn) cancelBtn.classList.add('hidden');
+    }
+
+    // --- 6. SAVE DEFAULT IMAGE ---
+    async function saveDefaultImage() {
+      const textUrl = document.getElementById('admin-default-url').value;
+      const fileInput = document.getElementById('admin-default-file');
+
+      if (!textUrl && (!fileInput || fileInput.files.length === 0)) {
+        alert("Please paste a URL or select a file!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('key', 'default_event_image');
+      formData.append('textValue', textUrl);
+
+      if (fileInput && fileInput.files.length > 0) {
+        formData.append('imageFile', fileInput.files[0]);
+      }
+
+      try {
+        const response = await fetch('https://sri-xpvu.onrender.com/api/settings', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const msg = document.getElementById('default-save-msg');
+          if (msg) {
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+          }
+          fetchLiveEvents();
+        }
+      } catch (err) {
+        console.error("Error saving setting:", err);
+      }
+    }
+
+    // Run this immediately when page loads
+    fetchLiveEvents();
+    // ----------------------------------
+
+    let countdownInterval;
+
+    // Run immediately when HTML is ready (Fixes 3-4s Lag)
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Apply NAV STATE immediately (This was missing!)
+      setNavStyle(state.navStyle); 
+
+      // 2. Initialize the rest
+      initSettingsUI();
+      applyTheme(state.theme);
+
+      // --- RESTORE LAST VIEW ---
+      const savedView = localStorage.getItem('lastView');
+      if (savedView && document.getElementById(savedView)) {
+        switchView(savedView);
+      } else {
+        renderNavigation();
+        document.getElementById('view-home').classList.remove('hide');
+      }
+
+      // Initialize other lightweight features
+      startCountdown(state.melaDate);
+      renderCalendar();
+      updateLanguage();
+      startShlokaRotation();
+      updateVisitorCount();
+      initPanchang();
+      renderAdminFeatures();
+      applyFeatureStates();
+      renderUserPlaylist();
+      updateDarshanStatus();
+      initSideNavResizer();
+
+      if (document.documentElement.classList.contains('dark')) {
+        toggleDarkMode();
+        if (!document.documentElement.classList.contains('dark')) toggleDarkMode();
+      }
+
+      setTimeout(() => {
+        document.getElementById('welcome-popup').classList.remove('hide');
+        setTimeout(() => document.getElementById('welcome-popup').classList.add('hide'), 8000);
+      }, 1000);
+    });
+
+    // Load heavy audio/images in background (Doesn't block UI anymore)
+    window.addEventListener('load', () => {
+      initAudioPlayer();
+      setInterval(updateDarshanStatus, 60000);
+      // REMOVED THE DELAYED SETNAVSTYLE FROM HERE
+    });
+
+    // Keep resize listener
+    window.addEventListener('resize', () => setNavStyle(state.navStyle));
+
+    // --- AUDIO PLAYER LOGIC ---
+    function initAudioPlayer() {
+      audioPlayer = document.getElementById('global-audio-player');
+      audioPlayer.addEventListener('timeupdate', updateProgressBar);
+
+      // Load first track
+      if (playlist.length > 0) loadTrack(0);
+    }
+
+    function loadTrack(index) {
+      if (index < 0 || index >= playlist.length) return;
+      currentTrack = index;
+      audioPlayer.src = playlist[index].url;
+
+      // Update Full UI (Bottom Desktop)
+      document.querySelector('#global-player-ui #player-title').innerText = playlist[index].title;
+      // Update Overlay UI
+      document.querySelector('#overlay-title').innerText = playlist[index].title;
+
+      updatePlayerUI();
+    }
+
+    function audioToggle(e) {
+      if (e) e.stopPropagation();
+
+      if (audioPlayer.paused) {
+        audioPlayer.play().then(() => {
+          isPlaying = true;
+          updatePlayerUI();
+        }).catch(e => console.error("Play error", e));
+      } else {
+        audioPlayer.pause();
+        isPlaying = false;
+        updatePlayerUI();
+      }
+    }
+
+    function audioNext(e) {
+      if (e) e.stopPropagation();
+      let next = currentTrack + 1;
+      if (next >= playlist.length) next = 0;
+
+      let wasPlaying = !audioPlayer.paused;
+      loadTrack(next);
+
+      if (wasPlaying) {
+        audioPlayer.play().then(() => {
+          isPlaying = true;
+          updatePlayerUI();
+        });
+      } else {
+        updatePlayerUI();
+      }
+    }
+
+    function audioPrev(e) {
+      if (e) e.stopPropagation();
+      let prev = currentTrack - 1;
+      if (prev < 0) prev = playlist.length - 1;
+
+      let wasPlaying = !audioPlayer.paused;
+      loadTrack(prev);
+
+      if (wasPlaying) {
+        audioPlayer.play().then(() => {
+          isPlaying = true;
+          updatePlayerUI();
+        });
+      } else {
+        updatePlayerUI();
+      }
+    }
+
+    function updatePlayerUI() {
+      // Update Overlay Controls
+      const overlayBtn = document.getElementById('overlay-play-btn');
+
+      // Update Full Bar Controls
+      const fullBarBtn = document.querySelector('#global-player-ui #play-pause-btn');
+
+      // Toggle Rotation on all music disks
+      const artElements = document.querySelectorAll('#music-disk-trigger img, .player-art-container img, #overlay-art, #mobile-menu-player-container img');
+
+      if (!audioPlayer.paused) {
+        if (overlayBtn) overlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        if (fullBarBtn) fullBarBtn.innerHTML = '<i class="fas fa-pause"></i>';
+
+        // Start rotation
+        artElements.forEach(img => {
+          img.style.animationPlayState = 'running';
+        });
+
+      } else {
+        if (overlayBtn) overlayBtn.innerHTML = '<i class="fas fa-play pl-1"></i>';
+        if (fullBarBtn) fullBarBtn.innerHTML = '<i class="fas fa-play pl-0.5"></i>';
+
+        // Pause rotation
+        artElements.forEach(img => {
+          img.style.animationPlayState = 'paused';
+        });
+      }
+    }
+
+    function updateProgressBar() {
+      if (audioPlayer.duration) {
+        const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        const overlayBar = document.getElementById('overlay-progress');
+        const fullBar = document.querySelector('#global-player-ui #player-progress');
+        if (overlayBar) overlayBar.style.width = percent + '%';
+        if (fullBar) fullBar.style.width = percent + '%';
+      }
+    }
+
+    function seekAudio(e) {
+      e.stopPropagation();
+      const width = e.currentTarget.clientWidth;
+      const clickX = e.offsetX;
+      const duration = audioPlayer.duration;
+      audioPlayer.currentTime = (clickX / width) * duration;
+    }
+
+    function togglePlayerOverlay() {
+      const overlay = document.getElementById('player-overlay');
+      overlay.classList.toggle('hide');
+    }
+
+    // Render Playlist inside Overlay
+    function renderUserPlaylist() {
+      const list = document.getElementById('overlay-playlist');
+      if (!list) return;
+      list.innerHTML = '';
+      playlist.forEach((track, idx) => {
+        const div = document.createElement('div');
+        div.className = 'p-2 rounded hover:bg-white/20 cursor-pointer flex items-center justify-between text-white text-sm';
+        div.onclick = () => { loadTrack(idx); audioPlayer.play(); };
+        div.innerHTML = `<span>${idx + 1}. ${track.title}</span> <i class="fas fa-play text-xs opacity-50"></i>`;
+        list.appendChild(div);
+      });
+    }
+
+    function togglePlayerModal() {
+      // Re-used for Mobile Bottom Nav Logic
+      togglePlayerOverlay();
+    }
+
+    // --- NAVIGATION & PLAYER POSITIONING ---
+    function setNavStyle(style) {
+      state.navStyle = style;
+      const isDesktop = window.innerWidth >= 1024;
+      const body = document.body;
+      body.className = `min-h-screen overflow-x-hidden nav-${style}`; // REMOVED 'relative'
+
+      const topNav = document.getElementById('top-nav');
+      const sideNav = document.getElementById('side-nav');
+      const bottomNav = document.getElementById('bottom-nav');
+      const mainLayout = document.getElementById('main-layout');
+      const footer = document.getElementById('main-footer');
+      const ticker = document.getElementById('announcement-bar');
+      const fullPlayerUI = document.getElementById('global-player-ui');
+      const settingsBtn = document.getElementById('top-nav-settings-btn');
+
+      // Side Nav Specifics
+      const mobileBurger = document.getElementById('mobile-burger-btn');
+      const desktopBurger = document.getElementById('desktop-side-burger');
+
+      // Reset common states
+      topNav.classList.remove('hide');
+      ticker.classList.remove('hide');
+      sideNav.classList.add('hide', '-translate-x-full');
+      bottomNav.classList.add('hide');
+
+      // Remove hardcoded padding, we will use style if needed
+      mainLayout.style.paddingLeft = '0';
+
+      footer.classList.remove('pb-32');
+
+      // Controls Reset
+      document.getElementById('top-nav-search-trigger').classList.add('hide');
+      document.getElementById('top-nav-search-btn').classList.remove('hide');
+      document.getElementById('side-nav-search-container').classList.add('hide');
+      document.getElementById('top-nav-icon-container').classList.remove('hide');
+      document.getElementById('top-nav-title-group').style.textAlign = 'left';
+      document.getElementById('top-nav-title-group').classList.remove('absolute', 'left-1/2', '-translate-x-1/2');
+      document.getElementById('desktop-bottom-search-container').classList.add('hide');
+      document.getElementById('top-menu-items').classList.remove('hide');
+      document.getElementById('music-disk-trigger').classList.remove('hide');
+      document.getElementById('top-nav-mobile-menu-btn').classList.add('hide'); // Hide default mobile menu btn
+
+      // Reset Burger Buttons
+      if (mobileBurger) mobileBurger.classList.add('hide');
+      if (desktopBurger) desktopBurger.classList.add('hide');
+
+      // Hide Full Player unless specifically shown
+      fullPlayerUI.style.display = 'none';
+
+      if (style === 'side') {
+        // SIDE NAV MODE
+        topNav.classList.remove('hide'); // Top bar always visible for heading
+        ticker.classList.add('hide');
+
+        if (isDesktop) {
+          sideNav.classList.remove('hide', '-translate-x-full');
+          // Use dynamic padding based on resizable width
+          mainLayout.style.paddingLeft = 'var(--side-nav-width)';
+
+          // Hide Top Nav elements that are in Side Nav
+          document.getElementById('top-menu-items').classList.add('hide');
+          document.getElementById('top-nav-search-btn').classList.add('hide');
+          settingsBtn.classList.add('hide');
+          document.getElementById('music-disk-trigger').classList.add('hide'); // Hide disk in nav
+          document.getElementById('side-nav-search-container').classList.remove('hide'); // Show search in side
+          // Move Player to Side Nav
+          document.getElementById('side-nav-player-container').appendChild(fullPlayerUI);
+          fullPlayerUI.style.display = 'flex';
+          fullPlayerUI.classList.remove('hidden');
+
+          // ENABLE DESKTOP TOGGLE BUTTON (Moved to right in HTML)
+          desktopBurger.classList.remove('hide');
+          desktopBurger.innerHTML = '<i class="fas fa-times"></i>'; // Default Open = Close Icon
+          desktopBurger.classList.add('rotate-90'); // Rotated state for 'open' visual if desired
+        } else {
+          // Mobile Side Nav Overlay Logic
+          // No push for main layout
+          // Show Burger in Top Nav Right (as requested)
+          if (mobileBurger) {
+            mobileBurger.classList.remove('hide');
+            mobileBurger.style.display = 'block';
+          }
+          // Hide Top Nav Icon to make space
+          document.getElementById('top-nav-icon-container').classList.add('hide');
+          // Hide standard mobile menu trigger
+          document.getElementById('top-nav-mobile-menu-btn').classList.add('hide');
+          // Hide other top elements to clean up
+          document.getElementById('top-nav-search-btn').classList.add('hide');
+          settingsBtn.classList.add('hide');
+          // Hide Disk Trigger in Header
+          document.getElementById('music-disk-trigger').classList.add('hide');
+          // Move Player to Side Nav
+          document.getElementById('side-nav-player-container').appendChild(fullPlayerUI);
+          fullPlayerUI.style.display = 'flex';
+          fullPlayerUI.classList.remove('hidden');
+        }
+      } else if (style === 'bottom') {
+        // BOTTOM NAV MODE
+        topNav.classList.remove('hide');
+        ticker.classList.add('hide');
+        bottomNav.classList.remove('hide');
+        footer.classList.add('pb-32');
+
+        settingsBtn.classList.add('hide');
+        document.getElementById('top-nav-search-btn').classList.add('hide');
+        document.getElementById('top-menu-items').classList.add('hide');
+        document.getElementById('top-nav-icon-container').classList.add('hide');
+
+        // Center Title
+        const titleGroup = document.getElementById('top-nav-title-group');
+        titleGroup.classList.add('absolute', 'left-1/2', '-translate-x-1/2');
+        titleGroup.style.textAlign = 'center';
+
+        if (isDesktop) {
+          // DESKTOP BOTTOM NAV
+          document.getElementById('music-disk-trigger').classList.add('hide'); // Hide small disk
+          document.getElementById('desktop-bottom-search-container').classList.remove('hide');
+          // Show Full Player in Header
+          const container = document.getElementById('desktop-bottom-player-container');
+          container.appendChild(fullPlayerUI);
+          fullPlayerUI.style.display = 'flex';
+          fullPlayerUI.classList.remove('hidden');
+        } else {
+          // MOBILE BOTTOM NAV
+          // Use music-disk-trigger for right audio player
+          document.getElementById('top-nav-search-trigger').classList.remove('hide'); // Left Icon
+          document.getElementById('music-disk-trigger').classList.remove('hide'); // Right Disk (reused)
+        }
+      } else {
+        // TOP NAV MODE (Default)
+        settingsBtn.classList.remove('hide');
+
+        if (isDesktop) {
+          // Desktop: Hide mobile menu btn, Show Disk
+          document.getElementById('top-nav-mobile-menu-btn').classList.add('hide');
+          document.getElementById('music-disk-trigger').classList.remove('hide');
+        } else {
+          // Mobile: Show mobile menu btn, Hide Disk (Disk is inside menu)
+          document.getElementById('top-nav-mobile-menu-btn').classList.remove('hide');
+          document.getElementById('music-disk-trigger').classList.add('hide');
+        }
+      }
+      renderNavigation();
+    }
+
+    function toggleSideNav() {
+      const sideNav = document.getElementById('side-nav');
+      const mobileBurger = document.getElementById('mobile-burger-btn');
+      const desktopBurger = document.getElementById('desktop-side-burger');
+      const mainLayout = document.getElementById('main-layout');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (isDesktop) {
+        // DESKTOP LOGIC
+        const isClosed = sideNav.classList.contains('-translate-x-full');
+
+        if (isClosed) {
+          // OPEN IT
+          sideNav.classList.remove('-translate-x-full');
+          mainLayout.style.paddingLeft = 'var(--side-nav-width)';
+
+          // Button becomes X
+          desktopBurger.innerHTML = '<i class="fas fa-times"></i>';
+          desktopBurger.classList.add('rotate-90');
+        } else {
+          // CLOSE IT
+          sideNav.classList.add('-translate-x-full');
+          mainLayout.style.paddingLeft = '0';
+
+          // Button becomes Hamburger
+          desktopBurger.innerHTML = '<i class="fas fa-bars"></i>';
+          desktopBurger.classList.remove('rotate-90');
+        }
+      } else {
+        // MOBILE LOGIC
+        const body = document.body;
+        if (sideNav.classList.contains('hide') || sideNav.classList.contains('-translate-x-full')) {
+          // Open
+          sideNav.classList.remove('hide');
+          // Animate Slide In
+          setTimeout(() => sideNav.classList.remove('-translate-x-full'), 10);
+
+          // Styles for overlay mobile (width respects resize variable)
+          sideNav.style.zIndex = "1000";
+          sideNav.style.boxShadow = "5px 0 15px rgba(0,0,0,0.5)";
+          body.classList.add('nav-side-mobile-active');
+
+          if (mobileBurger) {
+            mobileBurger.classList.add('open');
+            mobileBurger.innerHTML = '<i class="fas fa-times"></i>'; // Change to X
+          }
+        } else {
+          closeSideNavIfMobile();
+        }
+      }
+    }
+
+    function closeSideNavIfMobile() {
+      // Only close if in side mode AND active AND Mobile
+      const sideNav = document.getElementById('side-nav');
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (state.navStyle !== 'side' || isDesktop || sideNav.classList.contains('hide')) return;
+
+      // Only strictly enforce closing via overlay on mobile, or toggle on desktop
+      const burger = document.getElementById('mobile-burger-btn');
+      const body = document.body;
+
+      sideNav.classList.add('-translate-x-full');
+      setTimeout(() => sideNav.classList.add('hide'), 300); // Wait for transition
+      body.classList.remove('nav-side-mobile-active');
+
+      if (burger) {
+        burger.classList.remove('open');
+        burger.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    }
+
+    // --- SIDE NAV RESIZER LOGIC ---
+    function initSideNavResizer() {
+      const resizer = document.getElementById('side-nav-resizer');
+      const sideNav = document.getElementById('side-nav');
+      const mainLayout = document.getElementById('main-layout');
+
+      let isResizing = false;
+
+      resizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isResizing = true;
+        document.body.style.cursor = 'col-resize';
+        resizer.classList.add('active');
+
+        // Disable transitions to prevent lag
+        sideNav.classList.add('no-transition');
+        mainLayout.classList.add('no-transition');
+
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', stopResize);
+      });
+
+      // For Touch Support
+      resizer.addEventListener('touchstart', (e) => {
+        isResizing = true;
+        resizer.classList.add('active');
+        sideNav.classList.add('no-transition');
+        mainLayout.classList.add('no-transition');
+        document.addEventListener('touchmove', resize);
+        document.addEventListener('touchend', stopResize);
+      });
+
+      function resize(e) {
+        if (!isResizing) return;
+
+        let clientX;
+        if (e.type.includes('touch')) {
+          clientX = e.touches[0].clientX;
+        } else {
+          clientX = e.clientX;
+        }
+
+        // Constraints
+        let newWidth = clientX;
+        if (newWidth < 200) newWidth = 200;
+        if (newWidth > 600) newWidth = 600;
+        if (newWidth > window.innerWidth - 50) newWidth = window.innerWidth - 50;
+
+        document.documentElement.style.setProperty('--side-nav-width', newWidth + 'px');
+      }
+
+      function stopResize() {
+        isResizing = false;
+        document.body.style.cursor = 'default';
+        resizer.classList.remove('active');
+        sideNav.classList.remove('no-transition');
+        mainLayout.classList.remove('no-transition');
+
+        document.removeEventListener('mousemove', resize);
+        document.removeEventListener('mouseup', stopResize);
+        document.removeEventListener('touchmove', resize);
+        document.removeEventListener('touchend', stopResize);
+      }
+    }
+
+    // --- PLAYER CLICK HANDLER (EXPAND/OVERLAY) ---
+    function handlePlayerClick() {
+      if (state.navStyle === 'top') {
+        // Existing collapse logic
+        clearTimeout(collapseTimeout);
+        document.getElementById('global-player-ui').classList.remove('player-collapsed');
+        scheduleCollapse(5000);
+      } else {
+        // For Side and Bottom (Desktop), open overlay
+        togglePlayerOverlay();
+      }
+    }
+
+    // --- MOBILE TOP NAV ANIMATION FIX ---
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('-translate-y-full');
+    }
+
+    // ... (Existing Feature Functions: Aarti, Sankalp, Panchang, Visitor, Admin, etc.)
+
+    // --- FEATURE: VIRTUAL AARTI ---
+    function toggleAartiMode() {
+      document.body.classList.toggle('aarti-mode');
+      const cursor = document.getElementById('aarti-cursor');
+      cursor.classList.toggle('hide');
+
+      if (document.body.classList.contains('aarti-mode')) {
+        document.addEventListener('mousemove', moveAartiCursor);
+        document.getElementById('bell-sound').play();
+        showToast("Aarti Started... Move mouse over Idol 🪔");
+      } else {
+        document.removeEventListener('mousemove', moveAartiCursor);
+        document.getElementById('bell-sound').pause();
+      }
+    }
+
+    function moveAartiCursor(e) {
+      const cursor = document.getElementById('aarti-cursor');
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      if (Math.random() > 0.8) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = e.clientX + 'px';
+        sparkle.style.top = e.clientY + 'px';
+        sparkle.style.width = Math.random() * 5 + 2 + 'px';
+        sparkle.style.height = sparkle.style.width;
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+      }
+    }
+
+    // --- FEATURE: SANKALP ---
+    const sankalps = [
+      "Ramesh Sharma: Peace for family",
+      "Sunita Devi: Health for children",
+      "Amit Patel: Success in business"
+    ];
+
+    function toggleSankalp() {
+      const modal = document.getElementById('sankalp-modal');
+      modal.classList.toggle('hide');
+      if (!modal.classList.contains('hide')) updateSankalpMarquee();
+    }
+
+    function handleSankalpSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('sankalp-name').value;
+      const wish = document.getElementById('sankalp-wish').value;
+      sankalps.unshift(`${name}: ${wish}`);
+      updateSankalpMarquee();
+      toggleSankalp();
+      showToast("Sankalp Submitted Successfully 🙏");
+      document.getElementById('sankalp-wish').value = '';
+    }
+
+    function updateSankalpMarquee() {
+      const container = document.getElementById('sankalp-marquee');
+      container.innerHTML = sankalps.map(s => `<div class="bg-white/10 p-2 rounded text-sm">${s}</div>`).join('');
+
+      let top = 0;
+      if (window.sankalpInterval) clearInterval(window.sankalpInterval);
+      window.sankalpInterval = setInterval(() => {
+        top -= 1;
+        if (Math.abs(top) > container.scrollHeight - 128) top = 128; // Loop
+        container.style.transform = `translateY(${top}px)`;
+      }, 50);
+    }
+
+    // --- FEATURE: PANCHANG ---
+    function initPanchang() {
+      const now = new Date();
+      const tithis = ["Pratipada", "Dwitiya", "Tritiya", "Chaturthi", "Panchami", "Shashti", "Saptami", "Ashtami", "Navami", "Dashami", "Ekadashi", "Dwadashi", "Trayodashi", "Chaturdashi", "Purnima/Amavasya"];
+      const tithi = tithis[now.getDate() % 15];
+      const text = `${now.toDateString()} | Tithi: ${tithi} | Sun: 06:12 AM - 06:45 PM`;
+      document.getElementById('panchang-text').innerText = text;
+    }
+
+    // --- NEW FEATURE: LIVE DARSHAN STATUS ---
+    function updateDarshanStatus() {
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+      const totalMins = currentHour * 60 + currentMin;
+
+      // Define intervals in minutes
+      // 5:00 (300) to 12:00 (720)
+      // 12:30 (750) to 15:00 (900)
+      // 16:00 (960) to 21:00 (1260)
+
+      const isOpen = (totalMins >= 300 && totalMins <= 720) ||
+        (totalMins >= 750 && totalMins <= 900) ||
+        (totalMins >= 960 && totalMins <= 1260);
+
+      const badge = document.getElementById('live-darshan-badge');
+      const text = document.getElementById('darshan-status-text');
+      const dot = badge.querySelector('i');
+
+      if (isOpen) {
+        text.innerText = "DARSHAN OPEN";
+        dot.className = "fas fa-circle text-[10px] mr-1 text-green-400";
+        badge.classList.add('border-green-400/50', 'text-green-100');
+        badge.classList.remove('border-red-400/50', 'text-red-100');
+        dot.classList.add('animate-pulse');
+      } else {
+        text.innerText = "DARSHAN CLOSED";
+        dot.className = "fas fa-circle text-[10px] mr-1 text-red-500";
+        badge.classList.add('border-red-400/50', 'text-red-100');
+        badge.classList.remove('border-green-400/50', 'text-green-100');
+        dot.classList.remove('animate-pulse');
+      }
+    }
+
+    // --- NEW FEATURE: JAPA MALA ---
+    function toggleJapaMala() {
+      const modal = document.getElementById('mala-modal');
+      modal.classList.toggle('hide');
+    }
+
+    function countMala() {
+      state.malaCount++;
+      document.getElementById('mala-count').innerText = state.malaCount;
+      document.getElementById('bead-sound').currentTime = 0;
+      document.getElementById('bead-sound').play();
+
+      if (state.malaCount >= 108) {
+        state.malaCount = 0;
+        document.getElementById('mala-count').innerText = 108; // Show final
+        document.getElementById('bell-sound').play();
+        showToast("Japa Complete! 108 🙏");
+        setTimeout(() => {
+          document.getElementById('mala-count').innerText = 0;
+        }, 2000);
+      }
+    }
+
+    function resetMala() {
+      state.malaCount = 0;
+      document.getElementById('mala-count').innerText = 0;
+    }
+
+    // --- NEW FEATURE: DIVINE ORACLE ---
+    function toggleOracle() {
+      const modal = document.getElementById('oracle-modal');
+      modal.classList.toggle('hide');
+      if (!modal.classList.contains('hide')) askOracle();
+    }
+
+    function askOracle() {
+      const msgEl = document.getElementById('oracle-msg');
+      msgEl.style.opacity = 0;
+      setTimeout(() => {
+        const randomMsg = oracleMessages[Math.floor(Math.random() * oracleMessages.length)];
+        msgEl.innerText = `"${randomMsg}"`;
+        msgEl.style.opacity = 1;
+      }, 300);
+    }
+
+    // --- NEW FEATURE: DEEP DAAN (LIGHT A LAMP) ---
+    function toggleDeepDaan() {
+      const container = document.getElementById('flower-container');
+      const diya = document.createElement('div');
+      diya.className = 'floating-diya';
+      diya.innerText = '🪔';
+      diya.style.left = Math.random() * 80 + 10 + '%';
+      diya.style.bottom = "50px";
+      container.appendChild(diya);
+
+      showToast("Deep Daan Offered 🙏");
+      setTimeout(() => diya.remove(), 4000);
+    }
+
+    // --- NEW FEATURE: SHARE APP ---
+    function shareApp() {
+      const data = {
+        title: "Sri Narsimha Temple Hasampur",
+        text: "Join me in virtual darshan of Sri Narsimha Bhagwan!",
+        url: window.location.href
+      };
+
+      if (navigator.share) {
+        navigator.share(data).catch(console.error);
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        showToast("Link Copied to Clipboard!");
+      }
+    }
+
+    // --- FEATURE: VISITOR COUNTER ---
+    function updateVisitorCount() {
+      setInterval(() => {
+        const el = document.getElementById('visitor-count');
+        let count = parseInt(el.innerText);
+        count += Math.floor(Math.random() * 5) - 2;
+        if (count < 50) count = 50;
+        el.innerText = count;
+      }, 3000);
+    }
+
+    // --- FEATURE: SELFIE ---
+    function createSelfie(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.getElementById('preview-img-target');
+          img.src = e.target.result;
+          img.style.border = "20px solid #ea580c";
+          document.getElementById('image-preview-modal').classList.remove('hide');
+          showToast("Selfie Frame Applied! (Simulated)");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // --- ADMIN: FEATURE TOGGLES ---
+    function renderAdminFeatures() {
+      const container = document.getElementById('admin-feature-toggles');
+      container.innerHTML = '';
+      Object.keys(state.features).forEach(key => {
+        const isOn = state.features[key];
+        const div = document.createElement('div');
+        div.className = `p-3 rounded cursor-pointer border flex justify-between items-center ${isOn ? 'bg-green-600/20 border-green-500' : 'bg-red-600/20 border-red-500'}`;
+        div.onclick = () => toggleFeature(key);
+        div.innerHTML = `<span class="capitalize font-bold">${key}</span> <i class="fas ${isOn ? 'fa-check-circle text-green-400' : 'fa-times-circle text-red-400'}"></i>`;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleFeature(key) {
+      state.features[key] = !state.features[key];
+      renderAdminFeatures();
+      applyFeatureStates();
+      showToast(`${key} is now ${state.features[key] ? 'Enabled' : 'Disabled'}`);
+    }
+
+    function applyFeatureStates() {
+      document.querySelectorAll('[data-feature]').forEach(el => {
+        const key = el.getAttribute('data-feature');
+        if (state.features[key] === false) el.classList.add('hide');
+        else el.classList.remove('hide');
+      });
+    }
+
+    // --- EXISTING HELPER FUNCTIONS ---
+    function offerFlowers() {
+      const container = document.getElementById('flower-container');
+      const flowers = ['🌸', '🌺', '🌼', '🌻', '🌹'];
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const f = document.createElement('div');
+          f.className = 'flower';
+          f.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+          f.style.left = Math.random() * 100 + '%';
+          f.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          container.appendChild(f);
+          setTimeout(() => f.remove(), 4000);
+        }, i * 200);
+      }
+      showToast("Pushpanjali Offered 🙏");
+    }
+
+    function startShlokaRotation() {
+      setInterval(() => {
+        const el = document.getElementById('shloka-display');
+        el.style.opacity = 0;
+        setTimeout(() => {
+          currentShlokaIndex = (currentShlokaIndex + 1) % shlokas.length;
+          el.innerHTML = shlokas[currentShlokaIndex];
+          el.style.opacity = 1;
+        }, 1000);
+      }, 6000);
+    }
+
+    function toggleSearch() {
+      document.getElementById('search-modal').classList.toggle('hide');
+      document.getElementById('search-input').focus();
+    }
+
+    function performSearch(inputEl) {
+      // Support both main search input and side nav input
+      const input = inputEl || document.getElementById('search-input');
+      const query = input.value.toLowerCase();
+
+      // If main modal is open, use its results div
+      let resultsDiv = document.getElementById('search-results');
+
+      // Simple logic: if using side nav input, we might want to show results in a different way or open modal
+      // For now, let's keep consistent: typing in side nav opens main search modal populated
+      if (inputEl) {
+        document.getElementById('search-input').value = input.value;
+        document.getElementById('search-modal').classList.remove('hide');
+        resultsDiv = document.getElementById('search-results');
+      }
+
+      resultsDiv.innerHTML = '';
+      if (query.length < 2) {
+        resultsDiv.innerHTML = '<p class="text-center opacity-50 text-sm py-4">Type more to search...</p>';
+        return;
+      }
+      const hits = [];
+      calendarEvents.forEach(e => {
+        if (e.title.toLowerCase().includes(query) || e.desc.toLowerCase().includes(query))
+          hits.push({ type: 'Event', title: e.title, link: 'view-calendar' });
+      });
+      const currentLangData = translations[state.lang];
+      Object.keys(currentLangData).forEach(key => {
+        if (key.startsWith('nav') && currentLangData[key].toLowerCase().includes(query)) {
+          const navItem = navItems.find(n => n.labelKey === key);
+          if (navItem) hits.push({ type: 'Page', title: currentLangData[key], link: navItem.id });
+        }
+      });
+      if (hits.length === 0) {
+        resultsDiv.innerHTML = '<p class="text-center opacity-50 text-sm py-4">No results found.</p>';
+      } else {
+        hits.forEach(h => {
+          const div = document.createElement('div');
+          div.className = 'p-3 hover:bg-black/10 rounded cursor-pointer border-b border-gray-200 dark:border-gray-700 last:border-0';
+          div.innerHTML = `<span class="text-xs font-bold text-primary uppercase">${h.type}</span><h4 class="font-bold">${h.title}</h4>`;
+          div.onclick = () => { toggleSearch(); switchView(h.link); };
+          resultsDiv.appendChild(div);
+        });
+      }
+    }
+
+    function playBhajan(name) { showToast(`Now Playing: ${name} 🎵`); }
+    function playFromLibrary(title, url, art) {
+      // 1. Update the global playlist or inject this track at the top
+      const track = { title: title, url: url };
+      playlist.unshift(track); // Add to beginning
+
+      // 2. Load and Play
+      loadTrack(0);
+      audioPlayer.play();
+      isPlaying = true;
+      updatePlayerUI();
+
+      // 3. Notify the user
+      showToast(`Playing: ${title} 🎵`);
+    }
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    function toggleContactModal() { document.getElementById('contact-modal').classList.toggle('hide'); }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      toggleContactModal();
+      showToast("Message Sent Successfully! 🙏");
+    }
+
+    function updateTicker() {
+      const val = document.getElementById('admin-ticker-input').value;
+      if (val) {
+        document.getElementById('announcement-text').innerText = val;
+        alert("Ticker Updated");
+      }
+    }
+
+    function initSettingsUI() {
+      const grid = document.getElementById('theme-grid');
+      const adminGrid = document.getElementById('admin-theme-controls');
+      const createBtn = (t, container) => {
+        const btn = document.createElement('div');
+        btn.className = 'w-8 h-8 md:w-10 md:h-10 rounded-full cursor-pointer border-2 border-transparent hover:scale-110 transition shadow-sm';
+        btn.style.backgroundColor = t.colors.p;
+        btn.onclick = () => applyTheme(t.id);
+        btn.title = t.name;
+        container.appendChild(btn);
+      };
+      themes.forEach(t => { createBtn(t, grid); createBtn(t, adminGrid); });
+      document.querySelectorAll('.font-select').forEach(select => {
+        fonts.forEach(f => {
+          const opt = document.createElement('option');
+          opt.value = f; opt.innerText = f; opt.style.fontFamily = f; select.appendChild(opt);
+        });
+      });
+    }
+
+    function changeLanguage(lang) { state.lang = lang; updateLanguage(); renderNavigation(); }
+    function updateLanguage() {
+      const data = translations[state.lang];
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (data[key]) el.innerText = data[key];
+      });
+    }
+    function applyTheme(themeId) {
+      state.theme = themeId;
+      const t = themes.find(x => x.id === themeId);
+      const root = document.documentElement;
+      root.style.setProperty('--primary', t.colors.p);
+      // In light mode, update background to theme bg, otherwise keep dark mode bg
+      if (!root.classList.contains('dark')) {
+        root.style.setProperty('--bg', t.colors.bg);
+        root.style.setProperty('--text', t.colors.t);
+      }
+    }
+    function updateCustomFont(type, fontName) {
+      if (type === 'heading') document.documentElement.style.setProperty('--heading-font', fontName);
+      if (type === 'body') document.documentElement.style.setProperty('--body-font', fontName);
+    }
+    function updateShlokaStyle(prop, value) {
+      if (prop === 'color') document.documentElement.style.setProperty('--shloka-color', value);
+      if (prop === 'font') document.documentElement.style.setProperty('--shloka-font', value);
+    }
+    function adjustFontSize(delta) {
+      const root = document.documentElement;
+      const style = window.getComputedStyle(root).getPropertyValue('--font-size-base');
+      root.style.setProperty('--font-size-base', (parseInt(style) + delta) + 'px');
+    }
+
+    // Updated Dark Mode Logic to match prep.html exactly
+    function toggleDarkMode() {
+      const root = document.documentElement;
+      root.classList.toggle('dark');
+
+      // Explicit contrast handling like prep.html
+      if (root.classList.contains('dark')) {
+        // Force white text and dark background for best contrast
+        root.style.setProperty('--text', '#ffffff');
+        root.style.setProperty('--bg', '#0a0a0a');
+        // Ensure primary is visible on dark (Orange-400 from prep.html)
+        root.style.setProperty('--primary', '#fb923c');
+      } else {
+        // Re-apply current theme colors logic
+        // If we are in light mode, revert to the theme's defined colors
+        const t = themes.find(x => x.id === state.theme);
+        if (t) {
+          root.style.setProperty('--text', t.colors.t);
+          root.style.setProperty('--bg', t.colors.bg);
+          root.style.setProperty('--primary', t.colors.p);
+        } else {
+          // Fallback default
+          root.style.setProperty('--text', '#1f2937');
+          root.style.setProperty('--bg', '#fff7ed');
+        }
+      }
+    }
+
+    function toggleSettings() { document.getElementById('settings-modal').classList.toggle('hide'); }
+
+    // --- NAVIGATION & PLAYER POSITIONING (UPDATED) ---
+    // (Function setNavStyle and renderNavigation are defined in the script above)
+
+    function renderNavigation() {
+      const topContainer = document.getElementById('top-menu-items');
+      const sideContainer = document.getElementById('side-menu-items');
+      const dockContainer = document.getElementById('dock-items-container');
+      const mobileContainer = document.getElementById('mobile-menu-links');
+
+      let html = '';
+      let dockHtml = '';
+
+      navItems.forEach(item => {
+        let labelKey = item.labelKey;
+        if (item.id === 'view-login' && state.user) {
+          labelKey = state.user === 'admin' ? 'navAdmin' : 'navMember';
+          item.tempId = state.user === 'admin' ? 'view-admin' : 'view-leela';
+        }
+        const label = translations[state.lang][labelKey];
+        const targetId = item.tempId || item.id;
+        const isActive = targetId === state.activeView ? 'active' : '';
+
+        html += `<button onclick="switchView('${targetId}')" class="nav-btn ${isActive} hover:text-primary transition text-left flex items-center gap-3 py-2 px-2 rounded">
+                            <i class="fas ${item.icon}"></i> ${label}
+                         </button>`;
+
+        dockHtml += `<button onclick="switchView('${targetId}')" class="dock-item ${isActive} flex flex-col items-center justify-center text-xs gap-1 opacity-70 hover:opacity-100 p-2 relative group">
+                                <i class="fas ${item.icon} text-2xl mb-1"></i>
+                                <span class="absolute -top-10 bg-black/80 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition whitespace-nowrap">${label}</span>
+                             </button>`;
+        delete item.tempId;
+      });
+
+      topContainer.innerHTML = html;
+      sideContainer.innerHTML = html;
+      mobileContainer.innerHTML = html;
+      dockContainer.innerHTML = dockHtml;
+    }
+
+    function switchView(viewId) {
+      const sections = document.querySelectorAll('.view-section');
+      const target = document.getElementById(viewId);
+
+      if (!target) return;
+
+      // 1. Instantly hide all and strip the animation class
+      sections.forEach(el => {
+        el.classList.add('hide');
+        el.classList.remove('animate-fade-in');
+      });
+
+      // 2. Make the target visible
+      target.classList.remove('hide');
+
+      // 3. Re-trigger the scale-fade animation
+      void target.offsetWidth; // Force reflow
+      target.classList.add('animate-fade-in');
+
+      // 4. Persistence & Navigation updates
+      state.activeView = viewId;
+      localStorage.setItem('lastView', viewId);
+      renderNavigation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // function toggleReadMore(btn) {
+    //    if (window.event) window.event.stopPropagation(); // Prevent card clicks
+
+    //    const parent = btn.parentElement;
+    //    const short = parent.querySelector('.short-text');
+    //    const full = parent.querySelector('.full-text');
+
+    //    if (full.classList.contains('hide')) {
+    //      full.classList.remove('hide');
+    //      short.classList.add('hide');
+    //      btn.innerText = "Show Less";
+    //    } else {
+    //      full.classList.add('hide');
+    //      short.classList.remove('hide');
+    //      btn.innerText = "Read More";
+    //    }
+    // }
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    function filterCalendar() {
+      const query = document.getElementById('calendar-search').value.toLowerCase().trim();
+      const resultsOverlay = document.getElementById('search-results-overlay');
+
+      // 1. If query is empty, hide the results
+      if (query.length === 0) {
+        resultsOverlay.innerHTML = '';
+        resultsOverlay.classList.add('hide');
+        return;
+      }
+
+      // 2. Filter the events array
+      const matches = calendarEvents.filter(event => {
+        const title = event.title.toLowerCase();
+        const desc = event.desc.toLowerCase();
+        return title.includes(query) || desc.includes(query);
+      });
+
+      // 3. Build the Results List
+      if (matches.length > 0) {
+        resultsOverlay.classList.remove('hide');
+        resultsOverlay.innerHTML = matches.map(event => {
+          const isMela = event.title.toLowerCase().includes('mela') ||
+            event.title.toLowerCase().includes('jayanti');
+
+          return `
+                <div class="p-4 hover:bg-primary/10 border-b border-gray-100 dark:border-white/5 cursor-pointer flex items-center gap-4 transition"
+                     onclick="navigateToEvent('${event.title}', ${isMela})">
+                    <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                        <img src="${event.image || globalDefaultImage}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-2">
+                            <h5 class="font-bold text-sm text-text">${event.title}</h5>
+                            ${isMela ? '<span class="text-[8px] bg-yellow-500 text-black px-1 rounded font-bold uppercase">Mela</span>' : ''}
+                        </div>
+                        <p class="text-xs opacity-60 line-clamp-1">${event.desc}</p>
+                    </div>
+                    <div class="text-[10px] font-bold text-primary opacity-80 whitespace-nowrap">
+                        ${event.date.split(' ')[0]} ${event.date.split(' ')[1]}
+                    </div>
+                </div>
+            `;
+        }).join('');
+      } else {
+        resultsOverlay.innerHTML = `<div class="p-6 text-center text-sm opacity-50">No matches found for "${query}"</div>`;
+        resultsOverlay.classList.remove('hide');
+      }
+    }
+
+    function filterCalendarByDate() {
+      const fromDate = document.getElementById('date-from').value;
+      const toDate = document.getElementById('date-to').value;
+
+      if (!fromDate || !toDate) return;
+
+      const start = new Date(fromDate);
+      const end = new Date(toDate);
+
+      const filtered = calendarEvents.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate >= start && eventDate <= end;
+      });
+
+      // We pass the 'filtered' array here
+      renderCalendar(filtered);
+    }
+
+    function resetDateFilter() {
+      document.getElementById('date-from').value = '';
+      document.getElementById('date-to').value = '';
+      renderCalendar(calendarEvents); // Reset to full list
+    }
+
+    // 4. Function to handle clicking a result
+    function navigateToEvent(title, isMela) {
+      document.getElementById('calendar-search').value = '';
+      document.getElementById('search-results-overlay').classList.add('hide');
+
+      const triggerAndHighlight = (selector) => {
+        const cards = document.querySelectorAll(selector);
+        cards.forEach(card => {
+          const cardTitle = card.querySelector('h4').innerText;
+          if (cardTitle === title) {
+            // Scroll into view
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Apply visual highlight
+            card.classList.add('search-highlight');
+
+            // Remove highlight after animation ends (2 seconds)
+            setTimeout(() => {
+              card.classList.remove('search-highlight');
+            }, 2000);
+          }
+        });
+      };
+
+      if (isMela) {
+        if (document.getElementById('mela-overlay').classList.contains('hide')) {
+          toggleMelaOverlay();
+        }
+        setTimeout(() => triggerAndHighlight('#mela-overlay-grid > div'), 600);
+      } else {
+        triggerAndHighlight('#calendar-events-container > div');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const overlay = document.getElementById('search-results-overlay');
+      const searchInput = document.getElementById('calendar-search');
+      if (e.target !== overlay && e.target !== searchInput) {
+        overlay.classList.add('hide');
+      }
+    });
+
+    function renderCalendar(dataToRender = calendarEvents) {
+      const regularContainer = document.getElementById('calendar-events-container');
+      const melaOverlayGrid = document.getElementById('mela-overlay-grid'); // Inside the full-screen overlay
+      const melaTrigger = document.getElementById('mela-trigger-wrapper');
+
+      // Clear previous content
+      regularContainer.innerHTML = '';
+      melaOverlayGrid.innerHTML = '';
+
+      // Reset Grid Classes
+      regularContainer.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6";
+
+      let melaCount = 0;
+      dataToRender.forEach(event => {
+        // Standard categorization logic based on Title
+        const titleLower = event.title.toLowerCase();
+        const isMela = titleLower.includes('mela') ||
+          titleLower.includes('jayanti') ||
+          titleLower.includes('mahotsav');
+
+        const imageSrc = event.image ? event.image : globalDefaultImage;
+
+        // --- UNIVERSAL READ MORE LOGIC (Calculated for EVERY event) ---
+        const limit = 100;
+        const isLong = event.desc.length > limit;
+        const shortDesc = isLong ? event.desc.substring(0, limit) + "..." : event.desc;
+
+        // This HTML block is now reused in both templates
+        const descHTML = `
+      <div class="text-sm opacity-90 mb-4 font-light">
+          <span class="short-text">${shortDesc}</span>
+          ${isLong ? `<span class="full-text hide">${event.desc}</span> 
+                      <button onclick="toggleReadMore(this)" class="text-primary dark:text-yellow-400 font-bold text-xs hover:underline ml-1 cursor-pointer relative z-50">Read More</button>` : ''}
+      </div>
+    `;
+
+        if (isMela) {
+          melaCount++;
+          const el = document.createElement('div');
+          // Updated Mela Poster with Glassmorphism and Read More
+          el.className = `relative h-[480px] rounded-2xl overflow-hidden group shadow-2xl transition duration-500 hover:scale-[1.02] bg-white/80 border border-white/40 backdrop-blur-md dark:bg-white/5 dark:border-white/10 dark:backdrop-blur-lg`;
+
+          el.innerHTML = `
+            <div class="h-[50%] overflow-hidden relative">
+                <img src="${imageSrc}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg z-20">
+                    <span class="block text-xl font-extrabold leading-none text-center">${event.date.split(' ')[0]}</span>
+                    <span class="text-[10px] uppercase font-bold tracking-wider">${event.date.split(' ')[1]}</span>
+                </div>
+            </div>
+
+            <div class="p-6 flex flex-col justify-between h-[50%]">
+                <div>
+                    <h4 class="font-bold text-2xl mb-2 text-primary dark:text-yellow-400 leading-tight">${event.title}</h4>
+                    ${descHTML} </div>
+                <div class="flex items-center gap-2 mt-auto opacity-70 text-xs text-primary dark:text-white">
+                    <i class="fas fa-map-marker-alt"></i> Hasampur Temple Premises
+                </div>
+            </div>
+        `;
+          melaOverlayGrid.appendChild(el);
+
+        } else {
+          // === REGULAR CARD (Standard Grid) ===
+          const el = document.createElement('div');
+          el.className = "glass-panel rounded-xl overflow-hidden hover:scale-105 transition duration-300 relative group border border-white/20 flex flex-col";
+
+          el.innerHTML = `
+            <div class="relative h-48 overflow-hidden">
+                <img src="${imageSrc}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+            </div>
+            
+            <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white px-3 py-1 rounded-lg text-center border border-white/20 shadow-lg z-20">
+                <span class="block text-xl font-bold leading-none">${event.date.split(' ')[0]}</span>
+                <span class="text-[10px] uppercase font-bold text-secondary">${event.date.split(' ')[1]}</span>
+            </div>
+
+            <div class="p-5 flex-grow flex flex-col">
+                <h4 class="font-bold text-xl mb-2 text-primary leading-tight">${event.title}</h4>
+                ${descHTML}
+                <div class="mt-auto pt-3 border-t border-white/10 flex justify-between items-center text-xs opacity-60">
+                      <span><i class="fas fa-map-marker-alt mr-1"></i> Hasampur</span>
+                      <i class="fas fa-share-alt hover:text-primary cursor-pointer transition" onclick="shareApp()"></i>
+                </div>
+            </div>
+        `;
+          regularContainer.appendChild(el);
+        }
+      });
+
+      // Toggle Trigger Visibility
+      if (melaCount > 0) {
+        melaTrigger.classList.remove('hide');
+      } else {
+        melaTrigger.classList.add('hide');
+      }
+    }
+
+    // === NEW: TOGGLE FUNCTION FOR OVERLAY ===
+    function toggleMelaOverlay() {
+      const overlay = document.getElementById('mela-overlay');
+
+      if (overlay.classList.contains('hide')) {
+        // --- OPENING TRANSITION ---
+        overlay.classList.remove('hide');
+        // Small delay to allow the browser to register the "un-hidden" state
+        setTimeout(() => {
+          overlay.classList.remove('opacity-0', 'translate-y-10');
+          overlay.classList.add('opacity-100', 'translate-y-0');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+      } else {
+        // --- CLOSING TRANSITION ---
+        overlay.classList.add('opacity-0', 'translate-y-10');
+        overlay.classList.remove('opacity-100', 'translate-y-0');
+        // Wait for the 500ms transition to finish before hiding
+        setTimeout(() => {
+          overlay.classList.add('hide');
+        }, 500);
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Helper Function (Ensure this is in your script)
+    function toggleReadMore(btn) {
+      // Prevent event bubbling so it doesn't trigger card clicks if any
+      if (event) event.stopPropagation();
+
+      const parent = btn.parentElement;
+      const short = parent.querySelector('.short-text');
+      const full = parent.querySelector('.full-text');
+
+      if (full.classList.contains('hide')) {
+        full.classList.remove('hide');
+        short.classList.add('hide');
+        btn.innerText = "Show Less";
+      } else {
+        full.classList.add('hide');
+        short.classList.remove('hide');
+        btn.innerText = "Read More";
+      }
+    }
+
+    function startCountdown(dateString) {
+      if (countdownInterval) clearInterval(countdownInterval);
+      const target = new Date(dateString).getTime();
+      countdownInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const d = target - now;
+        if (d < 0) return;
+        document.getElementById("days").innerText = Math.floor(d / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById("minutes").innerText = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById("seconds").innerText = Math.floor((d % (1000 * 60)) / 1000);
+      }, 1000);
+    }
+
+    function addToGallery(event) {
+      const reader = new FileReader();
+      reader.onload = function () {
+        const grid = document.getElementById('gallery-grid');
+        const div = document.createElement('div');
+        div.className = 'gallery-item rounded-xl overflow-hidden shadow-lg h-64 group relative animate-fade-in border border-white/20 cursor-pointer';
+        div.onclick = function () { openImagePreview(this); };
+        div.innerHTML = `<img src="${reader.result}" class="w-full h-full object-cover"><button class="delete-btn absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full ${state.user === 'admin' ? '' : 'hide'}" onclick="deleteGalleryItem(event, this)"><i class="fas fa-trash"></i></button>`;
+        grid.insertBefore(div, grid.firstChild);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function openImagePreview(element) {
+      document.getElementById('preview-img-target').src = element.querySelector('img').src;
+      document.getElementById('image-preview-modal').classList.remove('hide');
+    }
+    function closeImagePreview() { document.getElementById('image-preview-modal').classList.add('hide'); }
+    function deleteGalleryItem(e, btn) { e.stopPropagation(); if (confirm('Delete?')) btn.closest('.gallery-item').remove(); }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const type = document.getElementById('login-type').value;
+      const p = document.getElementById('password').value;
+      if (type === 'admin' && p === 'admin9129') {
+        state.user = 'admin';
+        updateGalleryView();
+        renderAdminPlaylist();
+        setTimeout(() => { switchView('view-admin'); renderNavigation(); }, 500);
+      } else if (type === 'member' && p === 'member9129') {
+        state.user = 'member';
+        setTimeout(() => { switchView('view-leela'); renderNavigation(); }, 500);
+      } else {
+        document.getElementById('login-msg').innerText = "Incorrect Password";
+      }
+    }
+    function handleLogout() {
+      state.user = null;
+      updateGalleryView();
+      switchView('view-home');
+      renderNavigation();
+    }
+    function updateGalleryView() {
+      document.querySelectorAll('.delete-btn').forEach(b => b.classList.toggle('hide', state.user !== 'admin'));
+    }
+    function checkLeelaAccess() {
+      const isAuth = state.user === 'member' || state.user === 'admin';
+      document.getElementById('leela-public').classList.toggle('hide', isAuth);
+      document.getElementById('leela-member-dashboard').classList.toggle('hide', !isAuth);
+    }
+
+    function updateHeading() {
+      const val = document.getElementById('admin-heading-input').value;
+      if (val) { document.getElementById('main-heading-display').innerText = val; alert('Heading Updated!'); }
+    }
+    function updateMelaDate() {
+      const val = document.getElementById('admin-date-input').value;
+      if (val) { state.melaDate = val; document.getElementById('mela-date-display').innerText = new Date(val).toDateString(); startCountdown(val); alert('Date Updated!'); }
+    }
+    function updateMainPhoto() {
+      const fileInput = document.getElementById('admin-photo-file');
+      const urlInput = document.getElementById('admin-photo-url');
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) { document.getElementById('main-idol-img').src = e.target.result; alert('Photo Set!'); };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else if (urlInput.value) {
+        document.getElementById('main-idol-img').src = urlInput.value;
+        alert('Photo Set!');
+      }
+    }
+
+    // NEW FEATURE: Image Focus (Simulated Crop)
+    function updateMainPhotoFocus(focus) {
+      const img = document.getElementById('main-idol-img');
+      img.style.objectPosition = focus;
+    }
+
+    function updateTimings() {
+      const getVal = (id) => {
+        const val = document.getElementById(id).value;
+        if (!val) return null;
+        let [h, m] = val.split(':');
+        let suffix = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        return `${h}:${m} ${suffix}`;
+      };
+      const tm = getVal('admin-t-m');
+      const tmd = getVal('admin-t-md');
+      const te = getVal('admin-t-e');
+      if (tm) document.getElementById('time-morning-open').innerText = tm;
+      if (tmd) document.getElementById('time-mid-open').innerText = tmd;
+      if (te) document.getElementById('time-evening-open').innerText = te;
+      alert('Timings Updated!');
+    }
+    function updateMap() {
+      const url = document.getElementById('admin-map-url').value;
+      if (url) { document.getElementById('footer-map-frame').src = url; alert('Map Updated!'); }
+    }
+    function setDefaultNav(val) { setNavStyle(val); alert('Default Navigation Style Set!'); }
+    function addBhajan() {
+      const title = document.getElementById('bhajan-title').value;
+      if (title) {
+        const container = document.getElementById('bhajan-container');
+        const div = document.createElement('div');
+        div.className = 'glass-panel p-6 rounded-xl flex items-center gap-4 hover:bg-white/5 transition animate-fade-in';
+        div.innerHTML = `
+                    <div class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center text-xl"><i class="fas fa-music"></i></div>
+                    <div><h4 class="font-bold">${title}</h4><p class="text-xs opacity-70">New Audio</p></div>
+                    <button class="ml-auto text-secondary hover:scale-110 transition"><i class="fas fa-play-circle text-3xl"></i></button>
+                `;
+        container.appendChild(div);
+        document.getElementById('bhajan-title').value = '';
+        alert('Bhajan Added!');
+      }
+    }
+
+    function renderAdminPlaylist() {
+      const list = document.getElementById('admin-playlist-list');
+      list.innerHTML = '';
+      playlist.forEach((track, idx) => {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between items-center bg-white/5 p-2 rounded';
+        div.innerHTML = `
+                    <span class="truncate pr-2">${idx + 1}. ${track.title}</span>
+                    <button onclick="removeFromPlaylist(${idx})" class="text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                `;
+        list.appendChild(div);
+      });
+    }
+    function addToPlaylist() {
+      const t = document.getElementById('playlist-title').value;
+      const u = document.getElementById('playlist-url').value;
+      if (t && u) {
+        playlist.push({ title: t, url: u });
+        renderAdminPlaylist();
+        renderUserPlaylist(); // Update user playlist immediately
+        document.getElementById('playlist-title').value = '';
+        document.getElementById('playlist-url').value = '';
+        if (playlist.length === 1) loadTrack(0);
+      }
+    }
+    function uploadAudio() {
+      const fileInput = document.getElementById('playlist-file');
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const title = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+          playlist.push({ title: title, url: e.target.result });
+          renderAdminPlaylist();
+          renderUserPlaylist(); // Update user playlist immediately
+          if (playlist.length === 1) loadTrack(0);
+          alert("Audio Uploaded Successfully!");
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+    function removeFromPlaylist(idx) {
+      if (confirm('Remove track?')) {
+        playlist.splice(idx, 1);
+        renderAdminPlaylist();
+        renderUserPlaylist(); // Update user playlist immediately
+      }
+    }
+  </script>
+</body>
+
+</html>
