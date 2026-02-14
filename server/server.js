@@ -7,6 +7,7 @@ const path = require('path');     // <--- NEW TOOL
 const fs = require('fs');         // <--- NEW TOOL
 const Event = require('./models/event');
 const Setting = require('./models/setting');
+const History = require('./models/history');
 
 const app = express();
 
@@ -18,6 +19,51 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
+
+// GET: Fetch all stories !!Histroy Page
+app.get('/api/history', async (req, res) => {
+  try {
+    const stories = await History.find().sort({ createdAt: 1 });
+    res.json(stories);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST: Add a new story
+app.post('/api/history', async (req, res) => {
+  try {
+    const newStory = new History(req.body);
+    const savedStory = await newStory.save();
+    res.json(savedStory);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT: Update a story
+app.put('/api/history/:id', async (req, res) => {
+  try {
+    const updatedStory = await History.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      { new: true }
+    );
+    res.json(updatedStory);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE: Delete a story
+app.delete('/api/history/:id', async (req, res) => {
+  try {
+    await History.findByIdAndDelete(req.params.id);
+    res.json({ message: "Story deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // --- 1. SETUP FILE UPLOAD STORAGE ---
 // Ensure 'uploads' folder exists
