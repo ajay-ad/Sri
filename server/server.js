@@ -22,47 +22,86 @@ app.use(cors({
 
 // GET: Fetch all stories !!Histroy Page
 app.get('/api/history', async (req, res) => {
-  try {
-    const stories = await History.find().sort({ createdAt: 1 });
-    res.json(stories);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const stories = await History.find().sort({ createdAt: 1 });
+        res.json(stories);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
-// POST: Add a new story
-app.post('/api/history', async (req, res) => {
-  try {
-    const newStory = new History(req.body);
-    const savedStory = await newStory.save();
-    res.json(savedStory);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+app.post('/api/history', upload.array('historyImages', 5), async (req, res) => {
+    try {
+        const { tabTitle, title, subtitle, text, imageUrls } = req.body;
+
+        // 1. Start with URLs provided in the text field (if any)
+        let finalImages = imageUrls ? JSON.parse(imageUrls) : [];
+
+        // 2. Add uploaded files
+        if (req.files && req.files.length > 0) {
+            const uploadedPaths = req.files.map(file => `https://sri-xpvu.onrender.com/uploads/${file.filename}`);
+            finalImages = [...finalImages, ...uploadedPaths];
+        }
+
+        // Fallback default image if nothing provided
+        if (finalImages.length === 0) {
+            finalImages.push("https://images.unsplash.com/photo-1604537466158-719b1972feb8?q=80");
+        }
+
+        const newStory = new History({
+            tabTitle,
+            title,
+            subtitle,
+            text,
+            images: finalImages
+        });
+
+        const savedStory = await newStory.save();
+        res.json(savedStory);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // PUT: Update a story
-app.put('/api/history/:id', async (req, res) => {
-  try {
-    const updatedStory = await History.findByIdAndUpdate(
-      req.params.id, 
-      req.body, 
-      { new: true }
-    );
-    res.json(updatedStory);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+app.put('/api/history/:id', upload.array('historyImages', 5), async (req, res) => {
+    try {
+        const { tabTitle, title, subtitle, text, imageUrls, keepOldImages } = req.body;
 
-// DELETE: Delete a story
-app.delete('/api/history/:id', async (req, res) => {
-  try {
-    await History.findByIdAndDelete(req.params.id);
-    res.json({ message: "Story deleted" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+        // 1. Get existing story to merge images if needed
+        const oldStory = await History.findById(req.params.id);
+        if (!oldStory) return res.status(404).json({ error: "Story not found" });
+
+        // 2. Determine base images (Keep old ones? or Start fresh?)
+        let finalImages = (keepOldImages === 'true') ? oldStory.images : [];
+
+        // 3. Add new URLs from text input
+        if (imageUrls) {
+            const newUrls = JSON.parse(imageUrls);
+            finalImages = [...finalImages, ...newUrls];
+        }
+
+        // 4. Add new Uploaded Files
+        if (req.files && req.files.length > 0) {
+            const uploadedPaths = req.files.map(file => `https://sri-xpvu.onrender.com/uploads/${file.filename}`);
+            finalImages = [...finalImages, ...uploadedPaths];
+        }
+
+        const updatedStory = await History.findByIdAndUpdate(
+            req.params.id,
+            {
+                tabTitle,
+                title,
+                subtitle,
+                text,
+                images: finalImages
+            },
+            { new: true }
+        );
+        res.json(updatedStory);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // --- 1. SETUP FILE UPLOAD STORAGE ---
