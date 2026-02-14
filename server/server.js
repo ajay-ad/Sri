@@ -14,7 +14,6 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-
 app.use(cors({
     origin: '*', // Allow all origins (Easiest for now)
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -53,9 +52,14 @@ app.get('/api/history', async (req, res) => {
 // POST: Add a new story (Supports URL + Files)
 app.post('/api/history', upload.array('historyImages', 5), async (req, res) => {
     try {
-        const { tabTitle, title, subtitle, text, imageUrl } = req.body; // 'imageUrl' comes from text input
+        const { tabTitle, title, subtitle, text, imageUrl, retainedImages } = req.body; // 'imageUrl' comes from text input
 
         let finalImages = [];
+
+        // 0. Handle retained images if sent (usually empty for new post)
+        if (retainedImages) {
+            finalImages = JSON.parse(retainedImages);
+        }
 
         // 1. Add URL from text input if present
         if (imageUrl && imageUrl.trim() !== "") {
@@ -123,9 +127,19 @@ app.put('/api/history/:id', upload.array('historyImages', 5), async (req, res) =
     }
 });
 
+// DELETE: Delete a story (THIS WAS MISSING)
+app.delete('/api/history/:id', async (req, res) => {
+    try {
+        const result = await History.findByIdAndDelete(req.params.id);
+        if (!result) return res.status(404).json({ message: "Story not found" });
+        res.json({ message: "Story deleted" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // --- 2. MAKE UPLOADS PUBLICLY ACCESSIBLE ---
 // This lets the frontend view images at: http://localhost:5001/uploads/filename.jpg
-app.use('/uploads', express.static('uploads'));
 
 // --- DATABASE CONNECTION ---
 mongoose.connect(process.env.MONGO_URI)
