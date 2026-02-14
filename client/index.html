@@ -2727,20 +2727,24 @@
     });
 
 
-    // --- AUDIO PLAYER LOGIC ---
+    // --- AUDIO PLAYER LOGIC (FIXED AUTO-PLAY) ---
     function initAudioPlayer() {
       audioPlayer = document.getElementById('global-audio-player');
 
       // Existing progress bar listener
       audioPlayer.addEventListener('timeupdate', updateProgressBar);
 
-      // NEW: Sync Play/Pause buttons automatically
+      // Sync Play/Pause buttons
       audioPlayer.addEventListener('play', updatePlayerUI);
       audioPlayer.addEventListener('pause', updatePlayerUI);
-      audioPlayer.addEventListener('ended', () => {
-        isPlaying = false;
-        updatePlayerUI();
-      });
+
+      // 🔥 FIX: Auto-play next track when ended
+      audioPlayer.onended = () => {
+        let next = currentTrack + 1;
+        if (next >= playlist.length) next = 0;
+        loadTrack(next);
+        audioPlayer.play(); // Force play
+      };
 
       // Load first track
       if (playlist.length > 0) loadTrack(0);
@@ -3527,6 +3531,9 @@
     }
 
     // --- RENDER HISTORY (Fixed Layout, Time, & Z-Index) ---
+    // --- RENDER HISTORY (Fixed Navigation & Height) ---
+    // --- RENDER HISTORY (Fixed Height h-80 & No-Reload Carousel) ---
+    // --- RENDER HISTORY (500px Height & Modern Fonts) ---
     function renderHistory() {
       const tabContainer = document.getElementById('history-tabs-container');
       const contentContainer = document.getElementById('history-content-container');
@@ -3541,7 +3548,7 @@
 
         return `
           <button onclick="switchHistoryTab('${item.id}')" 
-            class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
+            class="flex-shrink-0 px-4 py-1.5 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm ${isActive ? activeStyle : inactiveStyle}">
             <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
           </button>
         `;
@@ -3551,7 +3558,6 @@
       const activeItem = historyData.find(i => i.id === activeHistoryId);
       if (activeItem) {
 
-        // 🔥 FIX: Added Time (hour/minute) to the date formatter
         const dateObj = new Date(activeItem.updatedAt);
         const dateStr = dateObj.toLocaleString('en-GB', {
           day: 'numeric', month: 'short', year: 'numeric',
@@ -3565,71 +3571,64 @@
               <i class="fas fa-edit"></i> Edit
             </button>
             <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
-              <i class="fas fa-trash"></i> Delete Tab
+              <i class="fas fa-trash"></i> Delete
             </button>
           </div>
         ` : '';
 
-        // --- IMAGE LOGIC ---
-        // 1. Ensure images array exists
+        // Image Logic
         const images = activeItem.images && activeItem.images.length > 0 ? activeItem.images : [];
-
-        // 2. Safe Indexing
         if (currentImageIndex >= images.length) currentImageIndex = 0;
+        let currentImgUrl = images[currentImageIndex] || '/assets/static/favicon.png';
 
-        // 3. Get URL or Fallback
-        let currentImgUrl = images[currentImageIndex];
-        if (!currentImgUrl || currentImgUrl === 'undefined') {
-          currentImgUrl = '/assets/static/favicon.png';
-        }
-
-        // 🔥 FIX: Increased Z-Index to 50 to ensure buttons are clickable/visible
-        const arrows = images.length > 1 ? `
-            <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/90 transition z-50 shadow-xl border border-white/20">
-                <i class="fas fa-chevron-left"></i>
+        // Arrows
+        const arrowsHTML = images.length > 1 ? `
+            <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition duration-300 z-50 shadow-lg border border-white/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm">
+                <i class="fas fa-chevron-left text-xs"></i>
             </button>
-            <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/90 transition z-50 shadow-xl border border-white/20">
-                <i class="fas fa-chevron-right"></i>
+            <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition duration-300 z-50 shadow-lg border border-white/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 backdrop-blur-sm">
+                <i class="fas fa-chevron-right text-xs"></i>
             </button>
-            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-40">
+            <div id="history-dots-container" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-40">
                 ${images.map((_, idx) => `
-                    <div class="w-1.5 h-1.5 rounded-full shadow-sm ${idx === currentImageIndex ? 'bg-white scale-150' : 'bg-white/50'}"></div>
+                    <div class="dot-indicator w-1.5 h-1.5 rounded-full shadow-sm transition-all duration-300 ${idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/40 hover:bg-white/60'}"></div>
                 `).join('')}
             </div>
         ` : '';
 
-        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
+        // Text Formatting (Reduced font size to text-base/text-sm)
+        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-3 text-base text-justify opacity-90 leading-relaxed">${para}</p>` : '').join('');
 
         contentContainer.innerHTML = `
           <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
             
-            <div class="w-full md:w-1/2 h-64 md:h-[450px] relative rounded-2xl overflow-hidden group select-none shadow-xl border border-white/10 flex-shrink-0 bg-black/10">
-              <img src="${currentImgUrl}" class="w-full h-full object-cover transform transition duration-500" id="history-main-img">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
-              ${arrows}
-              <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none">
-                <span class="bg-secondary text-black text-[10px] font-bold px-2 py-0.5 rounded mb-1 inline-block uppercase tracking-widest">${activeItem.subtitle || 'History'}</span>
-                <h3 class="text-2xl font-bold drop-shadow-md leading-tight">${activeItem.title}</h3>
+            <div class="w-full md:w-1/2 h-[500px] relative rounded-xl overflow-hidden group select-none shadow-lg border border-white/10 flex-shrink-0 bg-black/5">
+              <img src="${currentImgUrl}" class="w-full h-full object-cover transition-opacity duration-300" id="history-main-img">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10 pointer-events-none"></div>
+              ${arrowsHTML}
+              <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none pr-4">
+                <span class="bg-secondary text-black text-[9px] font-bold px-1.5 py-0.5 rounded mb-1 inline-block uppercase tracking-wider">${activeItem.subtitle || 'History'}</span>
+                <h3 class="text-xl md:text-2xl font-bold drop-shadow-md leading-tight">${activeItem.title}</h3>
               </div>
             </div>
 
-            <div class="w-full md:w-1/2 flex flex-col h-64 md:h-[450px]">
+            <div class="w-full md:w-1/2 flex flex-col h-[500px]">
               
-              <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-lg mb-4 border border-black/10 dark:border-white/10 flex-shrink-0">
+              <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 p-2.5 rounded-lg mb-3 border border-black/5 dark:border-white/5 flex-shrink-0">
                  <div class="flex flex-col">
-                    <span class="text-[10px] uppercase font-bold opacity-50 tracking-wider">Last Updated</span>
-                    <span class="text-xs font-bold opacity-90 text-primary dark:text-white">
+                    <span class="text-[9px] uppercase font-bold opacity-50 tracking-wider">Last Updated</span>
+                    <span class="text-xs font-bold opacity-80 text-primary dark:text-white">
                         <i class="far fa-clock mr-1"></i> ${dateStr}
                     </span>
                  </div>
                  ${adminControls}
               </div>
 
-              <div class="mb-2 flex-shrink-0">
-                <i class="fas fa-quote-left text-4xl text-secondary/30"></i>
+              <div class="mb-1 flex-shrink-0">
+                <i class="fas fa-quote-left text-2xl text-secondary/40"></i>
               </div>
 
-              <div class="flex-grow overflow-y-auto pr-2 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
+              <div class="flex-grow overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600">
                 ${formattedText}
               </div>
             </div>
@@ -3637,32 +3636,65 @@
         `;
       }
     }
-
-    // --- 3. CAROUSEL CONTROLS ---
+    // --- CAROUSEL CONTROLS (SMOOTH TRANSITION, NO RELOAD) ---
     function switchHistoryTab(id) {
       activeHistoryId = id;
-      currentImageIndex = 0; // Reset carousel
-      renderHistory();
+      currentImageIndex = 0;
+      renderHistory(); // Full reload only when switching tabs
+    }
+
+    function updateHistoryImageUI() {
+      const activeItem = historyData.find(i => i.id === activeHistoryId);
+      if (!activeItem || !activeItem.images) return;
+
+      const imgEl = document.getElementById('history-main-img');
+      const dots = document.querySelectorAll('.dot-indicator');
+
+      // 1. Fade Out
+      if (imgEl) {
+        imgEl.style.opacity = '0';
+
+        setTimeout(() => {
+          // 2. Change Source
+          imgEl.src = activeItem.images[currentImageIndex];
+
+          // 3. Fade In
+          imgEl.style.opacity = '1';
+        }, 200); // Wait for fade out
+      }
+
+      // 4. Update Dots
+      dots.forEach((dot, idx) => {
+        if (idx === currentImageIndex) {
+          dot.classList.remove('bg-white/50');
+          dot.classList.add('bg-white', 'scale-150');
+        } else {
+          dot.classList.add('bg-white/50');
+          dot.classList.remove('bg-white', 'scale-150');
+        }
+      });
     }
 
     function nextHistoryImage(e) {
       if (e) e.stopPropagation();
       const activeItem = historyData.find(i => i.id === activeHistoryId);
-      if (!activeItem) return;
+      if (!activeItem || !activeItem.images) return;
 
       currentImageIndex++;
       if (currentImageIndex >= activeItem.images.length) currentImageIndex = 0;
-      renderHistory();
+
+      updateHistoryImageUI(); // Only update image, don't reload text
     }
 
     function prevHistoryImage(e) {
       if (e) e.stopPropagation();
       const activeItem = historyData.find(i => i.id === activeHistoryId);
-      if (!activeItem) return;
+      if (!activeItem || !activeItem.images) return;
 
       currentImageIndex--;
       if (currentImageIndex < 0) currentImageIndex = activeItem.images.length - 1;
-      renderHistory();
+
+      updateHistoryImageUI(); // Only update image, don't reload text
     }
 
     // --- 4. ADMIN ACTIONS (Updated for Files) ---
