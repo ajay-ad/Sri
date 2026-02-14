@@ -90,9 +90,12 @@ app.put('/api/history/:id', upload.array('historyImages', 5), async (req, res) =
     try {
         const { tabTitle, title, subtitle, text, imageUrl, retainedImages } = req.body;
 
-        // 1. Start with the list of old images the user chose to keep
-        // (Frontend sends this as a JSON string)
-        let finalImages = retainedImages ? JSON.parse(retainedImages) : [];
+        // 1. Start with the list of images the user wants to KEEP
+        // The frontend will now send this as a JSON string
+        let finalImages = [];
+        if (retainedImages) {
+            finalImages = JSON.parse(retainedImages);
+        }
 
         // 2. Add NEW URL from text input (if provided)
         if (imageUrl && imageUrl.trim() !== "") {
@@ -141,8 +144,11 @@ app.get('/', (req, res) => {
 
 app.get('/api/events', async (req, res) => {
     try {
-        const e = await Event.find().sort({ date: 1 }); res.json(events);
-    } catch (err) { res.status(500).json({ error: err.message }); }
+        const events = await Event.find().sort({ date: 1 }); // Changed 'e' to 'events'
+        res.json(events); // Now this matches!
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 // UPDATED POST ROUTE: Now accepts 'imageFile' or 'image' URL
@@ -195,7 +201,8 @@ app.delete('/api/events/:id', async (req, res) => {
 // --- SETTINGS ROUTES ---
 // 1. GET a specific setting (like the default image)
 app.get('/api/settings/:key', async (req, res) => {
-    try { const setting = await Setting.findOne({ key: req.params.key });
+    try {
+        const setting = await Setting.findOne({ key: req.params.key });
         // If setting exists, return it. If not, return empty string.
         res.json({ value: setting ? setting.value : "" });
     } catch (err) { res.status(500).json({ error: err.message }); }
@@ -208,7 +215,7 @@ app.post('/api/settings', upload.single('imageFile'), async (req, res) => {
         // If a file was uploaded, use that instead
         if (req.file) { finalValue = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`; }
         // Find the setting and update it, OR create it if it doesn't exist (upsert)
-        const updatedSetting = await Setting.findOneAndUpdate( { key: key }, { value: finalValue }, { new: true, upsert: true } );
+        const updatedSetting = await Setting.findOneAndUpdate({ key: key }, { value: finalValue }, { new: true, upsert: true });
         res.json(updatedSetting);
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
