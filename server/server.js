@@ -88,30 +88,33 @@ app.post('/api/history', upload.array('historyImages', 5), async (req, res) => {
 // PUT: Update a story
 app.put('/api/history/:id', upload.array('historyImages', 5), async (req, res) => {
     try {
-        const { tabTitle, title, subtitle, text, imageUrl, keepOldImages } = req.body;
+        const { tabTitle, title, subtitle, text, imageUrl, retainedImages } = req.body;
 
-        // 1. Get existing story
-        const oldStory = await History.findById(req.params.id);
-        if (!oldStory) return res.status(404).json({ error: "Story not found" });
+        // 1. Start with the list of old images the user chose to keep
+        // (Frontend sends this as a JSON string)
+        let finalImages = retainedImages ? JSON.parse(retainedImages) : [];
 
-        // 2. Determine base images
-        // If keepOldImages is true, we start with the old list. Otherwise, start empty.
-        let finalImages = (keepOldImages === 'true') ? oldStory.images : [];
-
-        // 3. Add URL from text input
+        // 2. Add NEW URL from text input (if provided)
         if (imageUrl && imageUrl.trim() !== "") {
             finalImages.push(imageUrl.trim());
         }
 
-        // 4. Add new Uploaded Files
+        // 3. Add NEW Uploaded Files
         if (req.files && req.files.length > 0) {
             const uploadedPaths = req.files.map(file => `https://sri-xpvu.onrender.com/uploads/${file.filename}`);
             finalImages = [...finalImages, ...uploadedPaths];
         }
 
+        // 4. Update Database
         const updatedStory = await History.findByIdAndUpdate(
             req.params.id,
-            { tabTitle, title, subtitle, text, images: finalImages },
+            {
+                tabTitle,
+                title,
+                subtitle,
+                text,
+                images: finalImages
+            },
             { new: true }
         );
         res.json(updatedStory);
