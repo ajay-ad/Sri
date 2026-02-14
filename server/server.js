@@ -2,15 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const multer = require('multer'); // <--- NEW TOOL
-const path = require('path');     // <--- NEW TOOL
-const fs = require('fs');         // <--- NEW TOOL
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const Event = require('./models/event');
 const Setting = require('./models/setting');
 const History = require('./models/history');
 
 const app = express();
-
 
 // Middleware
 app.use(express.json());
@@ -21,7 +20,6 @@ app.use(cors({
 }));
 
 // --- 1. SETUP FILE UPLOAD STORAGE ---
-// Ensure 'uploads' folder exists
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -39,6 +37,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 app.use('/uploads', express.static('uploads'));
 
+// --- HISTORY ROUTES ---
+
 // GET: Fetch all stories !!Histroy Page
 app.get('/api/history', async (req, res) => {
     try {
@@ -55,23 +55,19 @@ app.post('/api/history', upload.array('historyImages', 5), async (req, res) => {
         const { tabTitle, title, subtitle, text, imageUrl, retainedImages } = req.body; // 'imageUrl' comes from text input
 
         let finalImages = [];
-
         // 0. Handle retained images if sent (usually empty for new post)
         if (retainedImages) {
             finalImages = JSON.parse(retainedImages);
         }
-
         // 1. Add URL from text input if present
         if (imageUrl && imageUrl.trim() !== "") {
             finalImages.push(imageUrl.trim());
         }
-
         // 2. Add uploaded files
         if (req.files && req.files.length > 0) {
             const uploadedPaths = req.files.map(file => `https://sri-xpvu.onrender.com/uploads/${file.filename}`);
             finalImages = [...finalImages, ...uploadedPaths];
         }
-
         // Fallback if absolutely nothing provided
         if (finalImages.length === 0) {
             finalImages.push("https://images.unsplash.com/photo-1604537466158-719b1972feb8?q=80");
@@ -112,13 +108,7 @@ app.put('/api/history/:id', upload.array('historyImages', 5), async (req, res) =
         // 4. Update Database
         const updatedStory = await History.findByIdAndUpdate(
             req.params.id,
-            {
-                tabTitle,
-                title,
-                subtitle,
-                text,
-                images: finalImages
-            },
+            { tabTitle, title, subtitle, text, images: finalImages },
             { new: true }
         );
         res.json(updatedStory);
@@ -140,7 +130,6 @@ app.delete('/api/history/:id', async (req, res) => {
 
 // --- 2. MAKE UPLOADS PUBLICLY ACCESSIBLE ---
 // This lets the frontend view images at: http://localhost:5001/uploads/filename.jpg
-
 // --- DATABASE CONNECTION ---
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected Successfully"))
@@ -152,21 +141,16 @@ app.get('/', (req, res) => {
 
 app.get('/api/events', async (req, res) => {
     try {
-        const events = await Event.find().sort({ date: 1 });
-        res.json(events);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        const e = await Event.find().sort({ date: 1 }); res.json(events);
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // UPDATED POST ROUTE: Now accepts 'imageFile' or 'image' URL
 app.post('/api/events', upload.single('imageFile'), async (req, res) => {
     try {
         const { title, date, description, location, image } = req.body;
-
         // LOGIC: Did they upload a file? OR did they paste a URL?
         let finalImageUrl = image; // Default to the pasted URL
-
         if (req.file) {
             // If a file was uploaded, construct the local server URL
             // NOTE: Replace 'localhost:5001' with your Render URL when you deploy!
@@ -174,32 +158,18 @@ app.post('/api/events', upload.single('imageFile'), async (req, res) => {
         }
 
         const newEvent = new Event({
-            title,
-            date,
-            description,
-            location,
-            image: finalImageUrl // Save the final link
+            title, date, description, location, image: finalImageUrl // Save the final link
         });
-
-        await newEvent.save();
-        res.json(newEvent);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        await newEvent.save(); res.json(newEvent);
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // --- UPDATE (EDIT) EVENT ---
 app.put('/api/events/:id', upload.single('imageFile'), async (req, res) => {
     try {
         const { title, date, description, location, image } = req.body;
-
         // 1. Prepare the data to update
-        let updateData = {
-            title,
-            date,
-            description,
-            location
-        };
+        let updateData = { title, date, description, location };
 
         // 2. Handle Image Logic
         // If a new file is uploaded, use that. 
@@ -207,70 +177,41 @@ app.put('/api/events/:id', upload.single('imageFile'), async (req, res) => {
         // If neither is provided, we don't overwrite 'image' (so the old one stays).
         if (req.file) {
             updateData.image = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`;
-        } else if (image) {
-            updateData.image = image;
-        }
+        } else if (image) { updateData.image = image; }
 
         // 3. Update the database
-        const updatedEvent = await Event.findByIdAndUpdate(
-            req.params.id,
-            updateData,
-            { new: true } // Return the updated document
+        const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true } // Return the updated document
         );
-
         res.json(updatedEvent);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
-
-
 app.delete('/api/events/:id', async (req, res) => {
-    try {
-        await Event.findByIdAndDelete(req.params.id);
-        res.json({ message: "Deleted" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    try { await Event.findByIdAndDelete(req.params.id); res.json({ message: "Deleted" }); }
+    catch (err) { res.status(500).json({ error: err.message }); }
 });
-// --- SETTINGS ROUTES ---
 
+// --- SETTINGS ROUTES ---
 // 1. GET a specific setting (like the default image)
 app.get('/api/settings/:key', async (req, res) => {
-    try {
-        const setting = await Setting.findOne({ key: req.params.key });
+    try { const setting = await Setting.findOne({ key: req.params.key });
         // If setting exists, return it. If not, return empty string.
         res.json({ value: setting ? setting.value : "" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
-
 // 2. SAVE a setting (Upload or URL)
 app.post('/api/settings', upload.single('imageFile'), async (req, res) => {
     try {
         const { key, textValue } = req.body;
         let finalValue = textValue;
-
         // If a file was uploaded, use that instead
-        if (req.file) {
-            finalValue = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`;
-        }
-
+        if (req.file) { finalValue = `https://sri-xpvu.onrender.com/uploads/${req.file.filename}`; }
         // Find the setting and update it, OR create it if it doesn't exist (upsert)
-        const updatedSetting = await Setting.findOneAndUpdate(
-            { key: key },
-            { value: finalValue },
-            { new: true, upsert: true }
-        );
-
+        const updatedSetting = await Setting.findOneAndUpdate( { key: key }, { value: finalValue }, { new: true, upsert: true } );
         res.json(updatedSetting);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
