@@ -1482,51 +1482,63 @@
 
       <div id="history-modal" class="modal-overlay hide animate-fade-in z-[6000]">
         <div
-          class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl border border-primary">
+          class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl border border-primary max-h-[90vh] overflow-y-auto">
+
           <button onclick="closeHistoryModal()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
               class="fas fa-times"></i></button>
           <h3 id="history-modal-title" class="text-2xl font-bold text-primary mb-4">Edit Story</h3>
 
           <form onsubmit="saveHistoryStory(event)" class="space-y-4">
             <input type="hidden" id="hist-id">
-            <div>
-              <label class="text-xs font-bold opacity-70">Tab Title (Short)</label>
-              <input type="text" id="hist-tab-title" required placeholder="e.g. Patotsav"
-                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-bold opacity-70">Tab Name</label>
+                <input type="text" id="hist-tab-title" required placeholder="Short Name"
+                  class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+              </div>
+              <div>
+                <label class="text-xs font-bold opacity-70">Subtitle</label>
+                <input type="text" id="hist-subtitle" placeholder="Tagline"
+                  class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+              </div>
             </div>
 
             <div>
               <label class="text-xs font-bold opacity-70">Main Title</label>
-              <input type="text" id="hist-title" required placeholder="e.g. Maha Patotsav History"
-                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+              <input type="text" id="hist-title" required placeholder="Full Story Title"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
             </div>
 
-            <div>
-              <label class="text-xs font-bold opacity-70">Subtitle / Tag</label>
-              <input type="text" id="hist-subtitle" placeholder="e.g. ANNUAL FESTIVAL"
-                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
-            </div>
+            <div class="space-y-2">
+              <label class="text-xs font-bold opacity-70 block">Images (Use URL or Upload)</label>
 
-            <div>
-              <label class="text-xs font-bold opacity-70">Image URL</label>
-              <input type="text" id="hist-image" required placeholder="/public/assets/static/..."
-                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40">
+              <div class="flex items-center gap-2">
+                <!-- <i class="fas fa-link opacity-50"></i> -->
+                <input type="text" id="hist-image-url" placeholder="Paste Image URL here..."
+                  class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white text-sm">
+              </div>
+
+              <div class="text-center text-xs opacity-50 font-bold">- OR -</div>
+
+              <div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded border border-blue-200">
+                <input type="file" id="hist-image-file" multiple accept="image/*"
+                  class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+              </div>
             </div>
 
             <div>
               <label class="text-xs font-bold opacity-70">Story Content</label>
-              <textarea id="hist-text" required rows="5" placeholder="Write the full katha here..."
-                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40"></textarea>
+              <textarea id="hist-text" required rows="5" placeholder="Write the full story..."
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white"></textarea>
             </div>
 
             <button type="submit"
-              class="w-full bg-primary text-white font-bold py-3 rounded hover:bg-orange-700 transition">
-              Save Story
-            </button>
+              class="w-full bg-primary text-white font-bold py-3 rounded hover:bg-orange-700 transition">Save
+              Story</button>
           </form>
         </div>
       </div>
-
       <!-- GALLERY VIEW -->
       <section id="view-gallery" class="view-section container mx-auto px-4 py-10 hide animate-fade-in">
         <div class="text-center mb-4">
@@ -3345,87 +3357,135 @@
         reader.readAsDataURL(file);
       }
     }
-   // --- DYNAMIC HISTORY DATA (CONNECTED TO DB) ---
-let historyData = [];
-let activeHistoryId = null; 
-const API_URL = 'https://sri-xpvu.onrender.com/api'; // Use your actual live backend URL
+    // --- DYNAMIC HISTORY DATA (CONNECTED TO DB) ---
+    let historyData = [];
+    let activeHistoryId = null;
+    let currentImageIndex = 0; // Tracks carousel position
+    const API_URL = 'https://sri-xpvu.onrender.com/api';
 
-// --- 1. INITIAL FETCH ---
-async function fetchHistory() {
-  try {
-    const res = await fetch(`${API_URL}/history`);
-    const data = await res.json();
-    
-    if (data.length > 0) {
-      historyData = data.map(item => ({
-        id: item._id, // MongoDB ID
-        tabTitle: item.tabTitle,
-        title: item.title,
-        subtitle: item.subtitle,
-        icon: 'fa-landmark', // Default icon
-        image: item.image,
-        text: item.text
-      }));
-      
-      // Set active tab to the first one if not set
-      if (!activeHistoryId) activeHistoryId = historyData[0].id;
-      
-      renderHistory();
-    } else {
-      // Fallback if DB is empty (Optional)
-      document.getElementById('history-content-container').innerHTML = 
-        '<p class="text-center p-10 opacity-50">No history stories found. Add one!</p>';
+    // --- 1. INITIAL FETCH ---
+    async function fetchHistory() {
+      try {
+        const res = await fetch(`${API_URL}/history`);
+        const data = await res.json();
+
+        if (data.length > 0) {
+          historyData = data.map(item => ({
+            id: item._id,
+            tabTitle: item.tabTitle,
+            title: item.title,
+            subtitle: item.subtitle,
+            icon: 'fa-landmark',
+            images: item.images || [item.image], // Handle old single image vs new array
+            text: item.text,
+            updatedAt: item.updatedAt // Get timestamp from DB
+          }));
+
+          if (!activeHistoryId) activeHistoryId = historyData[0].id;
+          renderHistory();
+        } else {
+          document.getElementById('history-content-container').innerHTML =
+            '<p class="text-center p-10 opacity-50">No history stories found. Add one!</p>';
+        }
+      } catch (err) {
+        console.error("Failed to load history:", err);
+      }
     }
-  } catch (err) {
-    console.error("Failed to load history:", err);
-  }
-}
 
-// --- 2. RENDER FUNCTION ---
-function renderHistory() {
-  const tabContainer = document.getElementById('history-tabs-container');
-  const contentContainer = document.getElementById('history-content-container');
-  
-  if(!tabContainer || !contentContainer) return;
+    // --- 2. RENDER FUNCTION ---
+    function renderHistory() {
+      const tabContainer = document.getElementById('history-tabs-container');
+      const contentContainer = document.getElementById('history-content-container');
 
-  // A. Render Tabs
-  tabContainer.innerHTML = historyData.map(item => {
-    const isActive = item.id === activeHistoryId;
-    const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
-    const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
-    
-    return `
+      if (!tabContainer || !contentContainer) return;
+
+      // A. Render Tabs
+      tabContainer.innerHTML = historyData.map(item => {
+        const isActive = item.id === activeHistoryId;
+        const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
+        const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
+
+        return `
       <button onclick="switchHistoryTab('${item.id}')" 
         class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
         <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
       </button>
     `;
-  }).join('');
+      }).join('');
 
-  // B. Render Content
-  const activeItem = historyData.find(i => i.id === activeHistoryId);
-  if (activeItem) {
-    const adminControls = state.user === 'admin' ? `
-      <div class="absolute top-4 right-4 flex gap-2 z-50">
-        <button onclick="editHistory('${activeItem.id}')" class="bg-blue-600 text-white w-10 h-10 rounded-full shadow-lg hover:scale-110 transition flex items-center justify-center"><i class="fas fa-edit"></i></button>
-        <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-600 text-white w-10 h-10 rounded-full shadow-lg hover:scale-110 transition flex items-center justify-center"><i class="fas fa-trash"></i></button>
+      // B. Render Content
+      const activeItem = historyData.find(i => i.id === activeHistoryId);
+      if (activeItem) {
+
+        // 1. DATE & TIME FORMATTING
+        const dateObj = new Date(activeItem.updatedAt);
+        const dateStr = dateObj.toLocaleString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit', hour12: true
+        });
+
+        // 2. Admin Controls
+        const adminControls = state.user === 'admin' ? `
+      <div class="flex items-center gap-3 border-l pl-3 border-gray-300 dark:border-white/20 ml-3">
+        <button onclick="editHistory('${activeItem.id}')" class="bg-blue-600 text-white w-7 h-7 rounded-full shadow hover:scale-110 transition flex items-center justify-center text-[10px]" title="Edit">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-600 text-white w-7 h-7 rounded-full shadow hover:scale-110 transition flex items-center justify-center text-[10px]" title="Delete">
+          <i class="fas fa-trash"></i>
+        </button>
       </div>
     ` : '';
 
-    const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
+        const metaSection = `
+      <div class="absolute top-4 right-4 z-50 flex items-center bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-gray-200 dark:border-white/10 shadow-sm">
+        <span class="text-[10px] font-bold uppercase tracking-wider opacity-70 text-black dark:text-white flex items-center">
+          <i class="fas fa-clock mr-1 text-primary"></i> ${dateStr}
+        </span>
+        ${adminControls}
+      </div>
+    `;
 
-    contentContainer.innerHTML = `
+        // 3. Carousel Logic
+        // Ensure index is valid
+        if (currentImageIndex >= activeItem.images.length) currentImageIndex = 0;
+        const currentImgUrl = activeItem.images[currentImageIndex];
+        const totalImages = activeItem.images.length;
+
+        // Show arrows if more than 1 image
+        const arrows = totalImages > 1 ? `
+        <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30 md:opacity-0 md:group-hover:opacity-100">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30 md:opacity-0 md:group-hover:opacity-100">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-30">
+            ${activeItem.images.map((_, idx) => `
+                <div class="w-1.5 h-1.5 rounded-full ${idx === currentImageIndex ? 'bg-white' : 'bg-white/40'}"></div>
+            `).join('')}
+        </div>
+    ` : '';
+
+        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
+
+        contentContainer.innerHTML = `
       <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
-        ${adminControls} 
-        <div class="w-full md:w-1/2 h-64 md:h-auto relative rounded-2xl overflow-hidden group">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-          <img src="${activeItem.image}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-1000">
-          <div class="absolute bottom-4 left-4 z-20 text-white">
+        ${metaSection}
+        
+        <div class="w-full md:w-1/2 h-64 md:h-96 relative rounded-2xl overflow-hidden group select-none">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 pointer-events-none"></div>
+          
+          <img src="${currentImgUrl}" class="w-full h-full object-cover transform transition duration-500" id="history-main-img">
+          
+          ${arrows}
+
+          <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none">
             <span class="bg-secondary text-black text-xs font-bold px-2 py-1 rounded mb-2 inline-block uppercase">${activeItem.subtitle || ''}</span>
-            <h3 class="text-2xl font-bold">${activeItem.title}</h3>
+            <h3 class="text-2xl font-bold drop-shadow-md">${activeItem.title}</h3>
           </div>
         </div>
-        <div class="w-full md:w-1/2 p-4 md:p-8 flex flex-col">
+
+        <div class="w-full md:w-1/2 p-4 md:p-8 flex flex-col pt-12 md:pt-4">
           <i class="fas fa-quote-left text-4xl text-secondary/30 mb-4"></i>
           <div class="overflow-y-auto h-64 md:h-80 pr-4 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
             ${formattedText}
@@ -3433,121 +3493,139 @@ function renderHistory() {
         </div>
       </div>
     `;
-  }
-}
-
-function switchHistoryTab(id) {
-  activeHistoryId = id;
-  renderHistory();
-}
-
-// --- 3. ADMIN ACTIONS (CONNECTED TO DB) ---
-
-function handleAddStoryClick() {
-  if (state.user !== 'admin') {
-    alert("🔒 Restricted Access: Please log in as Admin.");
-    switchView('view-login');
-  } else {
-    openHistoryModal();
-  }
-}
-
-function openHistoryModal(item = null) {
-  const modal = document.getElementById('history-modal');
-  modal.classList.remove('hide');
-  
-  if (item) {
-    document.getElementById('history-modal-title').innerText = "Edit Story";
-    document.getElementById('hist-id').value = item.id;
-    document.getElementById('hist-tab-title').value = item.tabTitle;
-    document.getElementById('hist-title').value = item.title;
-    document.getElementById('hist-subtitle').value = item.subtitle;
-    document.getElementById('hist-image').value = item.image;
-    document.getElementById('hist-text').value = item.text;
-  } else {
-    document.getElementById('history-modal-title').innerText = "Add New Story";
-    document.getElementById('hist-id').value = ""; 
-    document.querySelector('#history-modal form').reset();
-  }
-}
-
-function closeHistoryModal() {
-  document.getElementById('history-modal').classList.add('hide');
-}
-
-function editHistory(id) {
-  const item = historyData.find(i => i.id === id);
-  if (item) openHistoryModal(item);
-}
-
-// --- SAVE TO DATABASE ---
-async function saveHistoryStory(e) {
-  e.preventDefault();
-  
-  const id = document.getElementById('hist-id').value;
-  const payload = {
-    tabTitle: document.getElementById('hist-tab-title').value,
-    title: document.getElementById('hist-title').value,
-    subtitle: document.getElementById('hist-subtitle').value,
-    image: document.getElementById('hist-image').value,
-    text: document.getElementById('hist-text').value
-  };
-
-  try {
-    let response;
-    if (id) {
-      // UPDATE (PUT)
-      response = await fetch(`${API_URL}/history/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } else {
-      // CREATE (POST)
-      response = await fetch(`${API_URL}/history`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    }
-
-    if (response.ok) {
-      alert(id ? "✅ Story Updated!" : "✅ New Story Added!");
-      closeHistoryModal();
-      fetchHistory(); // Reload from DB
-    } else {
-      alert("❌ Error saving story");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("❌ Server Error");
-  }
-}
-
-// --- DELETE FROM DATABASE ---
-async function deleteHistory(id) {
-  if (confirm("Are you sure you want to delete this story? This cannot be undone.")) {
-    try {
-      const response = await fetch(`${API_URL}/history/${id}`, { method: 'DELETE' });
-      
-      if (response.ok) {
-        alert("🗑 Story Deleted");
-        // Reset active ID if we deleted the current one
-        if (activeHistoryId === id) activeHistoryId = null;
-        fetchHistory(); // Reload from DB
-      } else {
-        alert("❌ Error deleting story");
       }
-    } catch (err) {
-      console.error(err);
-      alert("❌ Server Error");
     }
-  }
-}
 
-// --- INITIALIZE ---
-// Add this line inside your DOMContentLoaded event listener:
-// fetchHistory();
+    // --- 3. CAROUSEL CONTROLS ---
+    function switchHistoryTab(id) {
+      activeHistoryId = id;
+      currentImageIndex = 0; // Reset carousel
+      renderHistory();
+    }
+
+    function nextHistoryImage(e) {
+      if (e) e.stopPropagation();
+      const activeItem = historyData.find(i => i.id === activeHistoryId);
+      if (!activeItem) return;
+
+      currentImageIndex++;
+      if (currentImageIndex >= activeItem.images.length) currentImageIndex = 0;
+      renderHistory();
+    }
+
+    function prevHistoryImage(e) {
+      if (e) e.stopPropagation();
+      const activeItem = historyData.find(i => i.id === activeHistoryId);
+      if (!activeItem) return;
+
+      currentImageIndex--;
+      if (currentImageIndex < 0) currentImageIndex = activeItem.images.length - 1;
+      renderHistory();
+    }
+
+    // --- 4. ADMIN ACTIONS (Updated for Files) ---
+
+    function handleAddStoryClick() {
+      if (state.user !== 'admin') {
+        alert("🔒 Restricted Access: Please log in as Admin.");
+        switchView('view-login');
+      } else {
+        openHistoryModal();
+      }
+    }
+
+    function openHistoryModal(item = null) {
+      const modal = document.getElementById('history-modal');
+      modal.classList.remove('hide');
+
+      if (item) {
+        document.getElementById('history-modal-title').innerText = "Edit Story";
+        document.getElementById('hist-id').value = item.id;
+        document.getElementById('hist-tab-title').value = item.tabTitle;
+        document.getElementById('hist-title').value = item.title;
+        document.getElementById('hist-subtitle').value = item.subtitle;
+        document.getElementById('hist-text').value = item.text;
+        // Note: We don't pre-fill file inputs for security reasons
+      } else {
+        document.getElementById('history-modal-title').innerText = "Add New Story";
+        document.getElementById('hist-id').value = "";
+        document.querySelector('#history-modal form').reset();
+      }
+    }
+
+    function closeHistoryModal() {
+      document.getElementById('history-modal').classList.add('hide');
+    }
+
+    function editHistory(id) {
+      const item = historyData.find(i => i.id === id);
+      if (item) openHistoryModal(item);
+    }
+
+    // --- SAVE TO DATABASE (Updated for FormData) ---
+    async function saveHistoryStory(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('hist-id').value;
+      const formData = new FormData();
+
+      formData.append('tabTitle', document.getElementById('hist-tab-title').value);
+      formData.append('title', document.getElementById('hist-title').value);
+      formData.append('subtitle', document.getElementById('hist-subtitle').value);
+      formData.append('text', document.getElementById('hist-text').value);
+
+      // 1. Append Text URL
+      formData.append('imageUrl', document.getElementById('hist-image-url').value);
+
+      // 2. Append Files
+      const fileInput = document.getElementById('hist-image-file');
+      for (let i = 0; i < fileInput.files.length; i++) {
+        formData.append('historyImages', fileInput.files[i]);
+      }
+
+      // Ask to keep old images if editing
+      if (id) {
+        // Default to true if they don't explicitly want to replace everything
+        // Or use confirm() if you want to force a choice
+        formData.append('keepOldImages', 'true');
+      }
+
+      try {
+        let response;
+        if (id) {
+          response = await fetch(`${API_URL}/history/${id}`, { method: 'PUT', body: formData });
+        } else {
+          response = await fetch(`${API_URL}/history`, { method: 'POST', body: formData });
+        }
+
+        if (response.ok) {
+          alert("✅ Saved Successfully!");
+          closeHistoryModal();
+          fetchHistory();
+        } else {
+          alert("❌ Error saving story");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("❌ Server Error");
+      }
+    }
+
+    // --- DELETE ---
+    async function deleteHistory(id) {
+      if (confirm("Delete this story?")) {
+        try {
+          const response = await fetch(`${API_URL}/history/${id}`, { method: 'DELETE' });
+          if (response.ok) {
+            if (activeHistoryId === id) activeHistoryId = null;
+            fetchHistory();
+          }
+        } catch (err) { console.error(err); }
+      }
+    }
+    // --- INITIALIZE ---
+    // Add this line inside your DOMContentLoaded event listener:
+    // fetchHistory();
     // --- 3. INIT ---
     // Add this inside your existing document.addEventListener('DOMContentLoaded', ...) block
     // Just call renderHistory() once to load the initial state.
