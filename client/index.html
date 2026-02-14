@@ -1478,96 +1478,6 @@
         <div id="history-content-container"
           class="glass-panel p-2 md:p-4 rounded-3xl shadow-2xl max-w-6xl mx-auto border border-white/20 relative overflow-hidden min-h-[500px]">
         </div>
-
-        <div id="history-modal" class="modal-overlay hide animate-fade-in z-[6000]">
-          <div
-            class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl border border-primary max-h-[90vh] overflow-y-auto">
-
-            <button onclick="closeHistoryModal()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
-                class="fas fa-times"></i></button>
-            <h3 id="history-modal-title" class="text-2xl font-bold text-primary mb-4">Edit Story</h3>
-
-            <form onsubmit="saveHistoryStory(event)" class="space-y-4">
-              <input type="hidden" id="hist-id">
-
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="text-xs font-bold opacity-70">Tab Name</label>
-                  <input type="text" id="hist-tab-title" required placeholder="Short Name"
-                    class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
-                </div>
-                <div>
-                  <label class="text-xs font-bold opacity-70">Subtitle</label>
-                  <input type="text" id="hist-subtitle" placeholder="Tagline"
-                    class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
-                </div>
-              </div>
-
-              <div>
-                <label class="text-xs font-bold opacity-70">Main Title</label>
-                <input type="text" id="hist-title" required placeholder="Full Story Title"
-                  class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
-              </div>
-
-              <div class="border-t border-b border-gray-200 dark:border-white/10 py-4 my-4">
-                <label class="text-xs font-bold opacity-70 block mb-3 uppercase tracking-wider">Manage Images</label>
-
-                <div class="flex gap-2 mb-4">
-                  <button type="button" id="btn-view-list" onclick="toggleImageSection('list')"
-                    class="flex-1 bg-gray-200 dark:bg-white/10 text-xs py-2.5 rounded hover:bg-gray-300 transition font-bold text-black dark:text-white border border-transparent">
-                    <i class="fas fa-images mr-1"></i> See Uploaded Images
-                  </button>
-                  <button type="button" id="btn-view-add" onclick="toggleImageSection('add')"
-                    class="flex-1 bg-primary/10 text-primary border border-primary/20 text-xs py-2.5 rounded hover:bg-primary/20 transition font-bold">
-                    <i class="fas fa-plus mr-1"></i> Add More Images
-                  </button>
-                </div>
-
-                <div id="img-list-view"
-                  class="hide bg-gray-50 dark:bg-black/20 p-3 rounded-lg border border-gray-200 dark:border-white/5">
-                  <div id="existing-images-grid" class="grid grid-cols-3 gap-3 max-h-48 overflow-y-auto pr-1">
-                  </div>
-                </div>
-
-                <div id="img-add-view" class="space-y-3 animate-fade-in">
-                  <div
-                    class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 border-dashed">
-                    <label class="block text-xs font-bold text-blue-800 dark:text-blue-300 mb-2">Upload from
-                      Device</label>
-                    <input type="file" id="hist-image-file" multiple accept="image/*"
-                      class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer">
-                  </div>
-
-                  <div class="text-center text-[10px] opacity-50 font-bold uppercase tracking-widest">- OR -</div>
-
-                  <div>
-                    <label class="block text-xs font-bold opacity-70 mb-1">Paste Image URL</label>
-                    <div class="flex items-center gap-2">
-                      <i class="fas fa-link opacity-50 text-sm"></i>
-                      <input type="text" id="hist-image-url" placeholder="https://..."
-                        class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white text-sm focus:border-primary outline-none">
-
-                      <button type="button" onclick="handleAddImageDone()"
-                        class="bg-green-600 text-white px-4 py-2 rounded text-xs font-bold hover:bg-green-700 transition">
-                        DONE
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label class="text-xs font-bold opacity-70">Story Content</label>
-                <textarea id="hist-text" required rows="5" placeholder="Write the full story..."
-                  class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white"></textarea>
-              </div>
-
-              <button type="submit"
-                class="w-full bg-primary text-white font-bold py-3 rounded hover:bg-orange-700 transition shadow-lg">Save
-                Story</button>
-            </form>
-          </div>
-        </div>
       </section>
 
       <!-- GALLERY VIEW -->
@@ -2186,6 +2096,95 @@
         <div id="mela-overlay-grid"
           class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         </div>
+      </div>
+    </div>
+    <div id="history-modal" class="modal-overlay hide animate-fade-in z-[6000]">
+      <div
+        class="glass-panel w-full max-w-lg p-6 rounded-2xl relative bg-white/95 dark:bg-slate-900/95 shadow-2xl border border-primary max-h-[90vh] overflow-y-auto">
+
+        <button onclick="closeHistoryModal()" class="absolute top-4 right-4 text-red-500 text-2xl"><i
+            class="fas fa-times"></i></button>
+        <h3 id="history-modal-title" class="text-2xl font-bold text-primary mb-4">Edit Story</h3>
+
+        <form onsubmit="saveHistoryStory(event)" class="space-y-4">
+          <input type="hidden" id="hist-id">
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="text-xs font-bold opacity-70">Tab Name</label>
+              <input type="text" id="hist-tab-title" required placeholder="Short Name"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+            </div>
+            <div>
+              <label class="text-xs font-bold opacity-70">Subtitle</label>
+              <input type="text" id="hist-subtitle" placeholder="Tagline"
+                class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold opacity-70">Main Title</label>
+            <input type="text" id="hist-title" required placeholder="Full Story Title"
+              class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white">
+          </div>
+
+          <div class="border-t border-b border-gray-200 dark:border-white/10 py-4 my-4">
+            <label class="text-xs font-bold opacity-70 block mb-3 uppercase tracking-wider">Manage Images</label>
+
+            <div class="flex gap-2 mb-4">
+              <button type="button" id="btn-view-list" onclick="toggleImageSection('list')"
+                class="flex-1 bg-gray-200 dark:bg-white/10 text-xs py-2.5 rounded hover:bg-gray-300 transition font-bold text-black dark:text-white border border-transparent">
+                <i class="fas fa-images mr-1"></i> See Uploaded Images
+              </button>
+              <button type="button" id="btn-view-add" onclick="toggleImageSection('add')"
+                class="flex-1 bg-primary/10 text-primary border border-primary/20 text-xs py-2.5 rounded hover:bg-primary/20 transition font-bold">
+                <i class="fas fa-plus mr-1"></i> Add More Images
+              </button>
+            </div>
+
+            <div id="img-list-view"
+              class="hide bg-gray-50 dark:bg-black/20 p-3 rounded-lg border border-gray-200 dark:border-white/5">
+              <div id="existing-images-grid" class="grid grid-cols-3 gap-3 max-h-48 overflow-y-auto pr-1">
+              </div>
+            </div>
+
+            <div id="img-add-view" class="space-y-3 animate-fade-in">
+              <div
+                class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 border-dashed">
+                <label class="block text-xs font-bold text-blue-800 dark:text-blue-300 mb-2">Upload from
+                  Device</label>
+                <input type="file" id="hist-image-file" multiple accept="image/*"
+                  class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer">
+              </div>
+
+              <div class="text-center text-[10px] opacity-50 font-bold uppercase tracking-widest">- OR -</div>
+
+              <div>
+                <label class="block text-xs font-bold opacity-70 mb-1">Paste Image URL</label>
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-link opacity-50 text-sm"></i>
+                  <input type="text" id="hist-image-url" placeholder="https://..."
+                    class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white text-sm focus:border-primary outline-none">
+
+                  <button type="button" onclick="handleAddImageDone()"
+                    class="bg-green-600 text-white px-4 py-2 rounded text-xs font-bold hover:bg-green-700 transition">
+                    DONE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold opacity-70">Story Content</label>
+            <textarea id="hist-text" required rows="5" placeholder="Write the full story..."
+              class="w-full p-2 rounded border border-gray-300 dark:bg-black/40 text-black dark:text-white"></textarea>
+          </div>
+
+          <button type="submit"
+            class="w-full bg-primary text-white font-bold py-3 rounded hover:bg-orange-700 transition shadow-lg">Save
+            Story</button>
+        </form>
       </div>
     </div>
 
@@ -3426,101 +3425,7 @@
       }
     }
 
-    // --- RENDER HISTORY (Fixed Layout) ---
-    function renderHistory() {
-      const tabContainer = document.getElementById('history-tabs-container');
-      const contentContainer = document.getElementById('history-content-container');
 
-      if (!tabContainer || !contentContainer) return;
-
-      // 1. RENDER TABS
-      tabContainer.innerHTML = historyData.map(item => {
-        const isActive = item.id === activeHistoryId;
-        const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
-        const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
-
-        return `
-          <button onclick="switchHistoryTab('${item.id}')" 
-            class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
-            <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
-          </button>
-        `;
-      }).join('');
-
-      // 2. RENDER CONTENT
-      const activeItem = historyData.find(i => i.id === activeHistoryId);
-      if (activeItem) {
-
-        const dateObj = new Date(activeItem.updatedAt);
-        const dateStr = dateObj.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-
-        // Admin Controls
-        const adminControls = state.user === 'admin' ? `
-          <div class="flex gap-2 ml-auto">
-            <button onclick="editHistory('${activeItem.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
-              <i class="fas fa-edit"></i> Edit
-            </button>
-            <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
-              <i class="fas fa-trash"></i> Delete Tab
-            </button>
-          </div>
-        ` : '';
-
-        // Carousel Logic
-        let currentImgUrl = activeItem.images[currentImageIndex] || activeItem.images[0];
-        if (!currentImgUrl) currentImgUrl = activeItem.image;
-        if (currentImageIndex >= activeItem.images.length) currentImageIndex = 0;
-
-        const arrows = activeItem.images.length > 1 ? `
-            <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-30">
-                ${activeItem.images.map((_, idx) => `
-                    <div class="w-1.5 h-1.5 rounded-full shadow-sm ${idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'}"></div>
-                `).join('')}
-            </div>
-        ` : '';
-
-        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
-
-        contentContainer.innerHTML = `
-          <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
-            
-            <div class="w-full md:w-1/2 h-64 md:h-96 relative rounded-2xl overflow-hidden group select-none shadow-xl border border-white/10 flex-shrink-0">
-              <img src="${currentImgUrl}" class="w-full h-full object-cover transform transition duration-500" id="history-main-img">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
-              ${arrows}
-              <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none">
-                <span class="bg-secondary text-black text-[10px] font-bold px-2 py-0.5 rounded mb-1 inline-block uppercase tracking-widest">${activeItem.subtitle || 'History'}</span>
-                <h3 class="text-2xl font-bold drop-shadow-md leading-tight">${activeItem.title}</h3>
-              </div>
-            </div>
-
-            <div class="w-full md:w-1/2 flex flex-col h-full">
-              <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-lg mb-4 border border-black/10 dark:border-white/10">
-                 <div class="flex flex-col">
-                    <span class="text-[10px] uppercase font-bold opacity-50 tracking-wider">Last Updated</span>
-                    <span class="text-xs font-bold opacity-90"><i class="far fa-clock mr-1"></i> ${dateStr}</span>
-                 </div>
-                 ${adminControls}
-              </div>
-              <div class="mb-2">
-                <i class="fas fa-quote-left text-4xl text-secondary/30"></i>
-              </div>
-              <div class="overflow-y-auto h-64 md:h-[300px] pr-4 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
-                ${formattedText}
-              </div>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    // --- MISSING FUNCTIONS ADDED BELOW ---
 
     // 1. OPEN MODAL
     function openHistoryModal(item = null) {
@@ -3620,6 +3525,119 @@
         renderImageList();
       }
     }
+
+    // --- RENDER HISTORY (Fixed Layout, Time, & Z-Index) ---
+    function renderHistory() {
+      const tabContainer = document.getElementById('history-tabs-container');
+      const contentContainer = document.getElementById('history-content-container');
+
+      if (!tabContainer || !contentContainer) return;
+
+      // 1. RENDER TABS
+      tabContainer.innerHTML = historyData.map(item => {
+        const isActive = item.id === activeHistoryId;
+        const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
+        const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
+
+        return `
+          <button onclick="switchHistoryTab('${item.id}')" 
+            class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
+            <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
+          </button>
+        `;
+      }).join('');
+
+      // 2. RENDER CONTENT
+      const activeItem = historyData.find(i => i.id === activeHistoryId);
+      if (activeItem) {
+
+        // 🔥 FIX: Added Time (hour/minute) to the date formatter
+        const dateObj = new Date(activeItem.updatedAt);
+        const dateStr = dateObj.toLocaleString('en-GB', {
+          day: 'numeric', month: 'short', year: 'numeric',
+          hour: '2-digit', minute: '2-digit', hour12: true
+        });
+
+        // Admin Controls
+        const adminControls = state.user === 'admin' ? `
+          <div class="flex gap-2 ml-auto">
+            <button onclick="editHistory('${activeItem.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
+              <i class="fas fa-edit"></i> Edit
+            </button>
+            <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
+              <i class="fas fa-trash"></i> Delete Tab
+            </button>
+          </div>
+        ` : '';
+
+        // --- IMAGE LOGIC ---
+        // 1. Ensure images array exists
+        const images = activeItem.images && activeItem.images.length > 0 ? activeItem.images : [];
+
+        // 2. Safe Indexing
+        if (currentImageIndex >= images.length) currentImageIndex = 0;
+
+        // 3. Get URL or Fallback
+        let currentImgUrl = images[currentImageIndex];
+        if (!currentImgUrl || currentImgUrl === 'undefined') {
+          currentImgUrl = '/assets/static/favicon.png';
+        }
+
+        // 🔥 FIX: Increased Z-Index to 50 to ensure buttons are clickable/visible
+        const arrows = images.length > 1 ? `
+            <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/90 transition z-50 shadow-xl border border-white/20">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/60 text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-black/90 transition z-50 shadow-xl border border-white/20">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-40">
+                ${images.map((_, idx) => `
+                    <div class="w-1.5 h-1.5 rounded-full shadow-sm ${idx === currentImageIndex ? 'bg-white scale-150' : 'bg-white/50'}"></div>
+                `).join('')}
+            </div>
+        ` : '';
+
+        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
+
+        contentContainer.innerHTML = `
+          <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
+            
+            <div class="w-full md:w-1/2 h-64 md:h-[450px] relative rounded-2xl overflow-hidden group select-none shadow-xl border border-white/10 flex-shrink-0 bg-black/10">
+              <img src="${currentImgUrl}" class="w-full h-full object-cover transform transition duration-500" id="history-main-img">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
+              ${arrows}
+              <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none">
+                <span class="bg-secondary text-black text-[10px] font-bold px-2 py-0.5 rounded mb-1 inline-block uppercase tracking-widest">${activeItem.subtitle || 'History'}</span>
+                <h3 class="text-2xl font-bold drop-shadow-md leading-tight">${activeItem.title}</h3>
+              </div>
+            </div>
+
+            <div class="w-full md:w-1/2 flex flex-col h-64 md:h-[450px]">
+              
+              <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-lg mb-4 border border-black/10 dark:border-white/10 flex-shrink-0">
+                 <div class="flex flex-col">
+                    <span class="text-[10px] uppercase font-bold opacity-50 tracking-wider">Last Updated</span>
+                    <span class="text-xs font-bold opacity-90 text-primary dark:text-white">
+                        <i class="far fa-clock mr-1"></i> ${dateStr}
+                    </span>
+                 </div>
+                 ${adminControls}
+              </div>
+
+              <div class="mb-2 flex-shrink-0">
+                <i class="fas fa-quote-left text-4xl text-secondary/30"></i>
+              </div>
+
+              <div class="flex-grow overflow-y-auto pr-2 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
+                ${formattedText}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
     // --- 3. CAROUSEL CONTROLS ---
     function switchHistoryTab(id) {
       activeHistoryId = id;
@@ -3698,22 +3716,18 @@
       formData.append('subtitle', document.getElementById('hist-subtitle').value);
       formData.append('text', document.getElementById('hist-text').value);
 
-      // 1. Append Text URL
+      // --- CRITICAL FIX: Send the current list of images ---
+      // This array contains the existing URLs that haven't been deleted
+      formData.append('retainedImages', JSON.stringify(currentStoryImages));
+
+      // Append new Text URL
       formData.append('imageUrl', document.getElementById('hist-image-url').value);
 
-      // 2. Append Files
+      // Append new Files
       const fileInput = document.getElementById('hist-image-file');
       for (let i = 0; i < fileInput.files.length; i++) {
         formData.append('historyImages', fileInput.files[i]);
       }
-
-      // Ask to keep old images if editing
-      if (id) {
-        // Default to true if they don't explicitly want to replace everything
-        // Or use confirm() if you want to force a choice
-        formData.append('keepOldImages', 'true');
-      }
-
       try {
         let response;
         if (id) {
@@ -3748,105 +3762,6 @@
       }
     }
 
-    function renderHistory() {
-      const tabContainer = document.getElementById('history-tabs-container');
-      const contentContainer = document.getElementById('history-content-container');
-
-      if (!tabContainer || !contentContainer) return;
-
-      // 1. RENDER TABS
-      tabContainer.innerHTML = historyData.map(item => {
-        const isActive = item.id === activeHistoryId;
-        const activeStyle = "bg-secondary text-black border-secondary scale-105 shadow-lg";
-        const inactiveStyle = "bg-transparent text-primary border-primary hover:bg-primary hover:text-white scale-100";
-
-        return `
-      <button onclick="switchHistoryTab('${item.id}')" 
-        class="flex-shrink-0 px-4 py-2 rounded-full font-bold transition-all transform border-2 snap-center whitespace-nowrap text-sm md:text-base ${isActive ? activeStyle : inactiveStyle}">
-        <i class="fas ${item.icon} mr-2"></i> ${item.tabTitle}
-      </button>
-    `;
-      }).join('');
-
-      // 2. RENDER CONTENT
-      const activeItem = historyData.find(i => i.id === activeHistoryId);
-      if (activeItem) {
-
-        // Time Format
-        const dateObj = new Date(activeItem.updatedAt);
-        const dateStr = dateObj.toLocaleString('en-GB', {
-          day: 'numeric', month: 'short', year: 'numeric',
-          hour: '2-digit', minute: '2-digit', hour12: true
-        });
-
-        // Admin Buttons (Delete Tab / Edit Tab)
-        const adminControls = state.user === 'admin' ? `
-      <div class="flex gap-2 ml-auto">
-        <button onclick="editHistory('${activeItem.id}')" class="bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1">
-          <i class="fas fa-edit"></i> Edit
-        </button>
-        <button onclick="deleteHistory('${activeItem.id}')" class="bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1" title="Delete this entire Story/Tab">
-          <i class="fas fa-trash"></i> Delete Tab
-        </button>
-      </div>
-    ` : '';
-
-        // Image Logic
-        let currentImgUrl = activeItem.images[currentImageIndex] || activeItem.images[0];
-        if (!currentImgUrl) currentImgUrl = activeItem.image;
-        if (currentImageIndex >= activeItem.images.length) currentImageIndex = 0;
-
-        const arrows = activeItem.images.length > 1 ? `
-        <button onclick="prevHistoryImage(event)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button onclick="nextHistoryImage(event)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-black/80 transition z-30">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-30">
-            ${activeItem.images.map((_, idx) => `
-                <div class="w-1.5 h-1.5 rounded-full shadow-sm ${idx === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'}"></div>
-            `).join('')}
-        </div>
-    ` : '';
-
-        const formattedText = activeItem.text.split('\n').map(para => para.trim() ? `<p class="mb-4">${para}</p>` : '').join('');
-
-        contentContainer.innerHTML = `
-      <div class="history-chapter animate-fade-in h-full flex flex-col md:flex-row gap-6 relative">
-        
-        <div class="w-full md:w-1/2 h-64 md:h-auto min-h-[350px] relative rounded-2xl overflow-hidden group select-none shadow-xl border border-white/10">
-          <img src="${currentImgUrl}" class="w-full h-full object-cover transform transition duration-500" id="history-main-img">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none"></div>
-          ${arrows}
-          <div class="absolute bottom-4 left-4 z-20 text-white pointer-events-none">
-            <span class="bg-secondary text-black text-[10px] font-bold px-2 py-0.5 rounded mb-1 inline-block uppercase tracking-widest">${activeItem.subtitle || 'History'}</span>
-            <h3 class="text-2xl font-bold drop-shadow-md leading-tight">${activeItem.title}</h3>
-          </div>
-        </div>
-
-        <div class="w-full md:w-1/2 flex flex-col h-full">
-          
-          <div class="flex items-center justify-between bg-black/5 dark:bg-white/5 p-3 rounded-lg mb-4 border border-black/10 dark:border-white/10">
-             <div class="flex flex-col">
-                <span class="text-[10px] uppercase font-bold opacity-50 tracking-wider">Last Updated</span>
-                <span class="text-xs font-bold opacity-90"><i class="far fa-clock mr-1"></i> ${dateStr}</span>
-             </div>
-             ${adminControls}
-          </div>
-
-          <div class="mb-2">
-            <i class="fas fa-quote-left text-4xl text-secondary/30"></i>
-          </div>
-
-          <div class="overflow-y-auto h-64 md:h-[calc(100%-140px)] pr-4 scrollbar-thin text-justify leading-relaxed opacity-90 text-lg">
-            ${formattedText}
-          </div>
-        </div>
-      </div>
-    `;
-      }
-    }
     // --- INITIALIZE ---
     // Add this line inside your DOMContentLoaded event listener:
     // fetchHistory();
@@ -4657,10 +4572,13 @@
       e.preventDefault();
       const type = document.getElementById('login-type').value;
       const p = document.getElementById('password').value;
+
       if (type === 'admin' && p === 'admin9129') {
         state.user = 'admin';
         updateGalleryView();
         renderAdminPlaylist();
+        // --- FIX: Force History Re-render ---
+        renderHistory(); // <--- Add this line!
         setTimeout(() => { switchView('view-admin'); renderNavigation(); }, 500);
       } else if (type === 'member' && p === 'member9129') {
         state.user = 'member';
