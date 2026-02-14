@@ -28,16 +28,15 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-// Configure where to save images
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/'); // Save to 'server/uploads'
+        cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        // Name the file: "timestamp-originalname.jpg"
         cb(null, Date.now() + '-' + file.originalname);
     }
 });
+
 const upload = multer({ storage: storage });
 app.use('/uploads', express.static('uploads'));
 
